@@ -47,7 +47,7 @@ def start(request):
         due_date = date.fromisoformat(request.POST.get('due_date', ''))
     except ValueError:
         messages.error(request, 'Angiv venligst en gyldig terminsdato.')
-        return redirect('/#find')
+        return redirect('/#bokse')
     pkg, week = package_for_due_date(due_date)
     if pkg is None:
         messages.error(request, 'Vi kunne ikke finde en pakke til den dato. Se alle pakker nedenfor.')

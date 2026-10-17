@@ -46,9 +46,6 @@
 </head>
 <body>
 
-  <div class="bg-bar text-white text-center py-2.5 px-4 text-[11px] md:text-xs track-wide uppercase">
-    Fri fragt · Opsig når som helst · Dansk produceret af Zentabox
-  </div>
 
   <header class="sticky top-0 bg-cream/95 backdrop-blur z-50 border-b border-stone-200">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center">
@@ -62,7 +59,7 @@
         <span class="serif font-light text-2xl md:text-3xl tracking-widest text-charcoal">Motherbox</span>
       </a>
       <div class="flex items-center gap-4 flex-1 justify-end">
-        <a href="{% url 'home' %}#find" class="hidden md:inline-flex pill btn-outline text-xs track-wide px-5 py-2.5 font-medium">FIND MIN BOKS</a>
+        <a href="{% url 'home' %}#bokse" class="hidden md:inline-flex pill btn-outline text-xs track-wide px-5 py-2.5 font-medium">FIND MIN BOKS</a>
         <button id="mobileMenuBtn" class="lg:hidden text-charcoal p-1" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobileMenu">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
         </button>
@@ -74,7 +71,7 @@
       <a href="{% url 'science' %}" class="block nav-link py-1">Videnskaben</a>
       <a href="{% url 'faq' %}" class="block nav-link py-1">FAQ</a>
       <a href="{% url 'about' %}" class="block nav-link py-1">Om os</a>
-      <a href="{% url 'home' %}#find" class="block nav-link py-1 text-terra">Find min boks</a>
+      <a href="{% url 'home' %}#bokse" class="block nav-link py-1 text-terra">Find min boks</a>
     </div>
   </header>
 
@@ -105,7 +102,7 @@
         <h4 class="text-white text-xs track-wide uppercase mb-4">Shop</h4>
         <ul class="space-y-2 text-sm">
           <li><a href="{% url 'package_list' %}" class="hover:text-white">Alle 4 bokse</a></li>
-          <li><a href="{% url 'home' %}#find" class="hover:text-white">Find min boks</a></li>
+          <li><a href="{% url 'home' %}#bokse" class="hover:text-white">Find min boks</a></li>
           <li><a href="{% url 'manage_subscription' %}" class="hover:text-white">Opsig abonnement</a></li>
           <li><a href="{% url 'withdraw' %}" class="hover:text-white font-medium text-white">Fortryd aftale</a></li>
         </ul>
