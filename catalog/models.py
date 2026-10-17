@@ -46,7 +46,7 @@ class Item(models.Model):
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT, related_name='items')
     nutrient = models.CharField(max_length=80, blank=True, help_text='Fx "Folsyre" – bruges til farve/ikon og gruppering')
     active_form = models.CharField(max_length=160, blank=True, help_text='Fx "Ferrobisglycinat (Ferrochel®)"')
-    dose_per_unit = models.CharField(max_length=120, blank=True, help_text='Fx "400 µg pr. tablet"')
+    dose_per_unit = models.CharField(max_length=300, blank=True, help_text='Fx "400 µg pr. tablet" – eller "Folsyre 500 µg · Jern 39 mg · …" for en dagspose')
     unit_type = models.CharField(max_length=40, blank=True, help_text='tablet, kapsel, softgel, breve, g …')
     pack_size = models.CharField(max_length=60, blank=True, help_text='Fx "60 tabletter" eller "100 g"')
     units_per_pack = models.PositiveIntegerField(null=True, blank=True, help_text='Antal doseringsenheder i pakningen (bruges til refill-beregning)')
