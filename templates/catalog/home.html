@@ -5,15 +5,16 @@
 <!-- HERO -->
 <section class="relative overflow-hidden" style="background:#F4EFE6;">
   <img src="{% static 'images/motherbox/hero.jpg' %}" alt="De fire Motherbox-bokse: Klar til graviditet, Early Care, Late Care og Ammeboks" class="hidden md:block absolute inset-0 w-full h-full object-cover" style="object-position:right center;">
-  <div class="relative max-w-7xl mx-auto px-4 md:px-6 flex items-center" style="min-height:min(76vh,660px);">
-    <div class="max-w-md py-16 md:py-24">
-      <p class="text-xs track-wide uppercase text-charcoal mb-5">Fra ønske til amning</p>
-      <h1 class="serif text-5xl md:text-6xl lg:text-7xl font-light leading-[1.02] text-charcoal mb-6">Vitaminer til hver fase af graviditeten</h1>
-      <p class="text-muted font-light text-lg leading-relaxed mb-9">30 dagsposer om måneden efter Sundhedsstyrelsens anbefalinger. Dansk produceret.</p>
-      <a href="#bokse" class="pill btn-terra inline-block px-10 py-4 text-xs track-wide uppercase font-medium">Find din boks</a>
+  <!-- mobile: products first, cropped to the boxes -->
+  <img src="{% static 'images/motherbox/hero.jpg' %}" alt="De fire Motherbox-bokse: Klar til graviditet, Early Care, Late Care og Ammeboks" class="md:hidden w-full" style="aspect-ratio:1/1;object-fit:cover;object-position:95% 60%;">
+  <div class="relative max-w-7xl mx-auto px-6 md:px-6 flex items-center md:min-h-[min(76vh,660px)]">
+    <div class="w-full md:max-w-md pt-4 pb-14 md:py-24 text-center md:text-left">
+      <p class="text-xs track-wide uppercase text-charcoal mb-4 md:mb-5">Fra ønske til amning</p>
+      <h1 class="serif text-[2.6rem] leading-[1.05] md:text-6xl lg:text-7xl font-light md:leading-[1.02] text-charcoal mb-5 md:mb-6">Vitaminer til hver fase af graviditeten</h1>
+      <p class="text-muted font-light text-base md:text-lg leading-relaxed mb-8 md:mb-9 max-w-sm mx-auto md:mx-0">30 dagsposer om måneden efter Sundhedsstyrelsens anbefalinger. Dansk produceret.</p>
+      <a href="#bokse" class="pill btn-terra inline-block px-12 py-4 text-xs track-wide uppercase font-medium">Find din boks</a>
     </div>
   </div>
-  <img src="{% static 'images/motherbox/hero.jpg' %}" alt="" class="md:hidden w-full" style="object-fit:cover;object-position:right center;aspect-ratio:4/3;">
 </section>
 
 <!-- THE 4 BOXES -->
