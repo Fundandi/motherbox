@@ -1,0 +1,23 @@
+{% extends "pages/_page.html" %}
+{% block title %}Fortrydelsesret & retur — Motherbox{% endblock %}
+{% block kicker %}Juridisk{% endblock %}
+{% block heading %}Fortrydelsesret &amp; retur{% endblock %}
+{% block body %}
+<h2>14 dages fortrydelsesret</h2>
+<p>Du kan fortryde dit køb inden for 14 dage fra den dag, du modtager en boks. Du skal ikke give en grund.</p>
+
+<h2>Forseglede produkter</h2>
+<p>Kosttilskud og fødevarer er forseglede af hensyn til sundhed og hygiejne. Hvis du bryder forseglingen på et produkt, mister du fortrydelsesretten for netop det produkt (forbrugeraftalelovens § 18, stk. 2, nr. 5). Uåbnede produkter kan du altid returnere inden for de 14 dage.</p>
+
+<h2>Sådan fortryder du</h2>
+<p>Brug knappen <a href="{% url 'withdraw' %}"><strong>Fortryd aftale</strong></a>, som også står nederst på alle sider. Så får du en kvittering på e-mail med det samme. Du kan også skrive til <a href="mailto:{{ COMPANY.email }}">{{ COMPANY.email }}</a> eller bruge standardfortrydelsesformularen fra <a href="https://www.forbrug.dk" target="_blank" rel="noopener">forbrug.dk</a>. Send varerne til os senest 14 dage efter, du har givet besked. Du betaler selv for returforsendelsen.</p>
+
+<h2>Refusion</h2>
+<p>Vi refunderer beløbet for de returnerede varer senest 14 dage efter, vi har modtaget din besked. Vi kan vente med at refundere, til vi har fået varerne retur. Pengene går tilbage til det betalingsmiddel, du brugte.</p>
+
+<h2>Abonnement</h2>
+<p>Fortrydelsesretten gælder for hver boks. Vil du stoppe abonnementet, så opsig det under <a href="{% url 'manage_subscription' %}">Mit abonnement</a>. Der er ingen binding.</p>
+
+<h2>Returadresse</h2>
+<p>{{ COMPANY.legal_name }}{% if COMPANY.address %}, {{ COMPANY.address }}{% else %} — adressen står i ordrebekræftelsen.{% endif %}</p>
+{% endblock %}

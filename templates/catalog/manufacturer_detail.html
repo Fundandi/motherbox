@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}{{ manufacturer.name }} — producent i Motherbox{% endblock %}
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 md:px-6 py-5">
+  <nav class="text-xs track-wide uppercase text-muted"><a href="{% url 'home' %}" class="hover:text-terra">Hjem</a><span class="mx-2">·</span><a href="{% url 'manufacturer_list' %}" class="hover:text-terra">Producenter</a><span class="mx-2">·</span><span class="text-charcoal">{{ manufacturer.name }}</span></nav>
+</div>
+<section class="max-w-5xl mx-auto px-4 md:px-6 pb-16">
+  <h1 class="serif text-5xl md:text-6xl font-light mb-2">{{ manufacturer.name }}</h1>
+  <p class="text-xs track-wide uppercase text-muted mb-8">{{ manufacturer.country }}{% if manufacturer.city %} · {{ manufacturer.city }}{% endif %}{% if manufacturer.founded %} · grundlagt {{ manufacturer.founded|stringformat:"d" }}{% endif %}</p>
+  <div class="grid md:grid-cols-[1fr_260px] gap-10">
+    <div class="prose-mb text-muted font-light">
+      {% if manufacturer.about %}<p>{{ manufacturer.about }}</p>{% endif %}
+      {% if manufacturer.production %}<h3>Produktion</h3><p>{{ manufacturer.production }}</p>{% endif %}
+    </div>
+    <aside class="bg-white border border-stone-200 p-5 text-sm self-start">
+      {% if manufacturer.review_rating %}
+      <p class="serif text-4xl font-light">{{ manufacturer.review_rating }}<span class="text-lg"> / 5</span></p>
+      <p class="text-xs text-muted mb-3">{{ manufacturer.review_count|intcomma }} anmeldelser på <a href="{{ manufacturer.review_url }}" target="_blank" rel="noopener nofollow" class="underline">{{ manufacturer.review_platform }}</a></p>
+      {% endif %}
+      {% if manufacturer.website %}<a href="{{ manufacturer.website }}" target="_blank" rel="noopener" class="text-xs track-wide uppercase text-terra hover:underline">Hjemmeside →</a>{% endif %}
+    </aside>
+  </div>
+  <h2 class="serif text-3xl font-light mt-12 mb-5">Produkter i Motherbox</h2>
+  <div class="space-y-4">
+    {% for i in items %}
+    <div class="bg-white border border-stone-200 p-6">
+      <p class="text-[11px] track-wide uppercase text-muted mb-1">{{ i.nutrient|default:i.get_kind_display }}</p>
+      <p class="serif text-2xl font-light mb-2">{{ i.name }}</p>
+      <p class="text-sm text-muted">{% if i.dose_per_unit %}{{ i.dose_per_unit }} · {% endif %}{{ i.pack_size }}{% if i.active_form %} · {{ i.active_form }}{% endif %}</p>
+      {% if i.review_rating %}<p class="text-xs mt-2"><span class="text-terra">★</span> {{ i.review_rating }} / 5 · {{ i.review_count|intcomma }} anmeldelser på <a href="{{ i.review_url }}" target="_blank" rel="noopener nofollow" class="underline">{{ i.review_platform }}</a></p>{% endif %}
+      <p class="text-xs mt-2">Indgår i: {% for pi in i.in_packages.all %}<a href="{{ pi.package.get_absolute_url }}" class="underline hover:text-terra">{{ pi.package.label }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

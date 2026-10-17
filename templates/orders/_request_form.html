@@ -1,0 +1,38 @@
+{# Shared two-step form: step "form" → "review" (Bekræft …) → done #}
+<form method="post" class="bg-white border border-stone-200 p-6 md:p-8 text-left space-y-4">
+  {% csrf_token %}
+  {% if step == 'review' %}
+    <input type="hidden" name="step" value="confirm">
+    {% for k, v in data.items %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
+    <p class="text-xs track-wide uppercase text-muted">Tjek oplysningerne</p>
+    <dl class="text-sm space-y-2">
+      <div class="flex justify-between gap-4"><dt class="text-muted">Ordrenummer</dt><dd>{{ data.reference|default:"—" }}</dd></div>
+      <div class="flex justify-between gap-4"><dt class="text-muted">E-mail</dt><dd>{{ data.email }}</dd></div>
+      <div class="flex justify-between gap-4"><dt class="text-muted">Navn</dt><dd>{{ data.name|default:"—" }}</dd></div>
+      {% if data.details %}<div><dt class="text-muted">Detaljer</dt><dd>{{ data.details }}</dd></div>{% endif %}
+    </dl>
+    <button type="submit" class="w-full py-4 text-sm track-wide uppercase font-semibold btn-terra">{{ confirm_label }}</button>
+    <p class="text-xs text-muted text-center">Du får en kvittering på e-mail med det samme.</p>
+  {% else %}
+    <input type="hidden" name="step" value="review">
+    <div>
+      <label for="reference" class="block text-sm font-medium mb-1">Ordrenummer{% if not reference_required %} (hvis du har det){% endif %}</label>
+      <input id="reference" name="reference" value="{{ data.reference }}" class="w-full bg-cream border {% if errors.reference %}border-red-400{% else %}border-stone-300{% endif %} px-4 py-3 text-sm" placeholder="MB1A2B3C4D">
+      {% if errors.reference %}<p class="text-xs text-red-600 mt-1">{{ errors.reference }}</p>{% endif %}
+    </div>
+    <div>
+      <label for="email" class="block text-sm font-medium mb-1">E-mail du bestilte med</label>
+      <input id="email" name="email" type="email" required value="{{ data.email }}" class="w-full bg-cream border {% if errors.email %}border-red-400{% else %}border-stone-300{% endif %} px-4 py-3 text-sm">
+      {% if errors.email %}<p class="text-xs text-red-600 mt-1">{{ errors.email }}</p>{% endif %}
+    </div>
+    <div>
+      <label for="name" class="block text-sm font-medium mb-1">Navn</label>
+      <input id="name" name="name" value="{{ data.name }}" class="w-full bg-cream border border-stone-300 px-4 py-3 text-sm">
+    </div>
+    <div>
+      <label for="details" class="block text-sm font-medium mb-1">{{ details_label }} <span class="text-muted font-normal">(valgfrit)</span></label>
+      <textarea id="details" name="details" rows="2" class="w-full bg-cream border border-stone-300 px-4 py-3 text-sm">{{ data.details }}</textarea>
+    </div>
+    <button type="submit" class="w-full py-4 text-sm track-wide uppercase font-semibold btn-outline">Fortsæt</button>
+  {% endif %}
+</form>

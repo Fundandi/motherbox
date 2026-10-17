@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Betaling afbrudt — Motherbox{% endblock %}
+{% block content %}
+<div class="max-w-xl mx-auto px-4 md:px-6 py-24 text-center">
+  <h1 class="serif text-5xl font-light mb-5">Betalingen blev afbrudt</h1>
+  <p class="text-muted font-light text-lg mb-10">Der er ikke trukket penge. Du kan prøve igen, når du er klar.</p>
+  <a href="{% url 'checkout' order.start_package.slug %}?plan={{ order.plan }}" class="pill btn-terra inline-block px-8 py-3 text-xs track-wide uppercase">Prøv igen</a>
+</div>
+{% endblock %}

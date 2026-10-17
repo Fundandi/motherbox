@@ -1,0 +1,42 @@
+{% extends "pages/_page.html" %}
+{% block title %}Handelsbetingelser — Motherbox{% endblock %}
+{% block kicker %}Juridisk{% endblock %}
+{% block heading %}Handelsbetingelser{% endblock %}
+{% block body %}
+<p><em>Gældende fra {% now "j. F Y" %}.</em></p>
+
+<h2>1. Hvem er vi</h2>
+<p>{{ COMPANY.legal_name }}{% if COMPANY.cvr %}, CVR {{ COMPANY.cvr }}{% endif %}{% if COMPANY.address %}, {{ COMPANY.address }}{% endif %}. E-mail: <a href="mailto:{{ COMPANY.email }}">{{ COMPANY.email }}</a>{% if COMPANY.phone %}, telefon {{ COMPANY.phone }}{% endif %}.</p>
+
+<h2>2. Produkterne</h2>
+<p>Motherbox sælger bokse med kosttilskud og fødevarer ("goodies"). Kosttilskuddene er dagsposer, der produceres af Zentabox A/S (Motherbox by Zentabox), og goodies kommer fra tredjepartsproducenter. Alle produkter leveres i forseglet emballage med varedeklaration. Indholdet af hver boks fremgår af den enkelte pakkeside. Hvis et produkt er udsolgt, kan vi erstatte det med et produkt med samme næringsstof og tilsvarende dosis. Det står altid i ordrebekræftelsen eller i boksen.</p>
+<p>Kosttilskud kan ikke erstatte en varieret kost. Oplysningerne på siden er generelle og er ikke personlig medicinsk rådgivning. Tal med din læge eller jordemoder, hvis du har en sygdom, tager medicin eller er i tvivl.</p>
+
+<h2>3. Priser og betaling</h2>
+<p>Alle priser er i danske kroner inkl. 25 % moms. Fragt til adresser i Danmark er inkluderet. Vi tager imod betaling med betalingskort og de øvrige metoder, der vises ved betaling. Betalingen håndteres af Stripe Payments Europe Ltd. Vi ser og gemmer ikke dine kortoplysninger.</p>
+
+<h2>4. Abonnement</h2>
+<ul>
+  <li>Abonnementet koster det beløb pr. måned, der står ved bestillingen. Beløbet trækkes første gang ved bestilling og derefter automatisk hver måned på samme dato.</li>
+  <li>Hver boks sammensættes efter, hvor du er i forløbet. Er du gravid, sker det ud fra din terminsdato. Ændrer din terminsdato sig, eller er dit forløb ændret, så giv os besked, så tilpasser vi boksen.</li>
+  <li>Hver boks indeholder én pakning med 30 dagsposer, svarende til én måneds forbrug, samt goodies. Prisen er den samme hver måned.</li>
+  <li><strong class="font-medium text-charcoal">Ingen binding.</strong> Du kan opsige abonnementet når som helst online under <a href="{% url 'manage_subscription' %}">Opsig abonnement</a> og får en kvittering med det samme. Opsigelsen gælder fra næste betaling. Er næste betaling allerede trukket, sender vi den boks.</li>
+  <li>Abonnementet stopper ikke af sig selv efter fødslen. Vi skifter til boksen til tiden efter fødslen og minder dig om, at du kan opsige.</li>
+  <li>Vi varsler prisændringer mindst 30 dage før, de træder i kraft. Du kan altid opsige inden.</li>
+</ul>
+
+<h2>5. Levering</h2>
+<p>Vi leverer i Danmark. Vi sender normalt inden for 1–3 hverdage efter betaling. Du får besked med track &amp; trace, når boksen er sendt.</p>
+
+<h2>6. Fortrydelsesret</h2>
+<p>Du har 14 dages fortrydelsesret og kan fortryde via knappen <a href="{% url 'withdraw' %}">Fortryd aftale</a>. Læs vilkår og undtagelser under <a href="{% url 'withdrawal' %}">Fortrydelsesret &amp; retur</a>.</p>
+
+<h2>7. Reklamation</h2>
+<p>Du har 2 års reklamationsret efter købeloven. Er en vare beskadiget eller forkert, så kontakt os hurtigst muligt og gerne med et billede. Så sender vi en ny eller refunderer beløbet. Holdbarheden på kosttilskud står på pakningen, og vi sender ikke produkter med kort restholdbarhed.</p>
+
+<h2>8. Persondata</h2>
+<p>Se vores <a href="{% url 'privacy' %}">privatlivspolitik</a>.</p>
+
+<h2>9. Klage</h2>
+<p>Kontakt os først på <a href="mailto:{{ COMPANY.email }}">{{ COMPANY.email }}</a>. Finder vi ikke en løsning, kan du klage til Nævnenes Hus, Toldboden 2, 8800 Viborg, via <a href="https://www.naevneneshus.dk" target="_blank" rel="noopener">naevneneshus.dk</a>. Bor du i et andet EU-land, kan du bruge EU-Kommissionens klageportal på <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a>.</p>
+{% endblock %}

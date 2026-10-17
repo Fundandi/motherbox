@@ -1,0 +1,149 @@
+{% load static %}<!DOCTYPE html>
+<html lang="da" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Motherbox — Vitaminer til hver fase af graviditeten{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Én boks om måneden med 30 dagsposer efter Sundhedsstyrelsens anbefalinger — fra du ønsker at blive gravid, gennem graviditeten og tiden efter fødslen. Dansk produceret af Zentabox.{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}Motherbox{% endblock %}">
+  <meta property="og:description" content="30 dagsposer om måneden efter Sundhedsstyrelsens anbefalinger. Dansk produceret.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%23C07859'/><text x='32' y='42' font-size='30' text-anchor='middle' fill='white' font-family='Georgia'>M</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: { cream:'#FAF5EE', sand:'#F3EBE0', terra:'#C07859', terradark:'#A9654A', charcoal:'#333333', muted:'#7A7469', bar:'#4A4040', sage:'#5A9E7A' },
+        fontFamily: { serif:['"Cormorant Garamond"','Georgia','serif'], sans:['Jost','sans-serif'] },
+      } }
+    }
+  </script>
+  <style>
+    body { font-family:'Jost',sans-serif; background:#FAF5EE; color:#333; -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,.serif { font-family:'Cormorant Garamond',Georgia,serif; }
+    .pill { border-radius:100px; }
+    .btn-terra { background:#C07859; color:#fff; border:1px solid #C07859; transition:background .2s; }
+    .btn-terra:hover { background:#A9654A; border-color:#A9654A; }
+    .btn-outline { background:transparent; color:#333; border:1px solid #333; transition:all .2s; }
+    .btn-outline:hover { background:#333; color:#fff; }
+    .track-wide { letter-spacing:.12em; }
+    .nav-link { font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:#333; transition:color .2s; }
+    .nav-link:hover { color:#C07859; }
+    .prose-mb p { margin-bottom:1rem; line-height:1.75; }
+    .prose-mb h2 { font-family:'Cormorant Garamond',Georgia,serif; font-size:1.9rem; font-weight:300; margin:2.5rem 0 .75rem; color:#333; }
+    .prose-mb h3 { font-weight:600; margin:1.5rem 0 .5rem; color:#333; }
+    .prose-mb ul { list-style:disc; padding-left:1.25rem; margin-bottom:1rem; }
+    .prose-mb li { margin-bottom:.35rem; line-height:1.7; }
+    .prose-mb a { color:#C07859; text-decoration:underline; text-underline-offset:3px; }
+    .scrollbar-hide::-webkit-scrollbar { display:none; }
+    details summary::-webkit-details-marker { display:none; }
+    input[type="date"]::-webkit-calendar-picker-indicator { opacity:.5; cursor:pointer; }
+    :focus-visible { outline:2px solid #C07859; outline-offset:2px; }
+  </style>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <div class="bg-bar text-white text-center py-2.5 px-4 text-[11px] md:text-xs track-wide uppercase">
+    Fri fragt · Opsig når som helst · Dansk produceret af Zentabox
+  </div>
+
+  <header class="sticky top-0 bg-cream/95 backdrop-blur z-50 border-b border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center">
+      <nav class="hidden lg:flex items-center gap-7 flex-1" aria-label="Hovedmenu">
+        <a href="{% url 'package_list' %}" class="nav-link">Boksene</a>
+        <a href="{% url 'manufacturer_list' %}" class="nav-link">Producent</a>
+        <a href="{% url 'science' %}" class="nav-link">Videnskaben</a>
+        <a href="{% url 'faq' %}" class="nav-link">FAQ</a>
+      </nav>
+      <a href="{% url 'home' %}" class="flex-1 lg:flex-none lg:text-center">
+        <span class="serif font-light text-2xl md:text-3xl tracking-widest text-charcoal">Motherbox</span>
+      </a>
+      <div class="flex items-center gap-4 flex-1 justify-end">
+        <a href="{% url 'home' %}#find" class="hidden md:inline-flex pill btn-outline text-xs track-wide px-5 py-2.5 font-medium">FIND MIN BOKS</a>
+        <button id="mobileMenuBtn" class="lg:hidden text-charcoal p-1" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobileMenu">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden lg:hidden bg-cream border-t border-stone-200 px-6 py-4 space-y-3">
+      <a href="{% url 'package_list' %}" class="block nav-link py-1">Boksene</a>
+      <a href="{% url 'manufacturer_list' %}" class="block nav-link py-1">Producent</a>
+      <a href="{% url 'science' %}" class="block nav-link py-1">Videnskaben</a>
+      <a href="{% url 'faq' %}" class="block nav-link py-1">FAQ</a>
+      <a href="{% url 'about' %}" class="block nav-link py-1">Om os</a>
+      <a href="{% url 'home' %}#find" class="block nav-link py-1 text-terra">Find min boks</a>
+    </div>
+  </header>
+
+  {% if messages %}
+  <div class="max-w-5xl mx-auto px-4 md:px-6 mt-5 space-y-2" role="status">
+    {% for message in messages %}
+    <div class="px-4 py-3 text-sm border {% if message.tags == 'error' %}border-red-300 bg-red-50 text-red-700{% else %}border-terra/40 bg-white text-charcoal{% endif %}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if not STRIPE_ENABLED %}
+  <div class="bg-amber-50 border-b border-amber-200 text-amber-800 text-xs text-center py-2 px-4">
+    Demo-tilstand: betaling er ikke aktiveret endnu — bestillinger gennemføres uden træk.
+  </div>
+  {% endif %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="bg-bar text-stone-300 pt-16 pb-10">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
+      <div class="col-span-2">
+        <p class="serif text-white font-light text-3xl tracking-widest mb-4">Motherbox</p>
+        <p class="text-sm leading-relaxed max-w-sm">Én boks om måneden med 30 dagsposer efter Sundhedsstyrelsens anbefalinger — til tiden før, under og efter graviditeten. Motherbox by Zentabox, dansk produceret på Møn.</p>
+        <p class="text-xs text-stone-400 mt-5 leading-relaxed max-w-sm">Kosttilskud kan ikke erstatte en varieret kost. Tal altid med din læge eller jordemoder, hvis du har en sygdom, tager medicin eller er i tvivl.</p>
+      </div>
+      <div>
+        <h4 class="text-white text-xs track-wide uppercase mb-4">Shop</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="{% url 'package_list' %}" class="hover:text-white">Alle 4 bokse</a></li>
+          <li><a href="{% url 'home' %}#find" class="hover:text-white">Find min boks</a></li>
+          <li><a href="{% url 'manage_subscription' %}" class="hover:text-white">Opsig abonnement</a></li>
+          <li><a href="{% url 'withdraw' %}" class="hover:text-white font-medium text-white">Fortryd aftale</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white text-xs track-wide uppercase mb-4">Gennemsigtighed</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="{% url 'manufacturer_list' %}" class="hover:text-white">Producent &amp; anmeldelser</a></li>
+          <li><a href="{% url 'science' %}" class="hover:text-white">Videnskab &amp; kilder</a></li>
+          <li><a href="{% url 'about' %}" class="hover:text-white">Om os</a></li>
+          <li><a href="{% url 'faq' %}" class="hover:text-white">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white text-xs track-wide uppercase mb-4">Juridisk</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="{% url 'terms' %}" class="hover:text-white">Handelsbetingelser</a></li>
+          <li><a href="{% url 'withdrawal' %}" class="hover:text-white">Fortrydelsesret &amp; retur</a></li>
+          <li><a href="{% url 'privacy' %}" class="hover:text-white">Privatlivspolitik</a></li>
+          {% if SMILEY_URL %}<li><a href="{{ SMILEY_URL }}" target="_blank" rel="noopener" class="hover:text-white">Fødevarestyrelsens kontrolrapport</a></li>{% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 md:px-6 pt-8 border-t border-stone-600 text-xs text-stone-400 flex flex-col md:flex-row justify-between gap-2">
+      <span>© {% now "Y" %} {{ COMPANY.legal_name }}{% if COMPANY.cvr %} · CVR {{ COMPANY.cvr }}{% endif %}{% if COMPANY.address %} · {{ COMPANY.address }}{% endif %} · <a href="mailto:{{ COMPANY.email }}" class="hover:text-white">{{ COMPANY.email }}</a></span>
+      <span>Doseringer er baseret på Sundhedsstyrelsens anbefalinger. Indhold ud over disse er markeret som tillæg.</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('mobileMenuBtn'), menu = document.getElementById('mobileMenu');
+      if (btn) btn.addEventListener('click', function () {
+        var open = menu.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', open);
+      });
+    })();
+  </script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends "pages/_page.html" %}
+{% block title %}Privatlivspolitik — Motherbox{% endblock %}
+{% block kicker %}Juridisk{% endblock %}
+{% block heading %}Privatlivspolitik{% endblock %}
+{% block body %}
+<p><em>Gældende fra {% now "j. F Y" %}.</em></p>
+<h2>Dataansvarlig</h2>
+<p>{{ COMPANY.legal_name }}{% if COMPANY.cvr %}, CVR {{ COMPANY.cvr }}{% endif %}{% if COMPANY.address %}, {{ COMPANY.address }}{% endif %}. Kontakt: <a href="mailto:{{ COMPANY.email }}">{{ COMPANY.email }}</a>.</p>
+
+<h2>Hvilke oplysninger vi behandler</h2>
+<ul>
+  <li><strong class="font-medium text-charcoal">Ordreoplysninger:</strong> navn, adresse, e-mail, telefon og ordrehistorik.</li>
+  <li><strong class="font-medium text-charcoal">Terminsdato eller fødselsdato</strong>, hvis du oplyser den. Den bruger vi kun til at vælge den rigtige boks. Oplysningen kan vise, at du er gravid, og det er en helbredsoplysning. Vi behandler den derfor kun med dit udtrykkelige samtykke, som du giver, når du indtaster den og bestiller (GDPR art. 9, stk. 2, litra a). Du kan altid trække samtykket tilbage. Så kan vi ikke længere tilpasse boksen til din graviditet.</li>
+  <li><strong class="font-medium text-charcoal">Betaling:</strong> Stripe behandler dine betalingsoplysninger. Vi får kun at vide, om betalingen er gennemført, og kortets sidste fire cifre.</li>
+</ul>
+
+<h2>Formål og retsgrundlag</h2>
+<ul>
+  <li>At levere og administrere dit køb eller abonnement (opfyldelse af aftale, art. 6, stk. 1, litra b).</li>
+  <li>Bogføring (retlig forpligtelse efter bogføringsloven, art. 6, stk. 1, litra c). Regnskabsbilag gemmes i 5 år.</li>
+  <li>Nyhedsbrev, kun hvis du har sagt ja (samtykke, art. 6, stk. 1, litra a).</li>
+</ul>
+
+<h2>Modtagere (databehandlere)</h2>
+<ul>
+  <li>Stripe Payments Europe Ltd. (betaling)</li>
+  <li>Vores hostingudbyder (drift af hjemmesiden)</li>
+  <li>Fragtfirma (navn og adresse til levering)</li>
+</ul>
+<p>Vi sælger aldrig dine oplysninger. Stripe kan overføre data til lande uden for EU på grundlag af EU-Kommissionens standardkontraktbestemmelser.</p>
+
+<h2>Opbevaring</h2>
+<p>Vi gemmer ordreoplysninger, så længe du er kunde og derefter i op til 5 år af hensyn til bogføringsloven. Terminsdatoen sletter vi senest 12 måneder efter, dit abonnement er ophørt.</p>
+
+<h2>Cookies</h2>
+<p>Vi bruger kun cookies, der er nødvendige for, at siden virker: en sessions-cookie og en sikkerheds-cookie (CSRF). Vi bruger ikke sporings- eller marketingcookies. Når du betaler, sætter Stripe sine egne nødvendige cookies for at forhindre svindel.</p>
+
+<h2>Dine rettigheder</h2>
+<p>Du har ret til indsigt, berigtigelse, sletning, begrænsning, dataportabilitet og indsigelse, og du kan trække et samtykke tilbage. Skriv til <a href="mailto:{{ COMPANY.email }}">{{ COMPANY.email }}</a>. Du kan klage til Datatilsynet på <a href="https://www.datatilsynet.dk" target="_blank" rel="noopener">datatilsynet.dk</a>.</p>
+{% endblock %}

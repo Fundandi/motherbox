@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Bestilling — Motherbox{% endblock %}
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 md:px-6 py-10 md:py-14">
+  <nav class="text-xs track-wide uppercase text-muted mb-8"><a href="{{ package.get_absolute_url }}" class="hover:text-terra">‹ Tilbage til {{ package.label }}</a></nav>
+  <h1 class="serif text-4xl md:text-5xl font-light mb-10">Din bestilling</h1>
+
+  <form method="post" novalidate class="grid lg:grid-cols-[1fr_380px] gap-10">
+    {% csrf_token %}
+    <div class="space-y-6">
+      <fieldset class="bg-white border border-stone-200 p-6">
+        <legend class="text-xs track-wide uppercase text-muted px-1">Abonnement eller enkelt boks</legend>
+        <div class="space-y-3 mt-2">
+          <label class="flex items-center gap-4 p-4 border cursor-pointer {% if plan == 'subscription' %}border-terra bg-cream{% else %}border-stone-300{% endif %}">
+            <input type="radio" name="plan" value="subscription" {% if plan == 'subscription' %}checked{% endif %} class="accent-[#C07859] w-4 h-4">
+            <span class="flex-1"><span class="block font-semibold text-sm">Abonnement</span><span class="block text-xs text-muted">Ny boks hver måned, der passer til hvor du er · opsig når som helst</span></span>
+            <span class="font-semibold whitespace-nowrap">{{ sub_price|floatformat:0 }} kr./md.</span>
+          </label>
+          <label class="flex items-center gap-4 p-4 border cursor-pointer {% if plan == 'single' %}border-terra bg-cream{% else %}border-stone-300{% endif %}">
+            <input type="radio" name="plan" value="single" {% if plan == 'single' %}checked{% endif %} class="accent-[#C07859] w-4 h-4">
+            <span class="flex-1"><span class="block font-semibold text-sm">Kun denne boks</span><span class="block text-xs text-muted">{{ package.label }} · engangskøb</span></span>
+            <span class="font-semibold whitespace-nowrap">{{ single_price|floatformat:0 }} kr.</span>
+          </label>
+        </div>
+      </fieldset>
+
+      {% if has_extras %}
+      <fieldset class="bg-white border border-stone-200 p-6">
+        <legend class="text-xs track-wide uppercase text-muted px-1">Indhold</legend>
+        <div class="space-y-3 mt-2">
+          <label class="flex items-start gap-4 p-4 border cursor-pointer {% if form.extras %}border-terra bg-cream{% else %}border-stone-300{% endif %}">
+            <input type="radio" name="extras" value="1" {% if form.extras %}checked{% endif %} class="accent-[#C07859] w-4 h-4 mt-1">
+            <span class="flex-1"><span class="block font-semibold text-sm">Komplet</span><span class="block text-xs text-muted">Sundhedsstyrelsens anbefalinger + tillæg ({{ extras_names|join:", " }})</span></span>
+            <span class="text-sm whitespace-nowrap">{{ price_komplet|floatformat:0 }} kr./md.</span>
+          </label>
+          <label class="flex items-start gap-4 p-4 border cursor-pointer {% if not form.extras %}border-terra bg-cream{% else %}border-stone-300{% endif %}">
+            <input type="radio" name="extras" value="0" {% if not form.extras %}checked{% endif %} class="accent-[#C07859] w-4 h-4 mt-1">
+            <span class="flex-1"><span class="block font-semibold text-sm">Basis</span><span class="block text-xs text-muted">Kun det, Sundhedsstyrelsen anbefaler: folsyre, D-vitamin, jern og evt. calcium</span></span>
+            <span class="text-sm whitespace-nowrap">{{ price_basis|floatformat:0 }} kr./md.</span>
+          </label>
+        </div>
+        <p class="text-xs text-muted mt-3">Sundhedsstyrelsen og Fødevarestyrelsen anbefaler ikke gravide at tage andre kosttilskud end de anbefalede. Tillæggene er derfor et valg, du selv træffer. <a href="{% url 'science' %}" target="_blank" class="underline">Læs mere</a>.</p>
+      </fieldset>
+      {% endif %}
+
+      <fieldset class="bg-white border border-stone-200 p-6">
+        <legend class="text-xs track-wide uppercase text-muted px-1">Om dig</legend>
+        {% if package.stage == 'pregnant' %}
+        <label for="due_date" class="block text-sm font-medium mt-2 mb-1">Terminsdato</label>
+        <p class="text-xs text-muted mb-2">Bruges kun til at sende den rigtige boks hver måned.</p>
+        <input type="date" id="due_date" name="due_date" value="{{ form.due_date }}" required class="w-full sm:w-72 bg-cream border {% if errors.due_date %}border-red-400{% else %}border-stone-300{% endif %} px-4 py-3 text-sm focus:outline-none focus:border-terra">
+        {% if errors.due_date %}<p class="text-xs text-red-600 mt-1">{{ errors.due_date }}</p>{% endif %}
+        {% elif package.stage == 'postpartum' %}
+        <label for="birth_date" class="block text-sm font-medium mt-2 mb-1">Fødselsdato (valgfri)</label>
+        <input type="date" id="birth_date" name="birth_date" value="{{ form.birth_date }}" class="w-full sm:w-72 bg-cream border border-stone-300 px-4 py-3 text-sm focus:outline-none focus:border-terra">
+        {% else %}
+        <p class="text-sm text-muted mt-2">Når du bliver gravid, skriver du blot til os med din terminsdato — så skifter vi automatisk til Early Care og Late Care.</p>
+        {% endif %}
+        <label for="email" class="block text-sm font-medium mt-5 mb-1">E-mail</label>
+        <input type="email" id="email" name="email" value="{{ form.email }}" autocomplete="email" class="w-full bg-cream border border-stone-300 px-4 py-3 text-sm focus:outline-none focus:border-terra" placeholder="navn@eksempel.dk">
+        <p class="text-xs text-muted mt-1">Adresse, telefon og betaling udfyldes sikkert hos Stripe i næste trin.</p>
+        {% if package.stage != 'ttc' %}
+        <label class="flex gap-3 text-sm mt-5 cursor-pointer">
+          <input type="checkbox" name="consent_health" value="1" {% if form.consent_health %}checked{% endif %} class="accent-[#C07859] mt-1">
+          <span class="text-muted">Jeg giver samtykke til, at Motherbox gemmer min {% if package.stage == 'pregnant' %}terminsdato{% else %}fødselsdato{% endif %} og bruger den til at sammensætte mine bokse. Jeg kan altid trække samtykket tilbage (<a href="{% url 'privacy' %}" target="_blank" class="underline">læs mere</a>).</span>
+        </label>
+        {% if errors.consent_health %}<p class="text-xs text-red-600 mt-1">{{ errors.consent_health }}</p>{% endif %}
+        {% endif %}
+      </fieldset>
+
+      <fieldset class="bg-white border border-stone-200 p-6 space-y-3">
+        <legend class="text-xs track-wide uppercase text-muted px-1">Bekræft</legend>
+        <label class="flex gap-3 text-sm mt-2 cursor-pointer">
+          <input type="checkbox" name="accept_terms" value="1" {% if form.accept_terms %}checked{% endif %} class="accent-[#C07859] mt-1">
+          <span>Jeg accepterer <a href="{% url 'terms' %}" target="_blank" class="text-terra underline">handelsbetingelserne</a> og har læst <a href="{% url 'privacy' %}" target="_blank" class="text-terra underline">privatlivspolitikken</a>.{% if plan == 'subscription' %} Abonnementet fornyes hver måned, indtil jeg opsiger det.{% endif %}</span>
+        </label>
+        {% if errors.accept_terms %}<p class="text-xs text-red-600">{{ errors.accept_terms }}</p>{% endif %}
+        <label class="flex gap-3 text-sm cursor-pointer">
+          <input type="checkbox" name="marketing" value="1" {% if form.marketing %}checked{% endif %} class="accent-[#C07859] mt-1">
+          <span class="text-muted">Ja tak til nyhedsbrev med tips til graviditeten (valgfrit, kan altid afmeldes).</span>
+        </label>
+      </fieldset>
+    </div>
+
+    <aside class="lg:sticky lg:top-24 self-start bg-white border border-stone-200 p-6">
+      <p class="text-xs track-wide uppercase text-muted mb-2">Oversigt</p>
+      <p class="serif text-2xl font-light">{{ package.label }}</p>
+      <p class="text-xs text-muted mb-5">{{ package.weeks_label }}{% if has_extras %} · {% if form.extras %}Komplet{% else %}Basis{% endif %}{% endif %}{% if plan == 'subscription' %} · derefter skifter boksen automatisk{% endif %}</p>
+      <div class="border-t border-stone-200 pt-4 space-y-2 text-sm">
+        <div class="flex justify-between"><span>{% if plan == 'subscription' %}Pr. måned{% else %}Boks{% endif %}</span><span>{% if plan == 'subscription' %}{{ sub_price|floatformat:0 }}{% else %}{{ single_price|floatformat:0 }}{% endif %} kr.</span></div>
+        <div class="flex justify-between text-muted"><span>Fragt</span><span class="text-sage">Gratis</span></div>
+        <div class="flex justify-between font-semibold text-base border-t border-stone-200 pt-3"><span>I alt inkl. moms</span><span>{% if plan == 'subscription' %}{{ sub_price|floatformat:0 }}{% else %}{{ single_price|floatformat:0 }}{% endif %} kr.</span></div>
+      </div>
+      <button type="submit" class="w-full mt-6 py-4 text-sm track-wide uppercase font-semibold btn-terra">{% if STRIPE_ENABLED %}Gå til sikker betaling{% else %}Gennemfør (demo){% endif %}</button>
+      <p class="text-[11px] text-muted mt-3 text-center">Betaling via Stripe · kort, Apple Pay, Google Pay{% if plan == 'single' %}, MobilePay{% endif %}{% if plan == 'subscription' %} · opsig når som helst{% endif %}</p>
+    </aside>
+  </form>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+document.querySelectorAll('input[name=plan], input[name=extras]').forEach(function (r) {
+  r.addEventListener('change', function () {
+    var u = new URL(window.location.href); u.searchParams.set(r.name, r.value);
+    var d = document.getElementById('due_date'); if (d && d.value) u.searchParams.set('due_date', d.value);
+    window.location.href = u.toString();
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<p>Indholdet er beregnet med refill-logik: kunden får kun de kosttilskud, hun er ved at løbe tør for, plus nye næringsstoffer og månedens goodies. Brug handlingen <em>"Opret forsendelse"</em> på ordrelisten, når boksen pakkes. Så bliver indholdet gemt i kundens historik.</p>
+
+<h2>Indkøbsbehov i dag (pakninger)</h2>
+<table>
+  <thead><tr><th>Produkt</th><th>Producent</th><th>Antal</th><th>Forhandler</th></tr></thead>
+  <tbody>{% for item, n in items %}<tr><td>{{ item.name }}</td><td>{{ item.manufacturer }}</td><td>{{ n }}</td><td>{% if item.retailer_url %}<a href="{{ item.retailer_url }}" target="_blank" rel="noopener">{{ item.retailer }}</a>{% endif %}</td></tr>{% empty %}<tr><td colspan="4">Intet at købe ind.</td></tr>{% endfor %}</tbody>
+</table>
+
+<h2 style="margin-top:2em">Kunder</h2>
+<table>
+  <thead><tr><th>Ordre</th><th>Navn &amp; adresse</th><th>Boks</th><th>Indhold</th></tr></thead>
+  <tbody>{% for r in rows %}<tr>
+    <td><a href="{% url 'admin:orders_order_change' r.order.pk %}">{{ r.order.reference }}</a></td>
+    <td>{{ r.order.name }}<br>{{ r.order.address_line1 }} {{ r.order.address_line2 }}<br>{{ r.order.postal_code }} {{ r.order.city }}</td>
+    <td>{{ r.package.label|default:"—" }}</td>
+    <td>{% if r.already %}✓ Allerede sendt denne måned{% else %}<ul style="margin:0;padding-left:1em">{% for ln in r.lines %}<li>{{ ln.quantity }} × {{ ln.item.name }} <small>({{ ln.reason }})</small></li>{% endfor %}</ul>{% endif %}</td>
+  </tr>{% empty %}<tr><td colspan="4">Ingen aktive abonnenter.</td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}

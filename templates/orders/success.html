@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Tak for din bestilling — Motherbox{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 md:px-6 py-20 text-center">
+  <p class="text-xs track-wide uppercase text-terra mb-4">{% if demo %}Demo-bestilling{% else %}Bestilling modtaget{% endif %}</p>
+  <h1 class="serif text-5xl font-light mb-5">Tak!</h1>
+  <p class="text-muted font-light text-lg leading-relaxed mb-8">
+    {% if demo %}Betaling er endnu ikke aktiveret på siden, så der er ikke trukket penge. Ordren er registreret som demo.{% else %}Vi har modtaget din bestilling og sender din første boks inden for 1–3 hverdage. Du får en kvittering på e-mail fra Stripe.{% endif %}
+  </p>
+  <div class="bg-white border border-stone-200 p-6 text-left text-sm space-y-2 mb-10">
+    <div class="flex justify-between"><span class="text-muted">Ordrenummer</span><span class="font-medium">{{ order.reference }}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Første boks</span><span>{{ order.start_package.label }} – {{ order.start_package.title }}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Type</span><span>{{ order.get_plan_display }}</span></div>
+    <div class="flex justify-between"><span class="text-muted">Beløb</span><span>{{ order.amount|floatformat:0 }} kr.{% if order.plan == 'subscription' %}/md.{% endif %}</span></div>
+  </div>
+  {% if order.plan == 'subscription' %}<p class="text-sm text-muted mb-8">Du kan altid opsige eller ændre dit abonnement under <a href="{% url 'manage_subscription' %}" class="text-terra underline">Mit abonnement</a>.</p>{% endif %}
+  <a href="{{ order.start_package.get_absolute_url }}" class="pill btn-outline inline-block px-8 py-3 text-xs track-wide uppercase">Se hvad der er i din boks</a>
+</div>
+{% endblock %}

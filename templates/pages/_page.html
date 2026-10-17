@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-14 md:py-16 bg-cream px-4">
+  <div class="max-w-3xl mx-auto">
+    <p class="text-xs track-wide uppercase text-terra mb-3">{% block kicker %}{% endblock %}</p>
+    <h1 class="serif text-4xl md:text-5xl font-light">{% block heading %}{% endblock %}</h1>
+  </div>
+</div>
+<section class="bg-white py-12 px-4">
+  <div class="max-w-3xl mx-auto prose-mb text-muted font-light">{% block body %}{% endblock %}</div>
+</section>
+{% endblock %}

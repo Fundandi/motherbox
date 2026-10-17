@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static humanize %}
+{% block content %}
+
+<!-- HERO -->
+<section class="relative overflow-hidden" style="min-height:max(600px,88vh);">
+  <img src="https://images.unsplash.com/photo-1651663303138-4dc283e15992?w=2000&q=80&fit=crop" alt="Gravid kvinde ved et vindue" class="absolute inset-0 w-full h-full object-cover" style="object-position:70% 30%;">
+  <div class="absolute inset-0" style="background:linear-gradient(to right,rgba(0,0,0,.50) 0%,rgba(0,0,0,.18) 60%,rgba(0,0,0,.05) 100%);"></div>
+  <div class="relative max-w-7xl mx-auto px-4 md:px-6 flex items-end" style="min-height:max(600px,88vh);">
+    <div class="pb-14 md:pb-20 max-w-xl w-full" id="find">
+      <p class="text-xs track-wide uppercase text-white/80 mb-4">Før · under · efter graviditeten</p>
+      <h1 class="serif text-5xl md:text-6xl font-light leading-[1.05] text-white mb-4">De rigtige vitaminer —<br>præcis når du har brug for dem.</h1>
+      <p class="text-white/85 font-light text-lg leading-relaxed mb-7">Én boks om måneden med 30 dagsposer efter Sundhedsstyrelsens anbefalinger – og lidt forkælelse, der følger din graviditet. Dansk produceret af Zentabox.</p>
+
+      <form action="{% url 'start' %}" method="post" class="bg-white/95 p-5 md:p-6 shadow-xl" id="finderForm">
+        {% csrf_token %}
+        <fieldset>
+          <legend class="text-xs track-wide uppercase text-muted mb-3">Hvor er du lige nu?</legend>
+          <div class="grid grid-cols-3 gap-2 mb-4" role="radiogroup">
+            <label class="stage-opt cursor-pointer text-center border px-2 py-3 text-xs md:text-sm transition">
+              <input type="radio" name="stage" value="ttc" class="sr-only"> Ønsker at blive gravid
+            </label>
+            <label class="stage-opt cursor-pointer text-center border px-2 py-3 text-xs md:text-sm transition">
+              <input type="radio" name="stage" value="pregnant" class="sr-only" checked> Jeg er gravid
+            </label>
+            <label class="stage-opt cursor-pointer text-center border px-2 py-3 text-xs md:text-sm transition">
+              <input type="radio" name="stage" value="postpartum" class="sr-only"> Jeg har født
+            </label>
+          </div>
+        </fieldset>
+        <div id="dueWrap" class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
+          <div class="flex-1">
+            <label for="due_date" class="block text-xs track-wide uppercase text-muted mb-2">Terminsdato</label>
+            <input type="date" id="due_date" name="due_date" required class="w-full bg-cream border border-stone-300 px-4 py-3 text-sm focus:outline-none focus:border-terra">
+          </div>
+          <button type="submit" class="pill btn-terra px-7 py-3 text-xs track-wide uppercase font-medium whitespace-nowrap">Find min boks</button>
+        </div>
+        <button type="submit" id="altSubmit" class="hidden w-full pill btn-terra px-7 py-3 text-xs track-wide uppercase font-medium">Se pakken</button>
+      </form>
+      <p class="text-xs text-white/80 mt-3">{{ sub_price|floatformat:0 }} kr./md. · fri fragt · opsig når som helst</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR (only verifiable statements) -->
+<div class="bg-white border-y border-stone-200 py-5">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[11px] md:text-xs track-wide uppercase text-muted">
+    <span>Baseret på Sundhedsstyrelsens anbefalinger</span><span class="text-stone-300 hidden md:inline">|</span>
+    <span>Dansk produceret på Møn</span><span class="text-stone-300 hidden md:inline">|</span>
+    <span>30 dagsposer = én måned</span><span class="text-stone-300 hidden md:inline">|</span>
+    <span>Opsig når som helst</span>
+  </div>
+</div>
+
+<!-- THE 4 BOXES -->
+<section id="pakker" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+      <div>
+        <p class="text-xs track-wide uppercase text-terra mb-3">4 bokse</p>
+        <h2 class="serif text-4xl md:text-5xl font-light">Fra ønske til nyfødt</h2>
+      </div>
+      <a href="{% url 'package_list' %}" class="text-xs track-wide uppercase text-terra hover:underline">Se boksene og indholdet →</a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for p in packages %}
+      <a href="{{ p.get_absolute_url }}" class="group block">
+        <div class="overflow-hidden mb-4 bg-sand relative" style="aspect-ratio:4/3;">
+          <img src="{{ p.box_image }}" alt="Motherbox {{ p.label }}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <span class="absolute top-3 left-3 bg-white/95 text-[10px] track-wide uppercase px-2 py-1">{{ p.label }}</span>
+        </div>
+        <p class="text-xs track-wide uppercase text-charcoal mb-1">{{ p.weeks_label }}</p>
+        <p class="serif text-2xl md:text-3xl font-light mb-1 group-hover:text-terra">{% if p.title != p.label %}{{ p.title }}{% else %}{{ p.label }}{% endif %}</p>
+        {% if p.hero_nutrient %}<p class="text-xs text-terra">{{ p.hero_nutrient }}</p>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="py-20 bg-cream">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-14">
+      <p class="text-xs track-wide uppercase text-terra mb-3">Sådan fungerer det</p>
+      <h2 class="serif text-4xl md:text-5xl font-light">Én boks om måneden. Altid den rigtige.</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div>
+        <p class="serif text-6xl font-light text-terra/70 mb-3">1</p>
+        <h3 class="text-lg font-medium mb-2 font-sans">Fortæl os hvor du er</h3>
+        <p class="text-muted font-light leading-relaxed">Ønsker du at blive gravid, er du gravid, eller har du lige født? Er du gravid, bruger vi din terminsdato til at finde den rigtige boks.</p>
+      </div>
+      <div>
+        <p class="serif text-6xl font-light text-terra/70 mb-3">2</p>
+        <h3 class="text-lg font-medium mb-2 font-sans">Vi sender den rigtige boks</h3>
+        <p class="text-muted font-light leading-relaxed">Hver boks indeholder 30 færdigpakkede dagsposer – én om dagen – plus udvalgte goodies som urtete, snacks og pleje. Boksen skifter automatisk fra Early Care til Late Care i uge 10.</p>
+      </div>
+      <div>
+        <p class="serif text-6xl font-light text-terra/70 mb-3">3</p>
+        <h3 class="text-lg font-medium mb-2 font-sans">Du ved præcis hvad du får</h3>
+        <p class="text-muted font-light leading-relaxed">Du kan se præcis, hvad der er i dagsposen, hvorfor det er med, hvem der producerer den, og hvad producentens kunder siger. Opsig med ét klik, når du vil.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPARENCY: PRODUCER -->
+<section class="py-20 bg-cream" id="producenter">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 grid lg:grid-cols-[1fr_420px] gap-12 items-center">
+    <div>
+      <p class="text-xs track-wide uppercase text-terra mb-3">Hvor kommer vitaminerne fra?</p>
+      <h2 class="serif text-4xl md:text-5xl font-light mb-5 leading-tight">Udviklet med Zentabox.<br>Produceret på Møn.</h2>
+      <p class="text-muted font-light leading-relaxed mb-8 max-w-xl">Dagsposerne er udviklet i samarbejde med den danske kosttilskudsproducent Zentabox og deres ernæringsekspert. De produceres i Zentabox' egen produktion på Møn og pakkes som 30 forseglede dagsposer – på pakningen står der <em>Motherbox by Zentabox</em>.</p>
+
+      {% for m in manufacturers|slice:":1" %}
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-stone-200 border border-stone-200 mb-6">
+        <div class="bg-white p-5">
+          <p class="serif text-3xl font-light text-charcoal">{% if m.founded %}{{ m.founded|stringformat:"d" }}{% endif %}</p>
+          <p class="text-[11px] track-wide uppercase text-muted mt-1">Laver vitaminer siden</p>
+        </div>
+        <div class="bg-white p-5">
+          <p class="serif text-3xl font-light text-charcoal">16.000+</p>
+          <p class="text-[11px] track-wide uppercase text-muted mt-1">Kunder</p>
+        </div>
+        <div class="bg-white p-5">
+          <p class="serif text-3xl font-light text-charcoal">{% if m.review_rating %}<span class="text-terra text-2xl">★</span> {{ m.review_rating }}{% endif %}</p>
+          <p class="text-[11px] track-wide uppercase text-muted mt-1">{% if m.review_count %}{{ m.review_count|intcomma }} anmeldelser på <a href="{{ m.review_url }}" target="_blank" rel="noopener nofollow" class="underline underline-offset-2 hover:text-terra">{{ m.review_platform }}</a>{% endif %}</p>
+        </div>
+        <div class="bg-white p-5">
+          <p class="serif text-3xl font-light text-charcoal">DK</p>
+          <p class="text-[11px] track-wide uppercase text-muted mt-1">Egen produktion på Møn</p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mb-6">Anmeldelsestallet er for {{ m.name }} som virksomhed{% if m.review_checked %} og blev tjekket {{ m.review_checked|date:"j. F Y" }}{% endif %}.</p>
+      <div class="flex flex-wrap gap-x-8 gap-y-3 items-center">
+        <a href="{{ m.get_absolute_url }}" class="pill btn-terra inline-block px-7 py-3 text-xs track-wide uppercase font-medium">Mød producenten</a>
+        {% if m.review_url %}<a href="{{ m.review_url }}" target="_blank" rel="noopener nofollow" class="text-xs track-wide uppercase text-terra hover:underline">Læs anmeldelserne →</a>{% endif %}
+      </div>
+      {% endfor %}
+      <p class="text-sm text-muted mt-8">Goodies som urtete, ingefær og snacks køber vi hos de danske grossister NatureSource og Biogan – <a href="{% url 'manufacturer_list' %}" class="text-terra underline underline-offset-2">se alle tre leverandører</a>.</p>
+    </div>
+    <div class="relative">
+      <img src="{% static 'images/motherbox/kit-late.jpg' %}" alt="Motherbox Late Care-gaveæske med dagsposer fra Zentabox, urtete, kiks og dadler" loading="lazy" class="w-full bg-sand">
+      <p class="text-[10px] text-muted/80 mt-2">Illustration af pakningen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCIENCE: SST BASELINE -->
+<section id="videnskab" class="flex flex-col md:flex-row bg-white">
+  <div class="flex-1 px-6 md:px-20 py-20">
+    <div class="max-w-lg">
+      <p class="text-xs track-wide uppercase text-terra mb-4">Videnskaben bag</p>
+      <h2 class="serif text-4xl md:text-5xl font-light mb-6 leading-snug">Sundhedsstyrelsen er fundamentet.</h2>
+      <p class="text-muted font-light leading-relaxed mb-6">Alle bokse bygger på Sundhedsstyrelsens officielle anbefalinger. Det øvrige indhold i dagsposerne — fx DHA eller magnesium — er tydeligt markeret som <em>tillæg</em>, med begrundelse og kilde.</p>
+      <table class="w-full text-sm mb-8">
+        <tbody>
+        {% for row in sst_baseline %}
+          <tr class="border-b border-stone-200"><td class="py-2.5 font-medium">{{ row.nutrient }}</td><td class="py-2.5 text-terra">{{ row.dose }}</td><td class="py-2.5 text-muted text-xs">{{ row.period }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'science' %}" class="pill btn-terra inline-block px-8 py-3 text-xs track-wide uppercase font-medium">Læs om videnskaben &amp; kilderne</a>
+    </div>
+  </div>
+  <div class="flex-1 relative min-h-[380px]">
+    <img src="https://images.unsplash.com/photo-1624362772755-4d5843e67047?w=1000&q=80&fit=crop" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="py-24 bg-cream" id="pris">
+  <div class="max-w-4xl mx-auto px-4 md:px-6 text-center">
+    <p class="text-xs track-wide uppercase text-terra mb-4">Pris</p>
+    <h2 class="serif text-4xl md:text-5xl font-light mb-3">Én pris. Hele vejen.</h2>
+    <p class="text-muted font-light mb-12 max-w-2xl mx-auto">Du betaler det samme hver måned, uanset hvilken boks du får. Fri fragt til hele Danmark. Opsig når som helst.</p>
+    <div class="grid md:grid-cols-2 gap-px bg-stone-200 border border-stone-200 text-left">
+      <div class="bg-white p-8">
+        <p class="text-xs track-wide uppercase text-muted mb-4">Abonnement</p>
+        <p class="serif text-5xl font-light">{{ sub_price|floatformat:0 }}<span class="text-xl"> kr./md.</span></p>
+        <ul class="text-sm text-muted mt-4 mb-6 space-y-1.5">
+          <li>· 30 dagsposer efter Sundhedsstyrelsens anbefalinger</li>
+          <li>· Goodies, der følger din graviditetsuge</li>
+          <li>· Skifter automatisk boks med din graviditet</li>
+          <li>· Fri fragt · opsig når som helst</li>
+        </ul>
+        <a href="#find" class="pill btn-terra inline-block px-7 py-3 text-xs track-wide uppercase font-medium">Find min boks</a>
+      </div>
+      <div class="bg-white p-8">
+        <p class="text-xs track-wide uppercase text-muted mb-4">Enkeltboks</p>
+        <p class="serif text-5xl font-light">{{ min_single_price|floatformat:0 }}<span class="text-xl"> kr.</span></p>
+        <p class="text-sm text-muted mt-4 mb-6">Én boks uden abonnement – fx som gave til en, der venter.</p>
+        <a href="{% url 'package_list' %}" class="pill btn-outline inline-block px-7 py-3 text-xs track-wide uppercase font-medium">Se boksene</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(function () {
+  var form = document.getElementById('finderForm');
+  if (!form) return;
+  var opts = form.querySelectorAll('.stage-opt'), due = document.getElementById('due_date'),
+      dueWrap = document.getElementById('dueWrap'), alt = document.getElementById('altSubmit');
+  function sync() {
+    var v = form.querySelector('input[name=stage]:checked').value;
+    opts.forEach(function (o) {
+      var on = o.querySelector('input').checked;
+      o.style.background = on ? '#C07859' : '#fff';
+      o.style.color = on ? '#fff' : '#333';
+      o.style.borderColor = on ? '#C07859' : '#D6CFC6';
+    });
+    var preg = v === 'pregnant';
+    dueWrap.style.display = preg ? '' : 'none';
+    alt.classList.toggle('hidden', preg);
+    due.required = preg;
+  }
+  opts.forEach(function (o) { o.addEventListener('change', sync); });
+  sync();
+})();
+</script>
+{% endblock %}

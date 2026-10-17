@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Fortryd aftale — Motherbox{% endblock %}
+{% block content %}
+<div class="max-w-xl mx-auto px-4 md:px-6 py-16">
+  <h1 class="serif text-5xl font-light mb-4 text-center">Fortryd aftale</h1>
+  <p class="text-muted font-light text-center mb-8">Du har 14 dages fortrydelsesret fra modtagelsen af en boks. Uåbnede produkter kan altid returneres. <a href="{% url 'withdrawal' %}" class="underline">Læs vilkårene</a>.</p>
+  {% include "orders/_request_form.html" with confirm_label="Bekræft fortrydelse" details_label="Hvilke varer / hele ordren" reference_required=False %}
+</div>
+{% endblock %}

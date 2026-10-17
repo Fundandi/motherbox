@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Videnskaben & kilderne — Motherbox{% endblock %}
+{% block content %}
+<div class="py-16 md:py-20 bg-cream px-4">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="text-xs track-wide uppercase text-terra mb-4">Videnskaben bag</p>
+    <h1 class="serif text-5xl md:text-6xl font-light mb-5">Sundhedsstyrelsen først. Alt andet markeret.</h1>
+    <p class="text-muted font-light text-lg leading-relaxed">Grundlaget for alle bokse er Sundhedsstyrelsens anbefalinger. Hvor vi går ud over dem, er det fordi internationale retningslinjer eller forskning peger på en mulig fordel — og det står altid tydeligt som <em>tillæg</em>.</p>
+  </div>
+</div>
+
+<section class="py-14 bg-white">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <h2 class="serif text-3xl md:text-4xl font-light mb-6">Sundhedsstyrelsens anbefalinger</h2>
+    <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead><tr class="text-left text-[11px] track-wide uppercase text-muted border-b border-stone-300"><th class="py-3 pr-4">Næringsstof</th><th class="py-3 pr-4">Anbefaling</th><th class="py-3 pr-4">Periode</th><th class="py-3">Kilde</th></tr></thead>
+      <tbody>
+      {% for row in sst_baseline %}
+      <tr class="border-b border-stone-200 align-top"><td class="py-3 pr-4 font-medium">{{ row.nutrient }}</td><td class="py-3 pr-4 text-terra">{{ row.dose }}</td><td class="py-3 pr-4 text-muted">{{ row.period }}</td><td class="py-3"><a href="{{ row.url }}" target="_blank" rel="noopener" class="text-xs underline text-muted">sst.dk</a></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section class="py-14 bg-cream">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <h2 class="serif text-3xl md:text-4xl font-light mb-2">Indhold pr. dagspose, boks for boks</h2>
+    <p class="text-muted font-light mb-6"><span class="inline-block w-3 h-3 align-middle bg-sage/80 mr-1"></span> Sundhedsstyrelsens anbefaling &nbsp; <span class="inline-block w-3 h-3 align-middle bg-terra/40 mr-1 ml-3"></span> Tillæg ud over SST</p>
+    <div class="overflow-x-auto bg-white border border-stone-200">
+      <table class="text-xs min-w-full">
+        <thead><tr class="border-b border-stone-200">
+          <th class="text-left p-3 sticky left-0 bg-white">Næringsstof</th>
+          {% for p in packages %}<th class="p-3 font-medium whitespace-nowrap"><a href="{{ p.get_absolute_url }}" class="hover:text-terra">{{ p.label }}</a></th>{% endfor %}
+        </tr></thead>
+        <tbody>
+        {% for row in matrix %}
+        <tr class="border-b border-stone-100">
+          <td class="p-3 sticky left-0 bg-white whitespace-nowrap"><span class="inline-block w-2 h-2 rounded-full mr-1.5" style="background:{{ row.style.dot }}"></span>{{ row.nutrient }}</td>
+          {% for c in row.cells %}<td class="p-2 text-center whitespace-nowrap">{% if c %}<span class="inline-block px-1.5 py-1 {% if row.sst %}bg-sage/20 text-[#2f6b4c]{% else %}bg-terra/15 text-terradark{% endif %}">{{ c }}</span>{% else %}<span class="text-stone-300">—</span>{% endif %}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="py-14 bg-white">
+  <div class="max-w-4xl mx-auto px-4 md:px-6 prose-mb text-muted font-light">
+    <h2>Hvordan vi arbejder</h2>
+    <ul>
+      <li><strong class="font-medium text-charcoal">Dansk producent, åbent navngivet.</strong> Dagsposerne er udviklet sammen med Zentabox og deres ernæringsekspert og produceres af Zentabox på Møn. Én pakning med 30 dagsposer svarer præcis til én måned – vi åbner eller pakker aldrig noget om.</li>
+      <li><strong class="font-medium text-charcoal">Vi lover ikke mirakler.</strong> Vi bruger kun sundhedsanprisninger, der er godkendt af EU, og henviser til kilden. Kosttilskud kan ikke forebygge, behandle eller helbrede sygdom.</li>
+      <li><strong class="font-medium text-charcoal">Vi opdaterer.</strong> Når Sundhedsstyrelsen ændrer sine anbefalinger, ændrer vi boksene.</li>
+      <li><strong class="font-medium text-charcoal">Vi viser forskellen.</strong> Næringsstoffer, der følger Sundhedsstyrelsens anbefaling, er markeret med grønt. Det øvrige indhold i dagsposen (fx DHA, magnesium og jod) er markeret som tillæg. Tag ikke andre kosttilskud med de samme næringsstoffer samtidig uden at tale med din læge eller jordemoder.</li>
+    </ul>
+    <h2>Kilder</h2>
+    <ul>
+      {% for s in sources %}<li><a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }}</a> — {{ s.publisher }}{% if s.year %} ({{ s.year }}){% endif %}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

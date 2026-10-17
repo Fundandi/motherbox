@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Opsig abonnement — Motherbox{% endblock %}
+{% block content %}
+<div class="max-w-xl mx-auto px-4 md:px-6 py-16">
+  <h1 class="serif text-5xl font-light mb-4 text-center">Opsig abonnement</h1>
+  <p class="text-muted font-light text-center mb-8">Ingen binding. Abonnementet stopper, inden næste boks bliver trukket.{% if CUSTOMER_PORTAL_URL %} Vil du i stedet skifte betalingskort eller se fakturaer, så brug <a href="{{ CUSTOMER_PORTAL_URL }}" class="underline">kundeportalen</a>.{% endif %}</p>
+  {% include "orders/_request_form.html" with confirm_label="Bekræft opsigelse" details_label="Evt. årsag – hjælper os med at blive bedre" reference_required=True %}
+</div>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "admin/change_list.html" %}
+{% block object-tools-items %}
+  <li><a href="{% url 'admin:orders_packing_list' %}">Pakkeliste denne måned</a></li>
+  {{ block.super }}
+{% endblock %}

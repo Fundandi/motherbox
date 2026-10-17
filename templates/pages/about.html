@@ -1,0 +1,31 @@
+{% extends "pages/_page.html" %}
+{% block title %}Om os — Motherbox{% endblock %}
+{% block kicker %}Om Motherbox{% endblock %}
+{% block heading %}Fra forvirring på apoteket til én dagspose om dagen.{% endblock %}
+{% block body %}
+<p>Motherbox startede med en oplevelse, mange gravide kender: Man står på apoteket eller i Matas foran en hel væg af vitaminer – og går hjem mere forvirret end før. Snart står der en halv flaske jerntilskud, lidt zink og en halvt tom pakke kalktabletter i køkkenskabet, og man er stadig ikke sikker på, om man får det rigtige.</p>
+<p>Derfor tog vi fat i den danske kosttilskudsproducent Zentabox. Sammen har vi udviklet Motherbox: én boks om måneden med 30 færdigpakkede dagsposer, der følger Sundhedsstyrelsens anbefalinger for netop din fase – plus lidt forkælelse, der følger din graviditetsuge.</p>
+
+<h2>Fire bokse – fra ønske til amning</h2>
+<ul>
+  <li><strong class="font-medium text-charcoal">Jeg vil gerne blive gravid</strong> – folsyre, fra du begynder at prøve.</li>
+  <li><strong class="font-medium text-charcoal">Hov, vi er gravide (Early Care)</strong> – graviditetens første uger, til og med uge 9.</li>
+  <li><strong class="font-medium text-charcoal">Late Care</strong> – fra uge 10 til fødslen, med jern, D-vitamin og DHA.</li>
+  <li><strong class="font-medium text-charcoal">Ammeboksen</strong> – til tiden efter fødslen.</li>
+</ul>
+
+<h2>Udviklet og produceret i Danmark</h2>
+<p>Dagsposerne er udviklet i samarbejde med Zentabox og deres ernæringsekspert og produceres af Zentabox i egen produktion på Møn. Zentabox har lavet daglige vitaminpakker siden 2016 og har over 16.000 kunder. På pakningen står der <em>Motherbox by Zentabox</em>, og på <a href="{% url 'manufacturer_list' %}">producentsiden</a> kan du se, hvem Zentabox er, og hvad deres kunder siger.</p>
+
+<h2>Det lover vi</h2>
+<ul>
+  <li><strong class="font-medium text-charcoal">Fuld gennemsigtighed.</strong> Vi viser åbent, hvem der producerer dagsposerne, hvad der er i dem, og hvad andre kunder siger om producenten.</li>
+  <li><strong class="font-medium text-charcoal">Én pakning = én måned.</strong> 30 forseglede dagsposer pr. boks. Ingen halvtomme bøtter, og vi åbner eller pakker aldrig noget om.</li>
+  <li><strong class="font-medium text-charcoal">Sundhedsstyrelsen først.</strong> Det, der følger Sundhedsstyrelsens anbefalinger, er markeret – resten står som tillæg.</li>
+  <li><strong class="font-medium text-charcoal">Ingen falske løfter.</strong> Vi bruger ikke opdigtede anmeldelser og lover ikke, at kosttilskud kan forebygge eller helbrede sygdom.</li>
+  <li><strong class="font-medium text-charcoal">Opsig når som helst.</strong> Med ét klik under <a href="{% url 'manage_subscription' %}">Mit abonnement</a>.</li>
+</ul>
+
+<h2>Kontakt</h2>
+<p>{{ COMPANY.legal_name }}{% if COMPANY.cvr %} · CVR {{ COMPANY.cvr }}{% endif %}{% if COMPANY.address %}<br>{{ COMPANY.address }}{% endif %}<br><a href="mailto:{{ COMPANY.email }}">{{ COMPANY.email }}</a>{% if COMPANY.phone %} · {{ COMPANY.phone }}{% endif %}</p>
+{% endblock %}
