@@ -14,7 +14,10 @@
 <section class="relative overflow-hidden" style="background:#F4EFE6;">
   <img src="{% static 'images/motherbox/hero.jpg' %}" alt="De fire Motherbox-bokse: Klar til graviditet, Early Care, Late Care og Ammeboks" class="hidden md:block absolute inset-0 w-full h-full object-cover" style="object-position:right center;">
   <!-- mobile: products first, cropped to the boxes -->
-  <img src="{% static 'images/motherbox/hero.jpg' %}" alt="De fire Motherbox-bokse: Klar til graviditet, Early Care, Late Care og Ammeboks" class="md:hidden w-full" style="aspect-ratio:1/1;object-fit:cover;object-position:95% 60%;">
+  <div class="md:hidden relative">
+    <img src="{% static 'images/motherbox/hero.jpg' %}" alt="De fire Motherbox-bokse: Klar til graviditet, Early Care, Late Care og Ammeboks" class="w-full" style="aspect-ratio:1/1;object-fit:cover;object-position:95% 60%;">
+    {% include "catalog/partials/jemopharm_stamp.html" with cls="absolute w-24 left-4 top-4 -rotate-12 drop-shadow-sm" sid="m" %}
+  </div>
   <div class="relative max-w-7xl mx-auto px-6 md:px-6 flex items-center md:min-h-[min(76vh,660px)]">
     <div class="w-full md:max-w-md pt-4 pb-14 md:py-24 text-center md:text-left">
       <p class="text-xs track-wide uppercase text-charcoal mb-4 md:mb-5">Fra ønske til amning</p>
@@ -22,6 +25,7 @@
       <p class="text-muted font-light text-base md:text-lg leading-relaxed mb-8 md:mb-9 max-w-sm mx-auto md:mx-0">30 dagsposer om måneden efter Sundhedsstyrelsens anbefalinger. Dansk produceret.</p>
       <a href="#bokse" class="pill btn-terra inline-block px-12 py-4 text-xs track-wide uppercase font-medium">Find din boks</a>
     </div>
+    {% include "catalog/partials/jemopharm_stamp.html" with cls="hidden md:block absolute w-36 lg:w-40 left-[40%] lg:left-[38%] bottom-12 -rotate-12 drop-shadow-sm" sid="d" %}
   </div>
 </section>
 
