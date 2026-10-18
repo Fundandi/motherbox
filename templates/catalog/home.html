@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% load static humanize %}
+{% block extra_head %}
+<style>
+  @keyframes mb-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .mb-marquee { animation: mb-marquee 38s linear infinite; }
+  .mb-marquee:hover { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) { .mb-marquee { animation: none; } }
+</style>
+{% endblock %}
 {% block content %}
 
 <!-- HERO -->
@@ -16,6 +24,14 @@
     </div>
   </div>
 </section>
+
+<!-- TRUST MARQUEE -->
+<div class="overflow-hidden py-4 md:py-5" style="background:#B9C4B4;" aria-label="Startet af en sygeplejerske · I samarbejde med ernæringseksperter · Dansk produceret af JemoPharm">
+  <div class="mb-marquee flex w-max text-xs md:text-sm track-wide uppercase font-medium text-charcoal" aria-hidden="true">
+    <div class="flex items-center"><span class="mx-8 whitespace-nowrap">Startet af en sygeplejerske</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">I samarbejde med ernæringseksperter</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">Dansk produceret af JemoPharm</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">Følger Sundhedsstyrelsens anbefalinger</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">30 dagsposer · én pakning pr. måned</span><span class="text-charcoal/40" aria-hidden="true">|</span></div>
+    <div class="flex items-center"><span class="mx-8 whitespace-nowrap">Startet af en sygeplejerske</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">I samarbejde med ernæringseksperter</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">Dansk produceret af JemoPharm</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">Følger Sundhedsstyrelsens anbefalinger</span><span class="text-charcoal/40" aria-hidden="true">|</span><span class="mx-8 whitespace-nowrap">30 dagsposer · én pakning pr. måned</span><span class="text-charcoal/40" aria-hidden="true">|</span></div>
+  </div>
+</div>
 
 <!-- THE 4 BOXES -->
 <section id="bokse" class="py-20 md:py-24 bg-white scroll-mt-20">
