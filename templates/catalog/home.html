@@ -24,24 +24,12 @@
       <h1 class="serif text-[2.6rem] leading-[1.05] md:text-6xl lg:text-7xl font-light md:leading-[1.02] text-charcoal mb-5 md:mb-6">Vitaminer til hver fase af graviditeten</h1>
       <p class="text-muted font-light text-base md:text-lg leading-relaxed mb-8 md:mb-9 max-w-sm mx-auto md:mx-0">1 månedlig boks med kosttilskud og goodies, som tager vare på dig igennem din graviditet.</p>
       <a href="#bokse" class="pill btn-terra inline-block px-12 py-4 text-xs track-wide uppercase font-medium">Find din boks</a>
-      <ul class="mt-8 grid grid-cols-2 gap-2 max-w-sm mx-auto md:mx-0 text-left">
-        <li class="flex items-center gap-2 bg-white/70 border border-stone-200 rounded-full pl-1.5 pr-3 py-1.5">
-          <span class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background:#C07859;"><svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span>
-          <span class="leading-tight"><span class="block text-[10px] uppercase track-wide text-muted">Følger</span><span class="block text-[13px] font-medium text-charcoal">Sundhedsstyrelsen</span></span>
-        </li>
-        <li class="flex items-center gap-2 bg-white/70 border border-stone-200 rounded-full pl-1.5 pr-3 py-1.5">
-          <span class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background:#C07859;"><svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span>
-          <span class="leading-tight"><span class="block text-[10px] uppercase track-wide text-muted">Produceret af</span><span class="block text-[13px] font-medium text-charcoal">JemoPharm</span></span>
-        </li>
-        <li class="flex items-center gap-2 bg-white/70 border border-stone-200 rounded-full pl-1.5 pr-3 py-1.5">
-          <span class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background:#C07859;"><svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span>
-          <span class="leading-tight"><span class="block text-[10px] uppercase track-wide text-muted">Udviklet med</span><span class="block text-[13px] font-medium text-charcoal">Ernæringsekspert</span></span>
-        </li>
-        <li class="flex items-center gap-2 bg-white/70 border border-stone-200 rounded-full pl-1.5 pr-3 py-1.5">
-          <span class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background:#C07859;"><svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10.5l3.2 3.2L15 7"/></svg></span>
-          <span class="leading-tight"><span class="block text-[10px] uppercase track-wide text-muted">Startet af</span><span class="block text-[13px] font-medium text-charcoal">Sygeplejerske</span></span>
-        </li>
-      </ul>
+      <dl class="mt-10 pt-6 border-t border-charcoal/10 grid grid-cols-2 gap-x-8 gap-y-4 max-w-sm mx-auto md:mx-0">
+        <div><dt class="text-[10px] uppercase track-wide text-muted">Følger</dt><dd class="serif text-lg text-charcoal leading-tight">Sundhedsstyrelsen</dd></div>
+        <div><dt class="text-[10px] uppercase track-wide text-muted">Produceret af</dt><dd class="serif text-lg text-charcoal leading-tight">JemoPharm</dd></div>
+        <div><dt class="text-[10px] uppercase track-wide text-muted">Udviklet med</dt><dd class="serif text-lg text-charcoal leading-tight">Ernæringsekspert</dd></div>
+        <div><dt class="text-[10px] uppercase track-wide text-muted">Startet af</dt><dd class="serif text-lg text-charcoal leading-tight">Sygeplejerske</dd></div>
+      </dl>
     </div>
     {% include "catalog/partials/jemopharm_stamp.html" with cls="hidden md:block absolute w-36 lg:w-40 left-[40%] lg:left-[38%] bottom-12 -rotate-12 drop-shadow-sm" sid="d" %}
   </div>
