@@ -63,13 +63,8 @@
       <p class="px-6 md:px-7 pb-5 text-[10px] text-muted/80">Billederne er illustrationer. Det præcise indhold står i varedeklarationen nedenfor.</p>
       {% if goodies %}
       <div class="px-6 md:px-7 py-5 border-t border-stone-100 bg-cream/60">
-        {% if goodie_windows %}
-        <p class="text-[11px] track-wide uppercase text-muted mb-2">+ Goodies, der skifter med din graviditetsuge</p>
-        <ul class="text-sm space-y-1">{% for w in goodie_windows %}<li><span class="text-muted">Uge {{ w.weeks }}:</span> {% for g in w.items %}{{ g.item.name }}{% if not forloop.last %} · {% endif %}{% endfor %}</li>{% endfor %}</ul>
-        {% else %}
-        <p class="text-[11px] track-wide uppercase text-muted mb-2">+ Goodies</p>
-        <p class="text-sm">{% for g in goodies %}{{ g.item.name }}{% if not forloop.last %} · {% endif %}{% endfor %}</p>
-        {% endif %}
+        <p class="text-[11px] track-wide uppercase text-muted mb-1">+ Goodies</p>
+        <p class="text-sm text-muted font-light">Udvalgte goodies som urtete og snacks, der passer til din graviditetsmåned. Indholdet kan variere.</p>
       </div>
       {% endif %}
       <div class="flex items-center justify-between px-6 md:px-7 py-4 border-t border-stone-100 text-xs track-wide uppercase">
@@ -189,8 +184,8 @@
     </div>
 
     {% if goodies %}
-    <h3 class="serif text-3xl font-light mt-14 mb-5">Goodies i boksen</h3>
-    {% if goodie_windows %}<p class="text-muted font-light mb-6 -mt-2">Dagsposen er den samme hver måned, men goodies skifter med din graviditetsuge.</p>{% endif %}
+    <h3 class="serif text-3xl font-light mt-14 mb-5">Eksempler på goodies</h3>
+    <p class="text-muted font-light mb-6 -mt-2">Eksempler på goodies. De passer til din graviditetsmåned, men indholdet kan variere.</p>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {% for c in goodies %}{% with i=c.item %}
       <div class="bg-white border border-stone-200 p-6">
