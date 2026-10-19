@@ -21,7 +21,7 @@ PACKAGE_TEXTS = [
     },
     {
         'slug': 'early-care', 'position': 1, 'stage': 'pregnant', 'month': None, 'week_start': 5, 'week_end': 9,
-        'title': 'Hov, vi er gravide',
+        'title': 'Jubi, vi er gravide',
         'tagline': 'De første uger: hjertet begynder at slå, og for mange topper kvalmen. Folsyre og D-vitamin er kernen.',
         'hero_nutrient': 'Folsyre + D-vitamin',
         'image_url': U + 'photo-1493894473891-10fc1e5dbd22?w=900&q=80&fit=crop',
