@@ -40,11 +40,45 @@ ITEMS = [
     # ── Zentabox-dagsposer (produceret af JemoPharm), forhandlet i original emballage: 30 dagsposer pr. pakning (én pakning = én boks) ──
     {
         'slug': 'motherbox-klar', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Zentabox Baby Me',
-        'nutrient': 'Folsyre', 'unit_type': 'dagspose', 'pack_size': '30 dagsposer', 'units_per_pack': 30,
-        'dose_per_unit': 'Folsyre 400 µg · Zink',
-        'description': 'Zentabox Baby Me til dig, der prøver at blive gravid: folsyre 400 µg, zink og Asparagus officinalis. Leveres i original Zentabox-pakning.',
-        'label_info': 'Zentabox Baby Me – anbefalet daglig dosis 1 tablet: 400 µg folsyre, zink samt Asparagus officinalis.\n'
-                      'Ansvarlig virksomhed: Zentabox A/S, Unionsvej 4, 4600 Køge (CVR 37447250).\nProduceret af JemoPharm A/S, Hasselvej 1, 4780 Stege.\nDen fulde varedeklaration står på den originale pakning.\nKilde: https://zentabox.dk/produkter',
+        'nutrient': 'Folsyre', 'unit_type': 'dagspose', 'pack_size': '30 dagsposer til hende + 30 til ham', 'units_per_pack': 30,
+        # Her daily sachet (Baby Me + D3 + mælkesyrebakterier + øjentablet), summed per nutrient.
+        'dose_per_unit': 'Folsyre 400 µg · D-vitamin 50 µg · Zink 20 mg · B6-vitamin 6,84 mg · B12-vitamin 12 µg · Riboflavin 1,4 mg · '
+                         'C-vitamin 80 mg · Mælkesyrebakterier 5 mia. CFU · Lutein 4,3 mg · Lykopen 5,1 mg · Blåbærekstrakt 150 mg · '
+                         'Asparagus officinalis 50 mg · Vitex agnus-castus 50 mg · Grøn te-ekstrakt 50 mg',
+        'description': 'Dagspose til dig, der prøver at blive gravid: Baby Me (folsyre 400 µg, zink, D-, B6-, B12-vitamin og riboflavin), '
+                       'D3-vitamin 40 µg, mælkesyrebakterier og en tablet med blåbær, lutein og lykopen. '
+                       'Boksen har også en dagspose til din partner med D3-vitamin 40 µg, mælkesyrebakterier, zink 22 mg og selen 100 µg. '
+                       'Leveres i original Zentabox-pakning.',
+        'pregnancy_note': 'Baby Me indeholder grøn te-ekstrakt og kyskhedstræ (Vitex agnus-castus) og må ikke tages af gravide eller ammende. '
+                          'Stop med Baby Me, så snart graviditetstesten er positiv – dit abonnement skifter da til Early Care. '
+                          'Tag ikke andre kosttilskud med grøn te samme dag, og tag ikke tabletten på tom mave.',
+        'label_info': 'HENDE – 1 dagspose:\n'
+                      'Baby Me, 1 tablet: folsyre 400 µg (200 % RI), zink 15 mg (150 % RI), D-vitamin 10 µg (200 % RI), riboflavin 1,4 mg (100 % RI), '
+                      'B6-vitamin 6 mg (429 % RI), B12-vitamin 12 µg (480 % RI), Asparagus officinalis 50 mg, Vitex agnus-castus 50 mg, grøn te-ekstrakt 50 mg. '
+                      'Ingredienser: antiklumpningsmidler (dikalciumfosfat, siliciumdioxid), fyldemidler (mikrokrystallinsk cellulose, tværbundet natriumcarboxymethylcellulose, '
+                      'magnesiumsalte af fedtsyrer), kyskhedstræekstrakt (Vitex agnus-castus L.), grøn te-ekstrakt (Camellia sinensis L. Kuntze), aspargesekstrakt (Asparagus officinalis L.), '
+                      'zinkoxid, overfladebehandlingsmidler (hydroxypropylmethylcellulose, polyethylenglycol, ethylcellulose, hydroxypropylcellulose, glycerol, talkum), '
+                      'pyridoxinhydroklorid, riboflavin, folsyre, farvestoffer (kaliumaluminiumsilikat, jernoxider og jernhydroxider), cyanocobalamin, cholecalciferol. '
+                      'Grøn te-ekstrakt indeholder EGCG; højst 800 mg EGCG pr. dag. Må ikke indtages af gravide, ammende eller børn under 18 år.\n'
+                      'D3-vitamin, 1 tablet: 40 µg (800 % RI). Ingredienser: fyldemidler (dikalciumfosfat, mikrokrystallinsk cellulose, magnesiumsalte af fedtsyrer), '
+                      'overfladebehandlingsmidler (hydroxypropylmethylcellulose, talkum, polyethylenglycol, hydroxypropylcellulose, ethylcellulose, glycerol), '
+                      'antiklumpningsmiddel (siliciumdioxid), antioxidant (DL-alfa-tocopherol), cholecalciferol, farvestof (riboflavin).\n'
+                      'Mælkesyrebakterier, 1 kapsel: Bifidobacterium lactis Bl041 2,0 mia. CFU, Lactiplantibacillus plantarum Lp-141 1,7 mia., '
+                      'Lactobacillus acidophilus La-121 300 mio., Lacticaseibacillus rhamnosus LR111 1 mia., B6-vitamin 0,84 mg (60 % RI). '
+                      'Ingredienser: fruktooligosakkarider, kapselskal (hydroxypropylmethylcellulose), majsstivelse, fyldemiddel (mikrokrystallinsk cellulose), '
+                      'mælkesyrebakterierne ovenfor, antiklumpningsmiddel (magnesiumsalte af fedtsyrer), pyridoxinhydrochlorid.\n'
+                      'Blåbær, lutein og lykopen, 1 stk.: blåbær 150 mg, C-vitamin 80 mg, lutein 4,3 mg, lykopen 5,1 mg, zink 5 mg, anthocyanin 10 mg. '
+                      'Ingredienser: blåbærekstrakt (Vaccinium myrtillus L.), anthocyanin, tagetesekstrakt (Tagetes erecta L.), lykopen, '
+                      'kapselskal (hydroxypropylmethylcellulose), L-ascorbinsyre, zinkoxid, konsistensmiddel (magnesiumsalte af fedtsyrer).\n\n'
+                      'HAM – 1 dagspose:\n'
+                      'D3-vitamin, 1 tablet: 40 µg (800 % RI) – ingredienser som ovenfor.\n'
+                      'Mælkesyrebakterier, 1 kapsel – som ovenfor.\n'
+                      'Zink, 1 tablet: 22 mg (220 % RI). Ingredienser: fyldemidler (dikalciumfosfat, mikrokrystallinsk cellulose), zinkoxid, '
+                      'antiklumpningsmidler (magnesiumsalte af fedtsyrer, siliciumdioxid).\n'
+                      'Selen, 1 tablet: 100 µg (182 % RI), organisk bundet. Ingredienser: ølgær (indeholder byg og hvede), fyldemiddel (mikrokrystallinsk cellulose), '
+                      'selenberiget gær, antiklumpningsmidler (magnesiumtrisilikat, magnesiumsalte af fedtsyrer), '
+                      'overfladebehandlingsmidler (shellak, ethylcellulose, polyvinylpyrrolidon, polysorbat 80, glycerol, talkum).\n'
+                      'Allergener: byg og hvede (i selen-tabletten).\n\nAnsvarlig virksomhed: Zentabox A/S, Unionsvej 4, 4600 Køge (CVR 37447250).\nProduceret af JemoPharm A/S, Hasselvej 1, 4780 Stege.\nKilde: oplysninger fra Zentabox.',
         'product_url': 'https://zentabox.dk/produkter', 'verified': False,
     },
     {
