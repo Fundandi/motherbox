@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Item, Manufacturer, Package, PackageItem
+from .models import Advisor, Item, Manufacturer, Package, PackageItem
 
 
 class PackageItemInline(admin.TabularInline):
@@ -35,3 +35,10 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ['kind', 'verified', 'manufacturer']
     search_fields = ['name', 'nutrient', 'manufacturer__name']
     prepopulated_fields = {'slug': ['name']}
+
+
+@admin.register(Advisor)
+class AdvisorAdmin(admin.ModelAdmin):
+    list_display = ('role', 'advises_on', 'position', 'is_active')
+    list_editable = ('position', 'is_active')
+    prepopulated_fields = {'slug': ('role',)}

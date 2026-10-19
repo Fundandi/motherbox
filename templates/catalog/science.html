@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Videnskaben & kilderne — Motherbox{% endblock %}
+{% block title %}Anbefalinger & kilder — Motherbox{% endblock %}
 {% block content %}
 <div class="py-16 md:py-20 bg-cream px-4">
   <div class="max-w-3xl mx-auto text-center">
-    <p class="text-xs track-wide uppercase text-terra mb-4">Videnskaben bag</p>
+    <p class="text-xs track-wide uppercase text-terra mb-4">Anbefalinger &amp; kilder</p>
     <h1 class="serif text-5xl md:text-6xl font-light mb-5">Sundhedsstyrelsen først. Alt andet markeret.</h1>
-    <p class="text-muted font-light text-lg leading-relaxed">Grundlaget for alle bokse er Sundhedsstyrelsens anbefalinger. Hvor vi går ud over dem, er det fordi internationale retningslinjer eller forskning peger på en mulig fordel — og det står altid tydeligt som <em>tillæg</em>.</p>
+    <p class="text-muted font-light text-lg leading-relaxed">Grundlaget for alle bokse er Sundhedsstyrelsens anbefalinger. Dagsposerne fra Zentabox indeholder også andre næringsstoffer – de står tydeligt markeret som <em>tillæg</em>, så du kan se forskel.</p>
   </div>
 </div>
 
@@ -52,7 +52,7 @@
   <div class="max-w-4xl mx-auto px-4 md:px-6 prose-mb text-muted font-light">
     <h2>Hvordan vi arbejder</h2>
     <ul>
-      <li><strong class="font-medium text-charcoal">Dansk producent, åbent navngivet.</strong> Dagsposerne er udviklet sammen med JemoPharm og deres ernæringsekspert og produceres af JemoPharm på Møn. Én pakning med 30 dagsposer svarer præcis til én måned – vi åbner eller pakker aldrig noget om.</li>
+      <li><strong class="font-medium text-charcoal">Vi er forhandler.</strong> Vi forhandler Zentabox-dagsposer, som produceres af JemoPharm på Møn. Zentabox A/S er ansvarlig virksomhed for produkterne. Én original pakning med 30 dagsposer svarer præcis til én måned – vi åbner eller pakker aldrig noget om.</li>
       <li><strong class="font-medium text-charcoal">Vi lover ikke mirakler.</strong> Vi bruger kun sundhedsanprisninger, der er godkendt af EU, og henviser til kilden. Kosttilskud kan ikke forebygge, behandle eller helbrede sygdom.</li>
       <li><strong class="font-medium text-charcoal">Vi opdaterer.</strong> Når Sundhedsstyrelsen ændrer sine anbefalinger, ændrer vi boksene.</li>
       <li><strong class="font-medium text-charcoal">Vi viser forskellen.</strong> Næringsstoffer, der følger Sundhedsstyrelsens anbefaling, er markeret med grønt. Det øvrige indhold i dagsposen (fx DHA, magnesium og jod) er markeret som tillæg. Tag ikke andre kosttilskud med de samme næringsstoffer samtidig uden at tale med din læge eller jordemoder.</li>
@@ -61,6 +61,7 @@
     <ul>
       {% for s in sources %}<li><a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }}</a> — {{ s.publisher }}{% if s.year %} ({{ s.year }}){% endif %}</li>{% endfor %}
     </ul>
+    <p class="text-sm">Kilderne er offentlige myndigheders anbefalinger og regler. Henvisningerne betyder ikke, at myndighederne anbefaler Motherbox eller bestemte produkter.</p>
   </div>
 </section>
 {% endblock %}

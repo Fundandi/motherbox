@@ -52,7 +52,7 @@
       <nav class="hidden lg:flex items-center gap-7 flex-1" aria-label="Hovedmenu">
         <a href="{% url 'package_list' %}" class="nav-link">Boksene</a>
         <a href="{% url 'manufacturer_list' %}" class="nav-link">Producent</a>
-        <a href="{% url 'science' %}" class="nav-link">Videnskaben</a>
+        <a href="{% url 'science' %}" class="nav-link">Kilder</a>
         <a href="{% url 'faq' %}" class="nav-link">FAQ</a>
       </nav>
       <a href="{% url 'home' %}" class="flex-1 lg:flex-none lg:text-center">
@@ -68,7 +68,7 @@
     <div id="mobileMenu" class="hidden lg:hidden bg-cream border-t border-stone-200 px-6 py-4 space-y-3">
       <a href="{% url 'package_list' %}" class="block nav-link py-1">Boksene</a>
       <a href="{% url 'manufacturer_list' %}" class="block nav-link py-1">Producent</a>
-      <a href="{% url 'science' %}" class="block nav-link py-1">Videnskaben</a>
+      <a href="{% url 'science' %}" class="block nav-link py-1">Kilder</a>
       <a href="{% url 'faq' %}" class="block nav-link py-1">FAQ</a>
       <a href="{% url 'about' %}" class="block nav-link py-1">Om os</a>
       <a href="{% url 'home' %}#bokse" class="block nav-link py-1 text-terra">Find min boks</a>
@@ -95,7 +95,7 @@
     <div class="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
       <div class="col-span-2">
         <p class="serif text-white font-light text-3xl tracking-widest mb-4">Motherbox</p>
-        <p class="text-sm leading-relaxed max-w-sm">Én boks om måneden med 30 dagsposer efter Sundhedsstyrelsens anbefalinger — til tiden før, under og efter graviditeten. Produceret af JemoPharm på Møn.</p>
+        <p class="text-sm leading-relaxed max-w-sm">Én boks om måneden med 30 dagsposer efter Sundhedsstyrelsens anbefalinger — til tiden før, under og efter graviditeten. Zentabox-dagsposer, produceret af JemoPharm på Møn.</p>
         <p class="text-xs text-stone-400 mt-5 leading-relaxed max-w-sm">Kosttilskud kan ikke erstatte en varieret kost. Tal altid med din læge eller jordemoder, hvis du har en sygdom, tager medicin eller er i tvivl.</p>
       </div>
       <div>
@@ -111,7 +111,7 @@
         <h4 class="text-white text-xs track-wide uppercase mb-4">Gennemsigtighed</h4>
         <ul class="space-y-2 text-sm">
           <li><a href="{% url 'manufacturer_list' %}" class="hover:text-white">Producent &amp; anmeldelser</a></li>
-          <li><a href="{% url 'science' %}" class="hover:text-white">Videnskab &amp; kilder</a></li>
+          <li><a href="{% url 'science' %}" class="hover:text-white">Anbefalinger &amp; kilder</a></li>
           <li><a href="{% url 'about' %}" class="hover:text-white">Om os</a></li>
           <li><a href="{% url 'faq' %}" class="hover:text-white">FAQ</a></li>
         </ul>

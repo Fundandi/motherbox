@@ -211,3 +211,22 @@ def package_for_due_date(due_date, today=None):
         stage=Package.STAGE_PREGNANT, is_active=True, week_start__lte=week_int, week_end__gte=week_int
     ).first()
     return pkg, week
+
+
+class Advisor(models.Model):
+    """'Hvem spørger vi til råds' on the front page. Shown by profession, not by person, and only for advisers we actually work with.
+    Health professionals must not appear to recommend the products (EU 1924/2006 art. 12(c)), so the text describes what they advise on."""
+    role = models.CharField(max_length=80, help_text='Fx "Jordemoder" – vises som overskrift')
+    slug = models.SlugField(unique=True)
+    advises_on = models.CharField(max_length=300, help_text='Hvad vi spørger dem om. Ikke "anbefaler", ikke produktudtalelser.')
+    name = models.CharField(max_length=120, blank=True, help_text='Internt – vises ikke på siden')
+    position = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['position', 'role']
+        verbose_name = 'rådgiver'
+        verbose_name_plural = 'rådgivere'
+
+    def __str__(self):
+        return self.role

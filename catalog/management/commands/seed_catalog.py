@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 from catalog import seed_data
-from catalog.models import Item, Manufacturer, Package, PackageItem
+from catalog.models import Advisor, Item, Manufacturer, Package, PackageItem
 
 
 class Command(BaseCommand):
@@ -67,6 +67,11 @@ class Command(BaseCommand):
                         sst_core=c.get('sst', False), cost_share=Decimal(str(c.get('share', 1))),
                         units_per_day=Decimal(str(c.get('upd', 0 if items[c['item']].kind == Item.KIND_GOODIE else 1))),
                     )
+
+        # Advisors are edited in admin, so the seed only creates missing rows and never overwrites them.
+        for a in seed_data.ADVISORS:
+            a = dict(a)
+            Advisor.objects.get_or_create(slug=a.pop('slug'), defaults=a)
 
         self.stdout.write(self.style.SUCCESS(
             'Seed færdig: ' + ', '.join(f'{v} nye {k}' for k, v in created.items()) + (' (eksisterende opdateret)' if update else '')

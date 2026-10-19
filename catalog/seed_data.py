@@ -17,8 +17,8 @@ MANUFACTURERS = [
         'website': 'https://jemopharm.dk',
         'about': 'JemoPharm A/S (CVR 10216109), Hasselvej 1, 4780 Stege, er en dansk virksomhed, der siden 1986 har udviklet naturbaserede lægemidler, '
                  'naturlægemidler og kosttilskud. JemoPharm står bl.a. bag VitaCare®, der sælges på danske apoteker og i helsekostbutikker, og bag abonnementsmærket Zentabox. '
-                 'JemoPharm er en del af The Whole Company A/S. Motherbox-dagsposerne er udviklet i samarbejde med JemoPharm og deres ernæringsekspert, og JemoPharm producerer dem.',
-        'production': 'Produceres af JemoPharm på Møn og pakkes som 30 forseglede dagsposer pr. pakning.',
+                 'JemoPharm er en del af The Whole Company A/S. Motherbox forhandler Zentabox-dagsposer, som JemoPharm producerer, i original og uåbnet emballage.',
+        'production': 'Produceres af JemoPharm på Møn. Zentabox A/S (Unionsvej 4, 4600 Køge, CVR 37447250) er ansvarlig virksomhed for mærkningen. Én original pakning med 30 forseglede dagsposer pr. boks.',
         'review_platform': 'Trustpilot (Zentabox, JemoPharms mærke)', 'review_rating': '4.7', 'review_count': 300,
         'review_url': 'https://dk.trustpilot.com/review/zentabox.dk', 'review_checked': date(2026, 10, 17),
     },
@@ -37,49 +37,48 @@ S = 'supplement'
 G = 'goodie'
 
 ITEMS = [
-    # ── Motherbox, produceret af JemoPharm: 30 dagsposer pr. pakning (én pakning = én boks) ──
+    # ── Zentabox-dagsposer (produceret af JemoPharm), forhandlet i original emballage: 30 dagsposer pr. pakning (én pakning = én boks) ──
     {
-        'slug': 'motherbox-klar', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Motherbox Klar til graviditet',
+        'slug': 'motherbox-klar', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Zentabox Baby Me',
         'nutrient': 'Folsyre', 'unit_type': 'dagspose', 'pack_size': '30 dagsposer', 'units_per_pack': 30,
         'dose_per_unit': 'Folsyre 400 µg · Zink',
-        'description': 'Dagspose til dig, der prøver at blive gravid. Bygger på JemoPharms Zentabox Baby Me (folsyre 400 µg, zink og Asparagus officinalis).',
-        'label_info': 'Endelig varedeklaration for Motherbox-pakken modtages fra JemoPharm før lancering.\n'
-                      'Grundprodukt: Zentabox Baby Me – anbefalet daglig dosis 1 tablet: 400 µg folsyre, zink samt Asparagus officinalis.\n'
-                      'Producent: JemoPharm A/S, Hasselvej 1, 4780 Stege.\nKilde: https://zentabox.dk/produkter',
+        'description': 'Zentabox Baby Me til dig, der prøver at blive gravid: folsyre 400 µg, zink og Asparagus officinalis. Leveres i original Zentabox-pakning.',
+        'label_info': 'Zentabox Baby Me – anbefalet daglig dosis 1 tablet: 400 µg folsyre, zink samt Asparagus officinalis.\n'
+                      'Ansvarlig virksomhed: Zentabox A/S, Unionsvej 4, 4600 Køge (CVR 37447250).\nProduceret af JemoPharm A/S, Hasselvej 1, 4780 Stege.\nDen fulde varedeklaration står på den originale pakning.\nKilde: https://zentabox.dk/produkter',
         'product_url': 'https://zentabox.dk/produkter', 'verified': False,
     },
     {
-        'slug': 'motherbox-early-care', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Motherbox Early Care',
+        'slug': 'motherbox-early-care', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Zentabox Early Care',
         'nutrient': 'Multi', 'unit_type': 'dagspose', 'pack_size': '30 dagsposer', 'units_per_pack': 30,
         'dose_per_unit': 'Folsyre 400 µg · D-vitamin 10 µg',
-        'description': 'Dagspose til graviditetens første uger (til og med uge 9) med Sundhedsstyrelsens anbefalinger om folsyre og D-vitamin.',
-        'label_info': 'Endelig varedeklaration for Motherbox Early Care modtages fra JemoPharm før lancering. '
+        'description': 'Zentabox-dagspose til graviditetens første uger (til og med uge 9) med Sundhedsstyrelsens anbefalinger om folsyre og D-vitamin. Leveres i original Zentabox-pakning.',
+        'label_info': 'Den endelige varedeklaration for Zentabox-pakningen til uge 5–9 modtages fra Zentabox før lancering. '
                       'Pakken er sammensat efter Sundhedsstyrelsens anbefalinger for graviditetens første uger: 400 µg folsyre og 10 µg D-vitamin dagligt.\n'
-                      'Producent: JemoPharm A/S, Hasselvej 1, 4780 Stege.',
+                      'Ansvarlig virksomhed: Zentabox A/S, Unionsvej 4, 4600 Køge (CVR 37447250).\nProduceret af JemoPharm A/S, Hasselvej 1, 4780 Stege.',
         'verified': False,
     },
     {
-        'slug': 'motherbox-late-care', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Motherbox Late Care',
+        'slug': 'motherbox-late-care', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Zentabox Pregnant Late Care',
         'nutrient': 'Multi', 'unit_type': 'dagspose', 'pack_size': '30 dagsposer', 'units_per_pack': 30,
         'dose_per_unit': 'Folsyre 500 µg · D3-vitamin 10 µg · Jern 39 mg · Jod 175 µg · Calcium 300 mg · Magnesium 160 mg · DHA 500 mg · EPA 148 mg · Vitamin A 400 µg · Probiotika',
         'active_form': 'Jern bl.a. som ferrobisglycinat',
-        'description': 'Dagspose fra uge 10 til fødslen. Samme indhold som JemoPharms Zentabox Pregnant Late Care.',
+        'description': 'Zentabox Pregnant Late Care: dagspose fra uge 10 til fødslen. Leveres i original Zentabox-pakning.',
         'pregnancy_note': 'Indeholder vitamin A (400 µg som retinylacetat). Tag ikke andre produkter med vitamin A eller jern samtidig uden at tale med din læge eller jordemoder.',
         'label_info': 'Næringsindhold pr. dagspose (ifølge Zentabox Pregnant Late Care, 30 doser): folsyre 500 µg, D3-vitamin 10 µg, jod 175 µg, jern 39 mg (14 mg + 25 mg ferrobisglycinat), '
                       'vitamin A 400 µg (retinylacetat), calcium 300 mg, magnesium 160 mg, DHA 500 mg, EPA 148 mg samt probiotika.\n'
-                      'Anbefalet daglig dosis: 1 dagspose.\nProducent: JemoPharm A/S, Hasselvej 1, 4780 Stege.\n'
-                      'Den endelige Motherbox-etiket modtages før lancering.\nKilde: https://www.webapoteket.dk/zentabox-pregnant-late-care-30-doser',
+                      'Anbefalet daglig dosis: 1 dagspose.\nAnsvarlig virksomhed: Zentabox A/S, Unionsvej 4, 4600 Køge (CVR 37447250).\nProduceret af JemoPharm A/S, Hasselvej 1, 4780 Stege.\n'
+                      'Leveres i original, uåbnet Zentabox-pakning.\nKilde: https://www.webapoteket.dk/zentabox-pregnant-late-care-30-doser',
         'retail_price': 249, 'price_checked': date(2026, 10, 12), 'verified': False,
     },
     {
-        'slug': 'motherbox-amme', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Motherbox Ammeboks',
+        'slug': 'motherbox-amme', 'kind': S, 'manufacturer': 'jemopharm', 'name': 'Zentabox Mommy Care After',
         'nutrient': 'Multi', 'unit_type': 'dagspose', 'pack_size': '30 dagsposer', 'units_per_pack': 30,
         'dose_per_unit': 'Folsyre 500 µg · D-vitamin 10 µg · Jern 15 mg · Jod 200 µg · Calcium 300 mg · Magnesium 160 mg · DHA 500 mg · Vitamin A 400 µg · Probiotika',
-        'description': 'Dagspose til dig, der ammer. Samme indhold som JemoPharms Zentabox Mommy Care After.',
+        'description': 'Zentabox Mommy Care After: dagspose til dig, der ammer. Leveres i original Zentabox-pakning.',
         'label_info': 'Næringsindhold pr. dagspose (ifølge Zentabox Mommy Care After, 30 doser): folsyre 500 µg, D-vitamin 10 µg, jod 200 µg, jern 15 mg, '
                       'vitamin A 400 µg (retinylacetat), calcium 300 mg, magnesium 160 mg, DHA 500 mg samt probiotika.\n'
-                      'Anbefalet daglig dosis: 1 dagspose.\nProducent: JemoPharm A/S, Hasselvej 1, 4780 Stege.\n'
-                      'Den endelige Motherbox-etiket modtages før lancering.\nKilde: https://www.webapoteket.dk/zentabox-mommy-care-after-30-doser',
+                      'Anbefalet daglig dosis: 1 dagspose.\nAnsvarlig virksomhed: Zentabox A/S, Unionsvej 4, 4600 Køge (CVR 37447250).\nProduceret af JemoPharm A/S, Hasselvej 1, 4780 Stege.\n'
+                      'Leveres i original, uåbnet Zentabox-pakning.\nKilde: https://www.webapoteket.dk/zentabox-mommy-care-after-30-doser',
         'retail_price': 249, 'price_checked': date(2026, 10, 12), 'verified': False,
     },
     # ── Goodies ──
@@ -158,6 +157,14 @@ CONTENTS = {
                  goodie('clipper-kamille', 'Til en rolig kop te mellem amningerne.'),
                  goodie('island-bakery-oat-raisin', 'Noget sødt til amningen.')],
 }
+
+# 'Hvem spørger vi til råds' – kun rådgivere vi faktisk arbejder med. Oprettes kun første gang; ret og udvid derefter i admin.
+ADVISORS = [
+    {'slug': 'sygeplejerske', 'role': 'Sygeplejerske', 'name': 'Camilla Stær', 'position': 0,
+     'advises_on': 'Hvordan boksene passer ind i hverdagen før, under og efter graviditeten – og hvad gravide spørger om.'},
+    {'slug': 'ernaeringsekspert', 'role': 'Ernæringsekspert', 'name': 'Zentabox', 'position': 1,
+     'advises_on': 'Indholdet af dagsposerne set i forhold til Sundhedsstyrelsens anbefalinger for hver fase.'},
+]
 
 SINGLE_PRICES = {}
 DEFAULT_SINGLE_PRICE = 399

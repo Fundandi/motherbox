@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.db.models import Count, Min, Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Item, Manufacturer, Package, PackageItem, package_for_due_date
+from .models import Advisor, Item, Manufacturer, Package, PackageItem, package_for_due_date
 from .pricing import subscription_price
 from .sources import SOURCES, SST_BASELINE
 from .visuals import nutrient_style
@@ -23,6 +23,7 @@ def home(request):
     return render(request, 'catalog/home.html', {
         'packages': packages,
         'manufacturers': manufacturers,
+        'advisors': Advisor.objects.filter(is_active=True),
         'sub_price': subscription_price(),
         'ttc_price': subscription_price('ttc'),
         'basis_price': subscription_price(None, extras=False),
