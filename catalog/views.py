@@ -10,6 +10,16 @@ from .sources import SOURCES, SST_BASELINE
 from .visuals import nutrient_style
 
 
+WHY_ROWS = [
+    'Følger Sundhedsstyrelsens anbefalinger',
+    'Bokse, der skifter med din graviditetsuge',
+    'Én dagspose – 30 poser pr. boks',
+    'Produceret i Danmark af JemoPharm',
+    'Fuld varedeklaration før køb',
+    'Goodies i hver boks · ingen binding',
+]
+
+
 def _active_packages():
     return Package.objects.filter(is_active=True)
 
@@ -45,14 +55,7 @@ def home(request):
         'min_single_price': packages.aggregate(m=Min('price'))['m'],
         'sst_baseline': SST_BASELINE,
         'sst_rows': sst_rows,
-        'why_rows': [
-            'Følger Sundhedsstyrelsens anbefalinger',
-            'Bokse, der skifter med din graviditetsuge',
-            'Én dagspose – 30 poser pr. boks',
-            'Produceret i Danmark af JemoPharm',
-            'Fuld varedeklaration før køb',
-            'Goodies i hver boks · ingen binding',
-        ],
+        'why_rows': WHY_ROWS,
     })
 
 
@@ -119,6 +122,11 @@ def package_detail(request, slug):
         'pregnancy_week': request.session.get('pregnancy_week'),
         'sub_price': subscription_price(package.stage),
         'sources': SOURCES,
+        'why_rows': WHY_ROWS,
+        'min_single_price': package.price,
+        'sst_lines': [ln for c in supplements for ln in c.lines if ln['sst']],
+        'extra_lines': [ln for c in supplements for ln in c.lines if not ln['sst']],
+        'nutrient_count': sum(len(c.lines) for c in supplements),
     })
 
 

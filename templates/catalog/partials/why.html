@@ -1,0 +1,22 @@
+{% load static %}<!-- WHY MOTHERBOX -->
+<section class="relative py-12 md:py-16" style="background:#E9E2D6 url('{% static 'images/motherbox/texture.jpg' %}') center/cover;">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="bg-paper rounded-lg px-5 md:px-12 py-10 md:py-12">
+      <h2 class="serif text-[2rem] md:text-[2.5rem] font-normal text-center text-charcoal mb-8">Hvorfor Motherbox?</h2>
+      <div class="grid grid-cols-[1fr_84px] md:grid-cols-[1fr_116px]">
+        <div></div>
+        <div class="bg-blush rounded-t-lg pt-3 pb-1 text-center font-logo text-xl md:text-2xl text-charcoal">Motherbox</div>
+        {% for f in why_rows %}
+        <div class="border-t border-charcoal/30 py-3.5 md:py-4 pr-3 text-base md:text-[1.35rem] text-charcoal leading-snug">{{ f }}</div>
+        <div class="bg-blush border-t border-charcoal/30 flex items-center justify-center {% if forloop.last %}rounded-b-lg{% endif %}"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        {% endfor %}
+      </div>
+      <div class="mt-5 bg-cream rounded-md px-5 py-4 flex items-center justify-between gap-3">
+        <span class="text-base md:text-[1.35rem] text-charcoal">Pris pr. måned</span>
+        <span class="flex items-center gap-3"><span class="hidden sm:inline bg-blush text-[11px] track-wide uppercase px-2 py-1">Inkl. goodies &amp; fragt</span><span class="text-xl md:text-[1.5rem] text-charcoal">{{ sub_price|floatformat:0 }} kr.</span></span>
+      </div>
+      <p class="text-[10px] text-muted text-center mt-3">Enkeltboks uden abonnement: {{ min_single_price|floatformat:0 }} kr. Ingen binding på abonnementet.</p>
+    </div>
+  </div>
+</section>
+

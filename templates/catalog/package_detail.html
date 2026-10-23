@@ -1,223 +1,240 @@
 {% extends "base.html" %}
-{% load humanize %}
+{% load static humanize %}
 {% block title %}{{ package.label }}{% if package.title != package.label %}: {{ package.title }}{% endif %} — Motherbox{% endblock %}
 {% block meta_description %}{{ package.tagline }} Se præcis hvilke kosttilskud, fra hvilke producenter, der er i boksen.{% endblock %}
+
+{% block extra_head %}
+<style>
+  .acc summary::-webkit-details-marker { display:none; }
+  .acc[open] .acc-plus { transform: rotate(45deg); }
+  .thumb[aria-current="true"] { outline: 1px solid #333; outline-offset: 2px; }
+  .ing-tab[aria-selected="true"] { color:#333; text-decoration: underline; text-underline-offset: 4px; }
+</style>
+{% endblock %}
 
 {% block content %}
 
 {% if is_recommended %}
-<div class="bg-terra/10 border-b border-terra/20 py-3 px-4 text-center">
-  <p class="text-xs track-wide uppercase text-terra">✓ Din anbefalede boks{% if pregnancy_week %} · du er ca. i uge {{ pregnancy_week|floatformat:0 }}{% endif %}</p>
+<div class="bg-sagelight border-b border-line py-3 px-4 text-center">
+  <p class="text-xs track-wide uppercase text-green">✓ Din anbefalede boks{% if pregnancy_week %} · du er ca. i uge {{ pregnancy_week|floatformat:0 }}{% endif %}</p>
 </div>
 {% endif %}
 
-<div class="max-w-7xl mx-auto px-4 md:px-6 py-5">
-  <nav class="text-xs track-wide uppercase text-muted" aria-label="Brødkrumme">
-    <a href="{% url 'home' %}" class="hover:text-terra">Hjem</a><span class="mx-2">·</span>
-    <a href="{% url 'package_list' %}" class="hover:text-terra">Boksene</a><span class="mx-2">·</span>
-    <span class="text-charcoal">{{ package.label }}</span>
-  </nav>
-</div>
+<!-- PRODUCT -->
+<section class="bg-paper">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 pt-5 md:pt-8 pb-14 md:pb-20">
+    <nav class="text-[11px] track-wide uppercase text-muted mb-5" aria-label="Brødkrumme">
+      <a href="{% url 'home' %}" class="hover:text-charcoal">Hjem</a><span class="mx-2">/</span>
+      <a href="{% url 'package_list' %}" class="hover:text-charcoal">Boksene</a><span class="mx-2">/</span>
+      <span class="text-charcoal">{{ package.label }}</span>
+    </nav>
 
-<!-- STAGE STRIP -->
-<div class="max-w-7xl mx-auto px-4 md:px-6 mb-6">
-  <div class="flex gap-1 overflow-x-auto scrollbar-hide" style="scrollbar-width:none;">
-    {% for p in all_packages %}
-    <a href="{{ p.get_absolute_url }}" class="flex-shrink-0 px-3 py-2 text-[11px] track-wide uppercase border {% if p.pk == package.pk %}bg-terra text-white border-terra{% else %}bg-white text-muted border-stone-200 hover:border-terra hover:text-terra{% endif %}">
-      {{ p.label }}
-    </a>
-    {% endfor %}
-  </div>
-</div>
+    <div class="grid lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-14 items-start">
 
-<div class="max-w-7xl mx-auto px-4 md:px-6 pb-16">
-  <div class="grid lg:grid-cols-[56fr_44fr] gap-10 lg:gap-12 items-start">
-
-    <!-- LEFT: visual contents panel -->
-    <div class="bg-white border border-[#EDE8E2]">
-      <div class="px-6 md:px-7 pt-7 pb-5 border-b border-stone-100 flex justify-between items-end gap-4">
-        <div>
-          <p class="text-xs track-wide uppercase text-terra mb-1">{% for c in supplements %}{{ c.item.pack_size }} · {{ c.lines|length }} næringsstoffer{% endfor %}{% if goodies %} · goodies{% endif %}</p>
-          <h2 class="serif text-2xl font-light">I din dagspose</h2>
+      <!-- GALLERY -->
+      <div class="lg:sticky lg:top-24">
+        <div class="relative bg-cream overflow-hidden" style="aspect-ratio:1/1;">
+          <img id="mainImg" src="{{ package.box_image }}" alt="Motherbox {{ package.label }}" class="w-full h-full object-cover">
+          <button type="button" id="prevImg" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-sm flex items-center justify-center" aria-label="Forrige billede">‹</button>
+          <button type="button" id="nextImg" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 shadow-sm flex items-center justify-center" aria-label="Næste billede">›</button>
         </div>
-        <p class="text-[11px] text-muted text-right">Én pakning<br>= én måned</p>
-      </div>
-      <img src="{{ package.box_image }}" alt="Motherbox {{ package.label }} – dagsposer og goodies" class="w-full bg-sand border-b border-stone-100">
-      {% if package.kit_image %}<img src="{{ package.kit_image }}" alt="Motherbox {{ package.label }} – gaveæsken med dagsposer og goodies" loading="lazy" class="w-full bg-sand border-b border-stone-100">{% endif %}
-      {% if package.pills_image %}
-      <div class="px-6 md:px-7 pt-7">
-        <img src="{{ package.pills_image }}" alt="Eksempel på indholdet i én dagspose" loading="lazy" class="w-full">
-      </div>
-      {% endif %}
-      <div class="px-6 md:px-7 py-6 grid grid-cols-2 sm:grid-cols-3 gap-x-5 gap-y-4">
-        {% for c in supplements %}{% for line in c.lines %}
-        <a href="#item-{{ c.item.slug }}" class="flex items-start gap-2 group">
-          <span class="inline-block w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0" style="background:{{ line.style.dot }};"></span>
-          <span>
-            <span class="block text-xs font-semibold leading-snug group-hover:text-terra">{{ line.name }}</span>
-            {% if line.amount %}<span class="block text-[11px] text-muted leading-tight">{{ line.amount }}</span>{% endif %}
-          </span>
-        </a>
-        {% endfor %}{% endfor %}
-      </div>
-      <p class="px-6 md:px-7 pb-5 text-[10px] text-muted/80">Billederne er illustrationer. Det præcise indhold står i varedeklarationen nedenfor.</p>
-      {% if goodies %}
-      <div class="px-6 md:px-7 py-5 border-t border-stone-100 bg-cream/60">
-        <p class="text-[11px] track-wide uppercase text-muted mb-1">+ Goodies</p>
-        <p class="text-sm text-muted font-light">Udvalgte goodies som urtete og snacks, der passer til din graviditetsmåned. Indholdet kan variere.</p>
-      </div>
-      {% endif %}
-      <div class="flex items-center justify-between px-6 md:px-7 py-4 border-t border-stone-100 text-xs track-wide uppercase">
-        {% if prev_pkg %}<a href="{{ prev_pkg.get_absolute_url }}" class="text-muted hover:text-terra">‹ {{ prev_pkg.label }}</a>{% else %}<span></span>{% endif %}
-        {% if next_pkg %}<a href="{{ next_pkg.get_absolute_url }}" class="text-muted hover:text-terra">{{ next_pkg.label }} ›</a>{% endif %}
-      </div>
-    </div>
-
-    <!-- RIGHT: buy box -->
-    <div class="lg:sticky lg:top-24">
-      <p class="text-xs track-wide uppercase text-muted mb-2">{{ package.label }} · {{ package.weeks_label }}</p>
-      <h1 class="serif text-4xl md:text-5xl font-light leading-tight mb-3">{{ package.title }}</h1>
-      <p class="text-muted font-light leading-relaxed mb-5">{{ package.tagline }}</p>
-
-      <ul class="text-sm space-y-1.5 mb-6 border-y border-stone-200 py-4">
-        {% for c in supplements %}{% for line in c.lines %}
-        <li class="flex justify-between gap-3">
-          <span>{{ line.name }} <span class="text-muted">{% if line.amount %}· {{ line.amount }}{% endif %}</span></span>
-          {% if line.sst %}<span class="text-[10px] track-wide uppercase text-sage border border-sage/50 px-1.5 py-0.5 self-start whitespace-nowrap">SST</span>{% else %}<span class="text-[10px] track-wide uppercase text-muted border border-stone-300 px-1.5 py-0.5 self-start whitespace-nowrap">Tillæg</span>{% endif %}
-        </li>
-        {% endfor %}{% endfor %}
-      </ul>
-
-      <form action="{% url 'checkout' package.slug %}" method="get" id="planForm">
-        <p class="text-xs track-wide uppercase text-muted mb-3">Vælg</p>
-        <div class="space-y-3 mb-5">
-          <label class="plan-opt flex items-center gap-4 p-4 cursor-pointer relative border-2 border-terra bg-cream">
-            <input type="radio" name="plan" value="subscription" checked class="accent-[#C07859] w-4 h-4">
-            <span class="flex-1">
-              <span class="block font-semibold text-sm">Abonnement</span>
-              <span class="block text-xs text-muted">Boksen følger din {% if package.stage == 'pregnant' %}graviditet{% else %}fase{% endif %} automatisk · opsig når som helst</span>
-            </span>
-            <span class="font-semibold">{{ sub_price|floatformat:0 }} kr./md.</span>
-          </label>
-          <label class="plan-opt flex items-center gap-4 p-4 cursor-pointer border border-stone-300 bg-white">
-            <input type="radio" name="plan" value="single" class="accent-[#C07859] w-4 h-4">
-            <span class="flex-1">
-              <span class="block font-semibold text-sm">Kun denne boks</span>
-              <span class="block text-xs text-muted">Engangskøb · intet abonnement</span>
-            </span>
-            <span class="font-semibold">{{ package.price|floatformat:0 }} kr.</span>
-          </label>
+        <div class="grid grid-cols-4 gap-2 md:gap-3 mt-3" id="thumbs">
+          <button type="button" class="thumb bg-cream overflow-hidden" aria-current="true" data-src="{{ package.box_image }}"><img src="{{ package.box_image }}" alt="" class="w-full aspect-square object-cover"></button>
+          {% if package.kit_image %}<button type="button" class="thumb bg-cream overflow-hidden" aria-current="false" data-src="{{ package.kit_image }}"><img src="{{ package.kit_image }}" alt="" loading="lazy" class="w-full aspect-square object-cover"></button>{% endif %}
+          {% if package.pills_image %}<button type="button" class="thumb bg-cream overflow-hidden" aria-current="false" data-src="{{ package.pills_image }}"><img src="{{ package.pills_image }}" alt="" loading="lazy" class="w-full aspect-square object-cover"></button>{% endif %}
+          <button type="button" class="thumb bg-cream overflow-hidden" aria-current="false" data-src="{{ package.stage_image }}"><img src="{{ package.stage_image }}" alt="" loading="lazy" class="w-full aspect-square object-cover"></button>
         </div>
-        <button type="submit" class="w-full py-4 text-sm track-wide uppercase font-semibold text-white btn-terra">Fortsæt til bestilling</button>
-      </form>
-      <p class="text-xs text-muted mt-3 text-center">Fri fragt · Levering 1–3 hverdage · Sikker betaling via Stripe</p>
-      <p class="text-xs text-muted mt-2 text-center">Original Zentabox-pakning · produceret af JemoPharm A/S på Møn</p>
-    </div>
-  </div>
-</div>
+        <p class="text-[10px] text-muted mt-3">Billederne er illustrationer. Det præcise indhold står i varedeklarationen.</p>
+      </div>
 
-<!-- WHAT HAPPENS + WHY -->
-<section class="bg-white border-t border-stone-200 py-16">
-  <div class="max-w-6xl mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12">
-    <div>
-      <p class="text-xs track-wide uppercase text-terra mb-2">Det sker nu</p>
-      <h2 class="serif text-3xl font-light mb-4">{{ package.weeks_label }}</h2>
-      <div class="text-muted font-light leading-relaxed prose-mb">{{ package.body_now|linebreaks }}</div>
-    </div>
-    <div>
-      <p class="text-xs track-wide uppercase text-terra mb-2">Derfor netop disse</p>
-      <h2 class="serif text-3xl font-light mb-4">Sammensætningen</h2>
-      <div class="text-muted font-light leading-relaxed prose-mb">{{ package.why|linebreaks }}</div>
-    </div>
-  </div>
-</section>
+      <!-- BUY BOX -->
+      <div>
+        <h1 class="serif text-[2.1rem] md:text-[2.5rem] leading-tight font-normal text-charcoal">{{ package.title }}</h1>
+        <p class="text-[12px] track-wide uppercase text-charcoal mt-1 mb-4">{{ package.label }} · {{ package.weeks_label }}</p>
+        <div class="flex flex-wrap gap-2 mb-5">
+          <span class="border border-charcoal/40 px-2.5 py-1 text-[11px] text-charcoal">Følger Sundhedsstyrelsen</span>
+          <span class="border border-charcoal/40 px-2.5 py-1 text-[11px] text-charcoal">30 dagsposer</span>
+          <span class="border border-charcoal/40 px-2.5 py-1 text-[11px] text-charcoal">Dansk produceret</span>
+          {% if goodies %}<span class="border border-charcoal/40 px-2.5 py-1 text-[11px] text-charcoal">Inkl. goodies</span>{% endif %}
+        </div>
+        <ul class="space-y-2 mb-3 text-[15px] text-charcoal">
+          {% for ln in sst_lines|slice:":4" %}
+          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 mt-1 flex-shrink-0 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>{{ ln.name }}{% if ln.amount %} {{ ln.amount }}{% endif %} <span class="text-charcoal/60">· indgår i Sundhedsstyrelsens anbefalinger</span></span></li>
+          {% endfor %}
+          {% if extra_lines %}<li class="flex items-start gap-2.5"><svg class="w-4 h-4 mt-1 flex-shrink-0 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>+ {{ extra_lines|length }} tillæg, fx {{ extra_lines.0.name }}</span></li>{% endif %}
+        </ul>
+        <a href="#indhold" class="text-[13px] underline underline-offset-2 text-charcoal">Se alle næringsstoffer</a>
 
-<!-- PRODUCT BY PRODUCT -->
-<section class="bg-cream border-t border-stone-200 py-16" id="produkter">
-  <div class="max-w-6xl mx-auto px-4 md:px-6">
-    <p class="text-xs track-wide uppercase text-terra mb-2">Fuld gennemsigtighed</p>
-    <h2 class="serif text-4xl font-light mb-3">Produkt for produkt</h2>
-    <p class="text-muted font-light mb-10 max-w-2xl">Her kan du se præcis hvilket produkt vi sender, hvem der producerer det, og hvad andre købere siger — med link til kilden, så du selv kan tjekke.</p>
+        <form action="{% url 'checkout' package.slug %}" method="get" id="planForm" class="mt-6">
+          <label class="plan-opt block border border-[#9DB3A4] bg-sagelight/60 cursor-pointer">
+            <span class="block px-4 pt-2.5 pb-1 text-[10px] track-wide uppercase text-green font-medium">Anbefalet</span>
+            <span class="flex items-start gap-3 px-4 pb-4">
+              <input type="radio" name="plan" value="subscription" data-price="{{ sub_price|floatformat:0 }}" data-suffix=" kr./md." checked class="mt-1 accent-[#4F6B5A] w-4 h-4">
+              <span class="flex-1">
+                <span class="flex justify-between gap-3"><span class="text-[13px] font-medium uppercase track-wide">Abonnement</span><span class="text-[15px] font-medium">{{ sub_price|floatformat:0 }} kr. / md.</span></span>
+                <span class="block mt-2 space-y-1 text-[12.5px] text-charcoal/80">
+                  <span class="block">◦ Skifter automatisk, når du går ind i en ny fase</span>
+                  <span class="block">◦ Fri fragt hver måned</span>
+                  <span class="block">◦ Ingen binding – opsig når som helst</span>
+                </span>
+              </span>
+            </span>
+          </label>
+          <label class="plan-opt flex items-center gap-3 border border-line bg-white px-4 py-3.5 mt-3 cursor-pointer">
+            <input type="radio" name="plan" value="single" data-price="{{ package.price|floatformat:0 }}" data-suffix=" kr." class="accent-[#4F6B5A] w-4 h-4">
+            <span class="flex-1 text-[13px] font-medium uppercase track-wide">Kun denne boks</span>
+            <span class="text-[15px] font-medium">{{ package.price|floatformat:0 }} kr.</span>
+          </label>
+          <button type="submit" class="w-full mt-5 pill py-4 text-[13px] track-wide uppercase font-medium text-charcoal bg-blush hover:bg-[#E8CDC1] transition">Fortsæt til bestilling · <span id="btnPrice">{{ sub_price|floatformat:0 }} kr./md.</span></button>
+        </form>
+        <p class="text-center mt-3"><a href="#varedeklaration" class="text-[12px] underline underline-offset-2 text-charcoal">Se varedeklaration</a></p>
 
-    <div class="space-y-5">
-      {% for c in supplements %}{% with i=c.item m=c.item.manufacturer %}
-      <article id="item-{{ i.slug }}" class="bg-white border border-stone-200 p-6 md:p-8 scroll-mt-28">
-        <div class="grid md:grid-cols-[1fr_280px] gap-8">
-          <div>
-            <div class="flex items-center gap-2 mb-3">
-              <span class="inline-block w-2.5 h-2.5 rounded-full" style="background:{{ c.style.dot }};"></span>
-              <span class="text-xs track-wide uppercase text-muted">Dagspose</span>
-              <span class="text-[10px] track-wide uppercase text-sage border border-sage/50 px-1.5 py-0.5">Følger Sundhedsstyrelsens anbefaling</span>
-            </div>
-            <h3 class="serif text-2xl md:text-3xl font-light mb-1">{{ i.name }}</h3>
-            <p class="text-sm mb-4">af <a href="{{ m.get_absolute_url }}" class="text-terra underline underline-offset-2">{{ m.name }}</a> <span class="text-muted">· {{ m.country }}</span></p>
-            {% if c.purpose %}<p class="text-muted font-light leading-relaxed mb-4">{{ c.purpose }}</p>{% endif %}
-            <dl class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
-              <div><dt class="text-[11px] track-wide uppercase text-muted">Daglig dosis</dt><dd>{{ c.daily_dose }}</dd></div>
-              <div><dt class="text-[11px] track-wide uppercase text-muted">Form</dt><dd>{{ i.active_form|default:"—" }}</dd></div>
-              
-              <div><dt class="text-[11px] track-wide uppercase text-muted">Pakning</dt><dd>{{ i.pack_size|default:"—" }}</dd></div>
-            </dl>
-            {% if i.description %}<p class="text-sm text-muted mb-4">{{ i.description }}</p>{% endif %}
-            {% if i.pregnancy_note %}<p class="text-xs text-muted mt-4 border-l-2 border-terra/40 pl-3">{{ i.pregnancy_note }}</p>{% endif %}
-            <details class="mt-4 text-xs text-muted">
-              <summary class="cursor-pointer track-wide uppercase text-[11px] text-charcoal">Varedeklaration</summary>
-              <div class="mt-2 leading-relaxed">{% if i.label_info %}{{ i.label_info|linebreaksbr }}{% else %}{{ i.dose_per_unit }}{% if i.pack_size %} · {{ i.pack_size }}{% endif %}. Ansvarlig virksomhed: {{ m.name }}{% if m.city %}, {{ m.city }}{% endif %}.{% endif %}</div>
-            </details>
+        <div class="grid grid-cols-3 gap-2 mt-6 text-center text-[11px] text-charcoal">
+          <div><svg class="w-6 h-6 mx-auto mb-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.5"/><circle cx="17" cy="17.5" r="1.5"/></svg>Fri fragt</div>
+          <div><svg class="w-6 h-6 mx-auto mb-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.5l2.3 2.3 4.7-5"/></svg>Ingen binding</div>
+          <div><svg class="w-6 h-6 mx-auto mb-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3"><path d="M12 21c0-7 3-12 8-15-8 0-12 5-12 11"/><path d="M12 21c0-4-2-7-6-9 5 0 7 3 7 7"/></svg>Dansk produceret</div>
+        </div>
+
+        <!-- OTHER STAGES -->
+        <div class="mt-9">
+          <p class="text-[13px] text-charcoal mb-3">Følg hele forløbet</p>
+          <div class="flex gap-3 overflow-x-auto scrollbar-hide" style="scrollbar-width:none;">
+            {% for p in all_packages %}{% if p.pk != package.pk %}
+            <a href="{{ p.get_absolute_url }}" class="flex-shrink-0 w-[118px] text-center group">
+              <div class="bg-cream overflow-hidden mb-1.5"><img src="{{ p.box_image }}" alt="" loading="lazy" class="w-full aspect-square object-cover group-hover:scale-105 transition-transform"></div>
+              <p class="text-[11px] text-charcoal">{{ p.label }}</p>
+              <p class="text-[10px] text-muted">{{ p.weeks_label }}</p>
+            </a>
+            {% endif %}{% endfor %}
           </div>
-          <aside class="bg-cream/70 p-5 text-sm self-start">
-            <p class="text-[11px] track-wide uppercase text-muted mb-3">Anmeldelser</p>
-            {% if i.review_rating %}
-            <p><span class="text-terra">★</span> <strong>{{ i.review_rating }}</strong> / 5 · {{ i.review_count|intcomma }} anmeldelser</p>
-            <p class="text-xs text-muted mb-3">af produktet på <a href="{{ i.review_url }}" target="_blank" rel="noopener nofollow" class="underline">{{ i.review_platform }}</a></p>
-            {% endif %}
-            {% if m.review_rating %}
-            <p><span class="text-terra">★</span> <strong>{{ m.review_rating }}</strong> / 5 · {{ m.review_count|intcomma }} anmeldelser</p>
-            <p class="text-xs text-muted mb-3">af {{ m.name }} på <a href="{{ m.review_url }}" target="_blank" rel="noopener nofollow" class="underline">{{ m.review_platform }}</a>{% if m.review_checked %} · tjekket {{ m.review_checked|date:"j. M Y" }}{% endif %}</p>
-            {% endif %}
-            {% if not i.review_rating and not m.review_rating %}<p class="text-xs text-muted mb-3">Vi har endnu ikke fundet et offentligt anmeldelsestal, vi kan stå inde for.</p>{% endif %}
-            {% if i.product_url %}<a href="{{ i.product_url }}" target="_blank" rel="noopener" class="text-xs track-wide uppercase text-terra hover:underline">Producentens produktside →</a>{% endif %}
-          </aside>
         </div>
-      </article>
-      {% endwith %}{% endfor %}
-    </div>
 
-    {% if goodies %}
-    <h3 class="serif text-3xl font-light mt-14 mb-5">Eksempler på goodies</h3>
-    <p class="text-muted font-light mb-6 -mt-2">Eksempler på goodies. De passer til din graviditetsmåned, men indholdet kan variere.</p>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {% for c in goodies %}{% with i=c.item %}
-      <div class="bg-white border border-stone-200 p-6">
-        <p class="text-[11px] track-wide uppercase text-muted mb-2">{{ i.manufacturer.name }} · {{ i.manufacturer.country }}</p>
-        <p class="serif text-2xl font-light mb-2">{{ i.name }}</p>
-        {% if i.pack_size %}<p class="text-xs text-muted mb-3">{{ i.pack_size }}</p>{% endif %}
-        {% if c.purpose %}<p class="text-sm text-muted font-light leading-relaxed">{{ c.purpose }}</p>{% endif %}
-        {% if i.review_rating %}<p class="text-xs mt-3"><span class="text-terra">★</span> {{ i.review_rating }} / 5 · {{ i.review_count|intcomma }} på <a href="{{ i.review_url }}" target="_blank" rel="noopener nofollow" class="underline">{{ i.review_platform }}</a></p>{% endif %}
+        <!-- ACCORDIONS -->
+        <div class="mt-9 border-t border-charcoal/20">
+          <details class="acc border-b border-charcoal/20" open>
+            <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-[15px] text-charcoal">Om boksen<span class="acc-plus text-xl font-light transition-transform">+</span></summary>
+            <div class="pb-5 text-sm text-charcoal/80 leading-relaxed prose-mb"><p>{{ package.tagline }}</p>{{ package.body_now|linebreaks }}</div>
+          </details>
+          <details class="acc border-b border-charcoal/20">
+            <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-[15px] text-charcoal">Derfor netop disse næringsstoffer<span class="acc-plus text-xl font-light transition-transform">+</span></summary>
+            <div class="pb-5 text-sm text-charcoal/80 leading-relaxed prose-mb">{{ package.why|linebreaks }}</div>
+          </details>
+          <details class="acc border-b border-charcoal/20">
+            <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-[15px] text-charcoal">Sådan tager du den<span class="acc-plus text-xl font-light transition-transform">+</span></summary>
+            <div class="pb-5 text-sm text-charcoal/80 leading-relaxed">
+              {% for c in supplements %}<p class="mb-2">{{ c.daily_dose|capfirst }} om dagen. Én pakning med {{ c.item.pack_size }} rækker præcis en måned.</p>{% if c.item.pregnancy_note %}<p class="border-l-2 border-terra/40 pl-3 text-xs">{{ c.item.pregnancy_note }}</p>{% endif %}{% endfor %}
+              <p class="mt-3 text-xs">Tag ikke flere produkter med samme næringsstof samtidig. Tal med din læge eller jordemoder, hvis du har en sygdom, tager medicin eller er i tvivl.</p>
+            </div>
+          </details>
+          <details class="acc border-b border-charcoal/20" id="varedeklaration">
+            <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-[15px] text-charcoal">Varedeklaration<span class="acc-plus text-xl font-light transition-transform">+</span></summary>
+            <div class="pb-5 text-xs text-charcoal/80 leading-relaxed">
+              {% for c in supplements %}{% with i=c.item m=c.item.manufacturer %}
+              <p class="font-medium text-sm text-charcoal mb-1">{{ i.name }}</p>
+              {% if i.label_info %}{{ i.label_info|linebreaksbr }}{% else %}{{ i.dose_per_unit }}{% if i.pack_size %} · {{ i.pack_size }}{% endif %}. Ansvarlig virksomhed: {{ m.name }}{% if m.city %}, {{ m.city }}{% endif %}.{% endif %}
+              {% endwith %}{% endfor %}
+            </div>
+          </details>
+          {% if goodies %}
+          <details class="acc border-b border-charcoal/20">
+            <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-[15px] text-charcoal">Goodies<span class="acc-plus text-xl font-light transition-transform">+</span></summary>
+            <div class="pb-5 text-sm text-charcoal/80 leading-relaxed">
+              <p class="mb-3">Udvalgte goodies som urtete og snacks, der passer til din graviditetsmåned. Indholdet kan variere. Eksempler:</p>
+              <ul class="space-y-1">{% for c in goodies %}<li>◦ {{ c.item.name }} <span class="text-muted">· {{ c.item.manufacturer.name }}</span></li>{% endfor %}</ul>
+            </div>
+          </details>
+          {% endif %}
+          <details class="acc border-b border-charcoal/20">
+            <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-[15px] text-charcoal">Abonnement &amp; levering<span class="acc-plus text-xl font-light transition-transform">+</span></summary>
+            <div class="pb-5 text-sm text-charcoal/80 leading-relaxed">Boksen sendes hver måned med fri fragt og leveres på 1–3 hverdage. Med abonnement skifter boksen automatisk, når du går ind i en ny fase. Du kan opsige når som helst online. Sikker betaling via Stripe.</div>
+          </details>
+          <details class="acc border-b border-charcoal/20">
+            <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-[15px] text-charcoal">Kilder<span class="acc-plus text-xl font-light transition-transform">+</span></summary>
+            <div class="pb-5 text-sm text-charcoal/80 leading-relaxed"><ul class="space-y-1.5">{% for s in sources %}<li><a href="{{ s.url }}" target="_blank" rel="noopener" class="underline">{{ s.title }}</a> — {{ s.publisher }}</li>{% endfor %}</ul></div>
+          </details>
+        </div>
       </div>
-      {% endwith %}{% endfor %}
     </div>
-    {% endif %}
   </div>
 </section>
 
-<!-- FAQ / SAFETY -->
-<section class="bg-white border-t border-stone-200">
-  <div class="max-w-3xl mx-auto px-4 md:px-6 py-10">
-    <details class="border-b border-stone-200 group">
-      <summary class="flex justify-between items-center py-5 cursor-pointer list-none"><span class="font-medium">Hvad betyder "SST" og "Tillæg"?</span><span class="text-2xl text-muted transition-transform group-open:rotate-45">+</span></summary>
-      <div class="pb-6 text-sm text-muted font-light leading-relaxed">"SST" betyder, at næringsstoffet og dosis følger Sundhedsstyrelsens officielle anbefaling for perioden. "Tillæg" er det øvrige indhold i dagsposen (fx DHA, magnesium og jod), som ikke er en del af Sundhedsstyrelsens officielle anbefaling for perioden. <a href="{% url 'science' %}" class="text-terra underline">Læs kilderne</a>.</div>
-    </details>
-    <details class="border-b border-stone-200 group">
-      <summary class="flex justify-between items-center py-5 cursor-pointer list-none"><span class="font-medium">Sikkerhed og hvornår du skal tale med din læge</span><span class="text-2xl text-muted transition-transform group-open:rotate-45">+</span></summary>
-      <div class="pb-6 text-sm text-muted font-light leading-relaxed">Følg altid doseringen på pakningen og i vores vejledning. Tal med din læge eller jordemoder, før du starter, hvis du har en kronisk sygdom, tager medicin (fx blodfortyndende eller stofskiftemedicin), har fået ordineret andre tilskud, eller hvis du er i tvivl. Tag ikke flere produkter med samme næringsstof samtidig. Opbevares utilgængeligt for børn.</div>
-    </details>
-    <details class="border-b border-stone-200 group">
-      <summary class="flex justify-between items-center py-5 cursor-pointer list-none"><span class="font-medium">Kilder for denne boks</span><span class="text-2xl text-muted transition-transform group-open:rotate-45">+</span></summary>
-      <div class="pb-6 text-sm text-muted font-light leading-relaxed">
-        <ul class="space-y-1.5">{% for s in sources %}<li><a href="{{ s.url }}" target="_blank" rel="noopener" class="underline">{{ s.title }}</a> — {{ s.publisher }}</li>{% endfor %}</ul>
+<!-- WHAT'S INSIDE -->
+<section class="relative overflow-hidden" style="background:#B9A894 url('{% static 'images/motherbox/texture.jpg' %}') center/cover;">
+  <div class="absolute inset-0 bg-[#8C7A66]/45"></div>
+  <div class="relative max-w-6xl mx-auto px-4 md:px-6 py-16 md:py-24">
+    <div class="text-center text-white mb-10 md:mb-12">
+      <h2 class="text-[2rem] md:text-[2.4rem] font-normal" style="font-family:'DM Sans',sans-serif;">Så, hvad er der i?</h2>
+      <p class="text-[12px] md:text-sm track-wide uppercase font-medium mt-1">{{ package.label }} · 1 dagspose</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="space-y-3">
+        {% for ln in sst_lines %}
+        <details class="acc bg-white">
+          <summary class="flex items-center gap-4 p-4 md:p-5 cursor-pointer list-none">
+            <span class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-paper flex items-center justify-center flex-shrink-0"><span class="w-4 h-7 rounded-full" style="background:{{ ln.style.dot }};"></span></span>
+            <span class="flex-1"><span class="block text-[17px] md:text-lg text-charcoal">{{ ln.name }}</span><span class="block text-[13px] text-charcoal/70">{{ ln.amount|default:"I dagsposen" }} pr. dagspose</span></span>
+            <span class="acc-plus text-2xl font-light text-charcoal/60 transition-transform">+</span>
+          </summary>
+          <p class="px-5 pb-5 text-sm text-charcoal/80">Indgår i Sundhedsstyrelsens anbefalinger til gravide og ammende. <a href="{% url 'science' %}" class="underline">Se anbefalingen og dosis</a>.</p>
+        </details>
+        {% endfor %}
+        {% if extra_lines %}
+        <details class="acc bg-white">
+          <summary class="flex items-center gap-4 p-4 md:p-5 cursor-pointer list-none">
+            <span class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-paper flex items-center justify-center flex-shrink-0 text-sm text-charcoal">+{{ extra_lines|length }}</span>
+            <span class="flex-1"><span class="block text-[17px] md:text-lg text-charcoal">Tillæg</span><span class="block text-[13px] text-charcoal/70">Øvrigt indhold i dagsposen</span></span>
+            <span class="acc-plus text-2xl font-light text-charcoal/60 transition-transform">+</span>
+          </summary>
+          <p class="px-5 pb-5 text-sm text-charcoal/80">{% for ln in extra_lines %}{{ ln.name }}{% if ln.amount %} {{ ln.amount }}{% endif %}{% if not forloop.last %} · {% endif %}{% endfor %}</p>
+        </details>
+        {% endif %}
       </div>
-    </details>
+      <div class="hidden md:block">
+        {% if package.pills_image %}<img src="{{ package.pills_image }}" alt="Indholdet i én dagspose" loading="lazy" class="w-full rounded-sm shadow-sm">{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY NUTRIENTS TABLE -->
+<section id="indhold" class="bg-paper py-16 md:py-20 scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 grid md:grid-cols-[260px_1fr] gap-8 md:gap-14">
+    <div>
+      <h2 class="text-[1.75rem] text-charcoal" style="font-family:'DM Sans',sans-serif;">{{ nutrient_count }} næringsstoffer</h2>
+      <p class="serif italic text-sm text-charcoal/70 mb-6">{{ package.label }}</p>
+      <div class="flex md:flex-col gap-4 md:gap-3 text-[11px] track-wide uppercase text-muted" role="tablist">
+        <button type="button" class="ing-tab text-left" role="tab" aria-selected="true" data-tab="sst">Sundhedsstyrelsen</button>
+        {% if extra_lines %}<button type="button" class="ing-tab text-left" role="tab" aria-selected="false" data-tab="extra">Tillæg</button>{% endif %}
+      </div>
+    </div>
+    <div>
+      <div class="ing-panel" data-tab="sst">
+        {% for ln in sst_lines %}<div class="flex justify-between gap-4 py-3.5 border-b border-charcoal/15 text-[14px]"><span class="font-medium text-charcoal">{{ ln.name }}</span><span class="text-charcoal/70 text-right">{{ ln.amount }}</span></div>{% endfor %}
+      </div>
+      <div class="ing-panel hidden" data-tab="extra">
+        {% for ln in extra_lines %}<div class="flex justify-between gap-4 py-3.5 border-b border-charcoal/15 text-[14px]"><span class="font-medium text-charcoal">{{ ln.name }}</span><span class="text-charcoal/70 text-right">{{ ln.amount }}</span></div>{% endfor %}
+      </div>
+      <p class="text-[11px] text-muted mt-4">Mængder pr. dagspose. "Sundhedsstyrelsen" = næringsstoffer, der indgår i Sundhedsstyrelsens anbefalinger. Se de anbefalede doser under Kilder. "Tillæg" = øvrigt indhold.</p>
+    </div>
+  </div>
+</section>
+
+{% include "catalog/partials/why.html" %}
+
+<!-- THE MOTHERBOX STANDARD -->
+<section class="bg-paper py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-6 items-stretch">
+    <div class="bg-cream px-8 py-12 md:p-14 flex flex-col justify-center text-center">
+      <h2 class="serif text-[2rem] md:text-[2.3rem] font-normal text-charcoal mb-4">Motherbox-standarden</h2>
+      {% for c in supplements %}{% with m=c.item.manufacturer %}
+      <p class="text-charcoal/80 leading-relaxed mb-3">Dagsposerne er {{ c.item.name }} i original, uåbnet pakning – produceret af {{ m.name }} i {{ m.city }}{% if m.founded %}, som har lavet kosttilskud siden {{ m.founded|stringformat:"d" }}{% endif %}.</p>
+      {% if m.review_rating %}<p class="text-sm text-charcoal/70 mb-6">★ {{ m.review_rating }} / 5 · {{ m.review_count|intcomma }} anmeldelser på <a href="{{ m.review_url }}" target="_blank" rel="noopener nofollow" class="underline">{{ m.review_platform }}</a></p>{% endif %}
+      <div><a href="{{ m.get_absolute_url }}" class="pill inline-block px-7 py-3 text-[11px] track-wide uppercase font-medium bg-[#8FA596] text-charcoal hover:bg-[#7F978A] transition">Mød producenten</a></div>
+      {% endwith %}{% endfor %}
+    </div>
+    <div class="bg-cream overflow-hidden min-h-[300px]">
+      <img src="{{ package.kit_image|default:package.box_image }}" alt="Motherbox {{ package.label }} i gaveæsken" loading="lazy" class="w-full h-full object-cover">
+    </div>
   </div>
 </section>
 
@@ -225,14 +242,33 @@
 
 {% block extra_scripts %}
 <script>
-document.querySelectorAll('#planForm input[name=plan]').forEach(function (r) {
-  r.addEventListener('change', function () {
-    document.querySelectorAll('.plan-opt').forEach(function (l) {
-      var on = l.querySelector('input').checked;
-      l.classList.toggle('border-2', on); l.classList.toggle('border-terra', on); l.classList.toggle('bg-cream', on);
-      l.classList.toggle('border', !on); l.classList.toggle('border-stone-300', !on); l.classList.toggle('bg-white', !on);
+(function () {
+  var radios = document.querySelectorAll('#planForm input[name=plan]'), btn = document.getElementById('btnPrice');
+  radios.forEach(function (r) {
+    r.addEventListener('change', function () {
+      btn.textContent = r.dataset.price + r.dataset.suffix;
+      document.querySelectorAll('.plan-opt').forEach(function (l) {
+        var on = l.querySelector('input').checked;
+        l.style.borderColor = on ? '#9DB3A4' : '#E6E4DF';
+        l.style.background = on ? 'rgba(231,237,232,.6)' : '#fff';
+      });
     });
   });
-});
+  var thumbs = [].slice.call(document.querySelectorAll('.thumb')), main = document.getElementById('mainImg'), idx = 0;
+  function show(i) {
+    idx = (i + thumbs.length) % thumbs.length; main.src = thumbs[idx].dataset.src;
+    thumbs.forEach(function (t, j) { t.setAttribute('aria-current', j === idx ? 'true' : 'false'); });
+  }
+  thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
+  document.getElementById('prevImg').addEventListener('click', function () { show(idx - 1); });
+  document.getElementById('nextImg').addEventListener('click', function () { show(idx + 1); });
+  var tabs = document.querySelectorAll('.ing-tab'), panels = document.querySelectorAll('.ing-panel');
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+      panels.forEach(function (p) { p.classList.toggle('hidden', p.dataset.tab !== t.dataset.tab); });
+    });
+  });
+})();
 </script>
 {% endblock %}
