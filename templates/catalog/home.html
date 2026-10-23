@@ -112,7 +112,7 @@
       {% for p in packages %}
       <button type="button" class="quiz-card text-left bg-white border border-line overflow-hidden" aria-pressed="false" data-url="{{ p.get_absolute_url }}">
         <span class="quiz-label block text-center text-[12px] md:text-[13px] py-2.5 border-b border-line transition">{% if p.stage == 'ttc' %}Prøver at blive gravid{% elif p.stage == 'postpartum' %}Ammer{% else %}Gravid · {{ p.weeks_label|lower }}{% endif %}</span>
-        <img src="{% static 'images/motherbox/stage-' %}{{ p.image_key }}.jpg" alt="" loading="lazy" class="w-full aspect-square object-cover">
+        <img src="{{ p.stage_image }}" alt="" loading="lazy" class="w-full aspect-square object-cover">
       </button>
       {% endfor %}
     </div>

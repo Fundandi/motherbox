@@ -138,8 +138,9 @@ class Package(models.Model):
     _IMAGES = {'klar-til-graviditet': 'klar', 'early-care': 'early', 'late-care': 'late', 'ammeboks': 'amme'}
 
     @property
-    def image_key(self):
-        return self._IMAGES.get(self.slug, '')
+    def stage_image(self):
+        key = self._IMAGES.get(self.slug)
+        return static(f'images/motherbox/stage-{key}.jpg') if key else self.image_url
 
     @property
     def box_image(self):
