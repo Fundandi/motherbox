@@ -16,7 +16,7 @@ WHY_ROWS = [
     'Én dagspose – 30 poser pr. boks',
     'Produceret i Danmark af JemoPharm',
     'Fuld varedeklaration før køb',
-    'Goodies i hver boks · ingen binding',
+    'Ingen binding · opsig når som helst',
 ]
 
 

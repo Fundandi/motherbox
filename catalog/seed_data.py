@@ -156,40 +156,12 @@ AMME_PACK = {'item': 'motherbox-amme', 'dose': '1 dagspose', 'short': 'D + jod +
              'purpose': 'Dækker Sundhedsstyrelsens anbefaling om 10 µg D-vitamin, mens du ammer, og indeholder også jod og DHA.'}
 
 
-def goodie(slug, purpose='', weeks=''):
-    """weeks = "10–13" means: only sent while the customer is in that pregnancy-week window (Late Care rotates goodies)."""
-    return {'item': slug, 'purpose': purpose, 'upd': 0, 'short': weeks}
-
-
+# Each box holds one 30-sachet pack. Goodies were dropped from the boxes in October 2026.
 CONTENTS = {
-    'klar-til-graviditet': [TTC_PACK,
-                            goodie('clipper-rooibos', 'Koffeinfri te. Fødevarestyrelsen anbefaler at begrænse koffein, allerede når man prøver at blive gravid.'),
-                            goodie('clearspring-tamari-graeskarkerner', 'Ristede græskarkerner i snackpose.')],
-    'early-care': [EARLY_PACK,
-                   goodie('gin-gins-original', 'Ingefærkarameller i almindelig fødevaremængde. Rart at have i tasken.'),
-                   goodie('panela-ingefaer-pastiller', 'Små, milde ingefærpastiller.'),
-                   goodie('hampstead-citron-ingefaer', 'Ingefærte uden lakrids.')],
-    # Late Care: the supplement is the same every month; goodies follow the pregnancy week (4-week windows).
-    'late-care': [LATE_PACK,
-                  goodie('hampstead-citron-ingefaer', 'Ingefærte uden lakrids til de sidste kvalme-uger.', '10–13'),
-                  goodie('island-bakery-oat-raisin', 'Tørre havrekiks, som mange har glæde af om morgenen.', '10–13'),
-                  goodie('clipper-rooibos', 'Koffeinfri te.', '14–17'),
-                  goodie('clearspring-tamari-graeskarkerner', 'Ristede græskarkerner i snackpose.', '14–17'),
-                  goodie('clipper-kamille', 'Kamillete til aftenen.', '18–21'),
-                  goodie('panela-ingefaer-pastiller', 'Små, milde ingefærpastiller til tasken.', '18–21'),
-                  goodie('island-bakery-oat-raisin', 'Havrekiks til eftermiddagen.', '22–25'),
-                  goodie('clipper-rooibos', 'Koffeinfri te.', '22–25'),
-                  goodie('clearspring-tamari-graeskarkerner', 'Ristede græskarkerner i snackpose.', '26–29'),
-                  goodie('hampstead-citron-ingefaer', 'Ingefærte uden lakrids.', '26–29'),
-                  goodie('clipper-kamille', 'Til en rolig kop te om aftenen.', '30–33'),
-                  goodie('island-bakery-oat-raisin', 'Havrekiks til eftermiddagen.', '30–33'),
-                  goodie('biogan-dadler', 'Økologiske dadler. Mange spiser dadler i de sidste uger af graviditeten.', '34–37'),
-                  goodie('clipper-rooibos', 'Koffeinfri te.', '34–37'),
-                  goodie('biogan-dadler', 'Økologiske dadler til de sidste uger.', '38–40'),
-                  goodie('island-bakery-oat-raisin', 'Noget sødt til hospitalstasken.', '38–40')],
-    'ammeboks': [AMME_PACK,
-                 goodie('clipper-kamille', 'Til en rolig kop te mellem amningerne.'),
-                 goodie('island-bakery-oat-raisin', 'Noget sødt til amningen.')],
+    'klar-til-graviditet': [TTC_PACK],
+    'early-care': [EARLY_PACK],
+    'late-care': [LATE_PACK],
+    'ammeboks': [AMME_PACK],
 }
 
 # 'Hvem spørger vi til råds' – kun rådgivere vi faktisk arbejder med. Oprettes kun første gang; ret og udvid derefter i admin.

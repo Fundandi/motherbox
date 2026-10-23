@@ -144,13 +144,13 @@ class Package(models.Model):
 
     @property
     def box_image(self):
-        """Main product photo: daily-sachet pack and goodies side by side (AI-generated illustration)."""
+        """Main product photo: the box with two daily sachets on a kitchen table (AI-generated illustration)."""
         key = self._IMAGES.get(self.slug)
         return static(f'images/motherbox/side-{key}.jpg') if key else self.image_url
 
     @property
     def kit_image(self):
-        """The monthly gift box with the daily-sachet pack and goodies inside."""
+        """Close-up of the box with a hand holding one daily sachet (AI-generated illustration)."""
         key = self._IMAGES.get(self.slug)
         return static(f'images/motherbox/kit-{key}.jpg') if key else ''
 

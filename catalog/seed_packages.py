@@ -29,16 +29,16 @@ PACKAGE_TEXTS = [
                     'Når du har kvalme, kan det være svært at spise varieret. Så er det rart at have styr på de tilskud, Sundhedsstyrelsen anbefaler – i én daglig pose.',
         'why': 'Sundhedsstyrelsen anbefaler 400 µg folsyre til og med uge 12 og 10 µg D-vitamin hele graviditeten. Begge dele er i dagsposen. Folat bidrager til væksten af moderens væv under graviditeten, og D-vitamin bidrager til normal optagelse og udnyttelse af calcium.\n\n'
                'Ekstra jern venter vi med til uge 10, som Sundhedsstyrelsen anbefaler – så skifter dit abonnement automatisk til Late Care.\n\n'
-               'Vi har ikke ingefærtilskud med, fordi danske myndigheder fraråder ingefærkapsler og -shots til gravide. I stedet er der ingefær i almindelig fødevaremængde blandt goodies. Er kvalmen svær, så tal med din læge eller jordemoder.',
+               'Vi har ikke ingefærtilskud med, fordi danske myndigheder fraråder ingefærkapsler og -shots til gravide. Er kvalmen svær, så tal med din læge eller jordemoder.',
     },
     {
         'slug': 'late-care', 'position': 2, 'stage': 'pregnant', 'month': None, 'week_start': 10, 'week_end': 40,
         'title': 'Late Care',
-        'tagline': 'Fra uge 10 til fødslen: jern, D-vitamin og DHA i én daglig pose – og goodies, der følger din graviditet måned for måned.',
+        'tagline': 'Fra uge 10 til fødslen: jern, D-vitamin og DHA i én daglig pose.',
         'hero_nutrient': 'Jern fra uge 10',
         'image_url': U + 'photo-1541956799312-3f9df99e0006?w=900&q=80&fit=crop',
         'body_now': 'Fra uge 10 stiger din blodvolumen, og den vokser med 40–50 % i løbet af graviditeten. I andet trimester mineraliseres fosterets knogler, og hjernen vokser hurtigt. I tredje trimester lagrer fosteret jern og fedt til de første måneder.\n\n'
-                    'Sundhedsstyrelsens anbefalinger er de samme fra uge 10 og helt frem til fødslen. Derfor er dagsposen også den samme – mens goodies og vores brev skifter med din graviditetsuge.',
+                    'Sundhedsstyrelsens anbefalinger er de samme fra uge 10 og helt frem til fødslen. Derfor er dagsposen også den samme – mens vores brev skifter med din graviditetsuge.',
         'why': 'Sundhedsstyrelsen anbefaler 40–50 mg jern dagligt fra uge 10. Dagsposen indeholder 39 mg jern. Jern bidrager til normal dannelse af røde blodlegemer og hæmoglobin og til normal ilttransport i kroppen. '
                'D-vitamin (10 µg) fortsætter hele graviditeten.\n\n'
                + DHA_CLAIM + ' Dagsposen indeholder 500 mg DHA.\n\n'
