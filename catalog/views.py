@@ -15,7 +15,22 @@ def _active_packages():
 
 
 def home(request):
-    packages = _active_packages()
+    packages = _active_packages().prefetch_related(
+        Prefetch('contents', queryset=PackageItem.objects.select_related('item'))
+    )
+    # Which box covers which of Sundhedsstyrelsen's recommendations, with the amount in the daily pack.
+    lines = {p.pk: [ln for c in p.contents.all() if c.item.kind == Item.KIND_SUPPLEMENT for ln in c.item.nutrient_lines]
+             for p in packages}
+    for p in packages:
+        p.key_lines = lines[p.pk][:4]
+    sst_rows = []
+    for row in SST_BASELINE:
+        prefixes = ('d-vitamin', 'd3-vitamin') if row['nutrient'] == 'D-vitamin' else (row['nutrient'].lower(),)
+        boxes = []
+        for p in packages:
+            hit = next((ln for ln in lines[p.pk] if ln['name'].lower().startswith(prefixes)), None)
+            boxes.append({'label': p.label, 'amount': hit['amount'] if hit else None})
+        sst_rows.append(dict(row, boxes=boxes))
     manufacturers = (
         Manufacturer.objects.filter(items__kind=Item.KIND_SUPPLEMENT, items__in_packages__package__is_active=True)
         .annotate(n=Count('items__in_packages', distinct=True)).filter(n__gt=0).order_by('-n', 'name')
@@ -29,6 +44,7 @@ def home(request):
         'basis_price': subscription_price(None, extras=False),
         'min_single_price': packages.aggregate(m=Min('price'))['m'],
         'sst_baseline': SST_BASELINE,
+        'sst_rows': sst_rows,
     })
 
 

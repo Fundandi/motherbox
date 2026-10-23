@@ -11,18 +11,22 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%23C07859'/><text x='32' y='42' font-size='30' text-anchor='middle' fill='white' font-family='Georgia'>M</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: { extend: {
-        colors: { cream:'#FAF5EE', sand:'#F3EBE0', terra:'#C07859', terradark:'#A9654A', charcoal:'#333333', muted:'#7A7469', bar:'#4A4040', sage:'#5A9E7A' },
-        fontFamily: { serif:['"Cormorant Garamond"','Georgia','serif'], sans:['Jost','sans-serif'] },
+        colors: { cream:'#F7F6F3', sand:'#F2F0EB', terra:'#C07859', terradark:'#A9654A', charcoal:'#22262A', muted:'#6B6F72', bar:'#2E3436', sage:'#5A9E7A', sagedark:'#3F6F55', mint:'#EEF3EE', line:'#E6E4DF' },
+        fontFamily: { serif:['Newsreader','Georgia','serif'], logo:['"Cormorant Garamond"','Georgia','serif'], sans:['Jost','sans-serif'] },
       } }
     }
   </script>
   <style>
-    body { font-family:'Jost',sans-serif; background:#FAF5EE; color:#333; -webkit-font-smoothing:antialiased; }
-    h1,h2,h3,.serif { font-family:'Cormorant Garamond',Georgia,serif; }
+    body { font-family:'Jost',sans-serif; background:#fff; color:#22262A; -webkit-font-smoothing:antialiased; }
+    h1,h2,h3,.serif { font-family:'Newsreader',Georgia,serif; letter-spacing:-.01em; }
+    .font-logo { font-family:'Cormorant Garamond',Georgia,serif; letter-spacing:.12em; }
+    .eyebrow { font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; font-weight:500; color:#3F6F55; }
+    .chip { display:inline-flex; align-items:center; gap:.35rem; font-size:.72rem; padding:.3rem .6rem; border-radius:100px; border:1px solid #E6E4DF; background:#fff; color:#22262A; white-space:nowrap; }
+    .chip-sst { background:#EEF3EE; border-color:#D5E3D7; color:#2F5A43; }
     .pill { border-radius:100px; }
     .btn-terra { background:#C07859; color:#fff; border:1px solid #C07859; transition:background .2s; }
     .btn-terra:hover { background:#A9654A; border-color:#A9654A; }
@@ -32,7 +36,7 @@
     .nav-link { font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:#333; transition:color .2s; }
     .nav-link:hover { color:#C07859; }
     .prose-mb p { margin-bottom:1rem; line-height:1.75; }
-    .prose-mb h2 { font-family:'Cormorant Garamond',Georgia,serif; font-size:1.9rem; font-weight:300; margin:2.5rem 0 .75rem; color:#333; }
+    .prose-mb h2 { font-family:'Newsreader',Georgia,serif; font-size:1.9rem; font-weight:300; margin:2.5rem 0 .75rem; color:#333; }
     .prose-mb h3 { font-weight:600; margin:1.5rem 0 .5rem; color:#333; }
     .prose-mb ul { list-style:disc; padding-left:1.25rem; margin-bottom:1rem; }
     .prose-mb li { margin-bottom:.35rem; line-height:1.7; }
@@ -47,7 +51,7 @@
 <body>
 
 
-  <header class="sticky top-0 bg-cream/95 backdrop-blur z-50 border-b border-stone-200">
+  <header class="sticky top-0 bg-white/95 backdrop-blur z-50 border-b border-line">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center">
       <nav class="hidden lg:flex items-center gap-7 flex-1" aria-label="Hovedmenu">
         <a href="{% url 'package_list' %}" class="nav-link">Boksene</a>
@@ -56,7 +60,7 @@
         <a href="{% url 'faq' %}" class="nav-link">FAQ</a>
       </nav>
       <a href="{% url 'home' %}" class="flex-1 lg:flex-none lg:text-center">
-        <span class="serif font-light text-2xl md:text-3xl tracking-widest text-charcoal">Motherbox</span>
+        <span class="font-logo font-light text-2xl md:text-3xl text-charcoal">Motherbox</span>
       </a>
       <div class="flex items-center gap-4 flex-1 justify-end">
         <a href="{% url 'home' %}#bokse" class="hidden md:inline-flex pill btn-outline text-xs track-wide px-5 py-2.5 font-medium">FIND MIN BOKS</a>
@@ -65,7 +69,7 @@
         </button>
       </div>
     </div>
-    <div id="mobileMenu" class="hidden lg:hidden bg-cream border-t border-stone-200 px-6 py-4 space-y-3">
+    <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-line px-6 py-4 space-y-3">
       <a href="{% url 'package_list' %}" class="block nav-link py-1">Boksene</a>
       <a href="{% url 'manufacturer_list' %}" class="block nav-link py-1">Producent</a>
       <a href="{% url 'science' %}" class="block nav-link py-1">Kilder</a>
@@ -94,7 +98,7 @@
   <footer class="bg-bar text-stone-300 pt-16 pb-10">
     <div class="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
       <div class="col-span-2">
-        <p class="serif text-white font-light text-3xl tracking-widest mb-4">Motherbox</p>
+        <p class="font-logo text-white font-light text-3xl mb-4">Motherbox</p>
         <p class="text-sm leading-relaxed max-w-sm">Én boks om måneden med 30 dagsposer efter Sundhedsstyrelsens anbefalinger — til tiden før, under og efter graviditeten. Zentabox-dagsposer, produceret af JemoPharm på Møn.</p>
         <p class="text-xs text-stone-400 mt-5 leading-relaxed max-w-sm">Kosttilskud kan ikke erstatte en varieret kost. Tal altid med din læge eller jordemoder, hvis du har en sygdom, tager medicin eller er i tvivl.</p>
       </div>
