@@ -138,6 +138,10 @@ class Package(models.Model):
     _IMAGES = {'klar-til-graviditet': 'klar', 'early-care': 'early', 'late-care': 'late', 'ammeboks': 'amme'}
 
     @property
+    def image_key(self):
+        return self._IMAGES.get(self.slug, '')
+
+    @property
     def box_image(self):
         """Main product photo: daily-sachet pack and goodies side by side (AI-generated illustration)."""
         key = self._IMAGES.get(self.slug)

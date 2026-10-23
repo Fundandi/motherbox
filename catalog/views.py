@@ -45,6 +45,14 @@ def home(request):
         'min_single_price': packages.aggregate(m=Min('price'))['m'],
         'sst_baseline': SST_BASELINE,
         'sst_rows': sst_rows,
+        'why_rows': [
+            'Følger Sundhedsstyrelsens anbefalinger',
+            'Bokse, der skifter med din graviditetsuge',
+            'Én dagspose – 30 poser pr. boks',
+            'Produceret i Danmark af JemoPharm',
+            'Fuld varedeklaration før køb',
+            'Goodies i hver boks · ingen binding',
+        ],
     })
 
 

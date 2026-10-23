@@ -11,25 +11,25 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%23C07859'/><text x='32' y='42' font-size='30' text-anchor='middle' fill='white' font-family='Georgia'>M</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: { extend: {
-        colors: { cream:'#F7F6F3', sand:'#F2F0EB', terra:'#C07859', terradark:'#A9654A', charcoal:'#22262A', muted:'#6B6F72', bar:'#2E3436', sage:'#5A9E7A', sagedark:'#3F6F55', mint:'#EEF3EE', line:'#E6E4DF' },
-        fontFamily: { serif:['Newsreader','Georgia','serif'], logo:['"Cormorant Garamond"','Georgia','serif'], sans:['Jost','sans-serif'] },
+        colors: { cream:'#F1EDE6', sand:'#ECE6DC', paper:'#F8F7F5', sagebar:'#BAC9BF', sagelight:'#E7EDE8', blush:'#F0DCD3', green:'#4F6B5A', terra:'#C07859', terradark:'#A9654A', charcoal:'#333333', muted:'#6B6F72', bar:'#2E3436', sage:'#5A9E7A', sagedark:'#3F6F55', mint:'#EEF3EE', line:'#E6E4DF' },
+        fontFamily: { serif:['Newsreader','Georgia','serif'], logo:['"Cormorant Garamond"','Georgia','serif'], sans:['"DM Sans"','sans-serif'] },
       } }
     }
   </script>
   <style>
-    body { font-family:'Jost',sans-serif; background:#fff; color:#22262A; -webkit-font-smoothing:antialiased; }
+    body { font-family:'DM Sans',sans-serif; background:#F8F7F5; color:#333; -webkit-font-smoothing:antialiased; }
     h1,h2,h3,.serif { font-family:'Newsreader',Georgia,serif; letter-spacing:-.01em; }
     .font-logo { font-family:'Cormorant Garamond',Georgia,serif; letter-spacing:.12em; }
     .eyebrow { font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; font-weight:500; color:#3F6F55; }
     .chip { display:inline-flex; align-items:center; gap:.35rem; font-size:.72rem; padding:.3rem .6rem; border-radius:100px; border:1px solid #E6E4DF; background:#fff; color:#22262A; white-space:nowrap; }
     .chip-sst { background:#EEF3EE; border-color:#D5E3D7; color:#2F5A43; }
     .pill { border-radius:100px; }
-    .btn-terra { background:#C07859; color:#fff; border:1px solid #C07859; transition:background .2s; }
-    .btn-terra:hover { background:#A9654A; border-color:#A9654A; }
+    .btn-terra { background:#4F6B5A; color:#fff; border:1px solid #4F6B5A; transition:background .2s; }
+    .btn-terra:hover { background:#3E5747; border-color:#3E5747; }
     .btn-outline { background:transparent; color:#333; border:1px solid #333; transition:all .2s; }
     .btn-outline:hover { background:#333; color:#fff; }
     .track-wide { letter-spacing:.12em; }
@@ -49,9 +49,14 @@
   {% block extra_head %}{% endblock %}
 </head>
 <body>
+  {% if not STRIPE_ENABLED %}
+  <div class="bg-sagebar text-charcoal text-xs md:text-sm text-center py-2.5 px-4 track-wide">
+    <span class="uppercase font-medium">Åbner snart</span><span class="hidden sm:inline"> · Vi åbner for bestillinger om kort tid</span>
+  </div>
+  {% endif %}
 
 
-  <header class="sticky top-0 bg-white/95 backdrop-blur z-50 border-b border-line">
+  <header class="sticky top-0 bg-paper/95 backdrop-blur z-50 border-b border-line">
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center">
       <nav class="hidden lg:flex items-center gap-7 flex-1" aria-label="Hovedmenu">
         <a href="{% url 'package_list' %}" class="nav-link">Boksene</a>
@@ -69,7 +74,7 @@
         </button>
       </div>
     </div>
-    <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-line px-6 py-4 space-y-3">
+    <div id="mobileMenu" class="hidden lg:hidden bg-paper border-t border-line px-6 py-4 space-y-3">
       <a href="{% url 'package_list' %}" class="block nav-link py-1">Boksene</a>
       <a href="{% url 'manufacturer_list' %}" class="block nav-link py-1">Producent</a>
       <a href="{% url 'science' %}" class="block nav-link py-1">Kilder</a>
@@ -87,11 +92,6 @@
   </div>
   {% endif %}
 
-  {% if not STRIPE_ENABLED %}
-  <div class="bg-terra text-white text-xs md:text-sm text-center py-2.5 px-4 track-wide">
-    <span class="uppercase font-medium">Åbner snart</span><span class="hidden sm:inline"> · Vi åbner for bestillinger om kort tid</span>
-  </div>
-  {% endif %}
 
   <main>{% block content %}{% endblock %}</main>
 

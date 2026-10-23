@@ -3,224 +3,203 @@
 {% block extra_head %}
 <style>
   @keyframes mb-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .mb-marquee { animation: mb-marquee 38s linear infinite; }
+  .mb-marquee { animation: mb-marquee 40s linear infinite; }
   .mb-marquee:hover { animation-play-state: paused; }
   @media (prefers-reduced-motion: reduce) { .mb-marquee { animation: none; } }
+  .quiz-card[aria-pressed="true"] { outline: 2px solid #4F6B5A; outline-offset: 2px; }
+  .quiz-card[aria-pressed="true"] .quiz-label { background:#4F6B5A; color:#fff; }
+  .role-tab[aria-selected="true"] { background:#E6E0D3; border-color:#CFC6B4; color:#333; }
 </style>
 {% endblock %}
 {% block content %}
 
 <!-- HERO -->
-<section class="bg-white">
-  <div class="max-w-7xl mx-auto px-4 md:px-6 pt-4 md:pt-10 pb-12 md:pb-20 grid md:grid-cols-12 gap-8 md:gap-12 items-center">
-    <div class="md:col-span-7 md:order-2 relative">
-      <div class="overflow-hidden rounded-2xl md:rounded-3xl bg-cream">
-        <img src="{% static 'images/motherbox/hero-bord.jpg' %}" alt="Camilla Stær, stifter af Motherbox, ved et bord med de fire Motherbox-bokse" class="w-full aspect-[3/2] md:aspect-[5/4] object-cover" style="object-position:82% 60%;">
-      </div>
-      {% include "catalog/partials/jemopharm_stamp.html" with cls="absolute w-16 md:w-32 left-3 top-3 md:-left-10 md:top-auto md:bottom-10 -rotate-12 drop-shadow-sm" sid="h" %}
-    </div>
-    <div class="md:col-span-5 md:order-1 text-center md:text-left">
-      <p class="eyebrow mb-4 md:mb-5">Fra ønske til amning</p>
-      <h1 class="serif text-[2.5rem] leading-[1.06] md:text-6xl md:leading-[1.04] font-light text-charcoal mb-5 md:mb-6">Vitaminer til hver fase af graviditeten</h1>
-      <p class="text-muted font-light text-base md:text-lg leading-relaxed mb-8 max-w-md mx-auto md:mx-0">1 månedlig boks med kosttilskud og goodies, som tager vare på dig igennem din graviditet.</p>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-        <a href="#bokse" class="pill btn-terra inline-block px-10 py-4 text-xs track-wide uppercase font-medium">Find din boks</a>
-        <a href="#anbefalinger" class="pill btn-outline inline-block px-8 py-4 text-xs track-wide uppercase font-medium">Se indholdet</a>
-      </div>
-      <dl class="mt-10 pt-6 border-t border-line grid grid-cols-2 gap-x-8 gap-y-4 max-w-md mx-auto md:mx-0 text-left">
-        <div><dt class="text-[10px] uppercase track-wide text-muted">Følger</dt><dd class="serif text-lg text-charcoal leading-tight">Sundhedsstyrelsen</dd></div>
-        <div><dt class="text-[10px] uppercase track-wide text-muted">Produceret af</dt><dd class="serif text-lg text-charcoal leading-tight">JemoPharm</dd></div>
-        <div><dt class="text-[10px] uppercase track-wide text-muted">Rådgivning fra</dt><dd class="serif text-lg text-charcoal leading-tight">Ernæringsekspert</dd></div>
-        <div><dt class="text-[10px] uppercase track-wide text-muted">Startet af</dt><dd class="serif text-lg text-charcoal leading-tight">Sygeplejerske</dd></div>
-      </dl>
+<section class="relative overflow-hidden bg-cream">
+  <img src="{% static 'images/motherbox/hero-bord.jpg' %}" alt="Camilla Stær, stifter af Motherbox, ved et bord med de fire Motherbox-bokse" class="hidden md:block absolute inset-0 w-full h-full object-cover" style="object-position:right center;">
+  <div class="md:hidden">
+    <img src="{% static 'images/motherbox/hero-bord.jpg' %}" alt="Camilla Stær, stifter af Motherbox, ved et bord med de fire Motherbox-bokse" class="w-full" style="aspect-ratio:4/3;object-fit:cover;object-position:85% 70%;">
+  </div>
+  <div class="relative max-w-7xl mx-auto px-6 flex items-center md:min-h-[640px]">
+    <div class="w-full md:max-w-lg pt-8 pb-12 md:py-24 text-center md:text-left">
+      <p class="text-xs md:text-sm track-wide uppercase font-medium text-charcoal mb-4">Fra ønske til amning</p>
+      <h1 class="serif text-[2.6rem] leading-[1.05] md:text-[4rem] md:leading-[1.03] font-light text-black mb-8">Vitaminer til hver fase af graviditeten</h1>
+      <a href="#bokse" class="pill btn-terra inline-block px-9 py-3.5 text-xs track-wide uppercase font-medium">Find din boks</a>
     </div>
   </div>
 </section>
 
-<!-- TRUST MARQUEE -->
-<div class="overflow-hidden py-3.5 bg-mint border-y border-line" aria-label="Startet af en sygeplejerske · I samarbejde med ernæringseksperter · Dansk produceret af JemoPharm">
-  <div class="mb-marquee flex w-max text-[11px] md:text-xs track-wide uppercase font-medium text-sagedark" aria-hidden="true">
-    {% for _ in "12" %}<div class="flex items-center"><span class="mx-8 whitespace-nowrap">Startet af en sygeplejerske</span><span class="opacity-40">·</span><span class="mx-8 whitespace-nowrap">I samarbejde med ernæringseksperter</span><span class="opacity-40">·</span><span class="mx-8 whitespace-nowrap">Dansk produceret af JemoPharm</span><span class="opacity-40">·</span><span class="mx-8 whitespace-nowrap">Følger Sundhedsstyrelsens anbefalinger</span><span class="opacity-40">·</span><span class="mx-8 whitespace-nowrap">30 dagsposer · én pakning pr. måned</span><span class="opacity-40">·</span></div>{% endfor %}
+<!-- TICKER -->
+<div class="overflow-hidden py-3.5 bg-paper border-b border-line" aria-label="Startet af en sygeplejerske · Følger Sundhedsstyrelsen · Dansk produceret af JemoPharm">
+  <div class="mb-marquee flex w-max text-[11px] md:text-xs track-wide uppercase font-medium text-charcoal" aria-hidden="true">
+    {% for _ in "12" %}<div class="flex items-center"><span class="mx-7 whitespace-nowrap">Startet af en sygeplejerske</span><span class="opacity-40">|</span><span class="mx-7 whitespace-nowrap">Følger Sundhedsstyrelsen</span><span class="opacity-40">|</span><span class="mx-7 whitespace-nowrap">Dansk produceret af JemoPharm</span><span class="opacity-40">|</span><span class="mx-7 whitespace-nowrap">30 dagsposer pr. boks</span><span class="opacity-40">|</span><span class="mx-7 whitespace-nowrap">Fuld varedeklaration</span><span class="opacity-40">|</span><span class="mx-7 whitespace-nowrap">Ingen binding</span><span class="opacity-40">|</span></div>{% endfor %}
   </div>
 </div>
 
-<!-- THE 4 BOXES -->
-<section id="bokse" class="py-20 md:py-24 bg-white scroll-mt-20">
-  <div class="max-w-7xl mx-auto px-4 md:px-6">
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-12">
-      <div>
-        <p class="eyebrow mb-3">4 bokse · 4 faser</p>
-        <h2 class="serif text-4xl md:text-5xl font-light">Vælg din fase</h2>
-      </div>
-      <p class="text-muted font-light max-w-md">Hver boks har 30 dagsposer sammensat til netop din fase. Med abonnement skifter boksen automatisk, når du går ind i en ny fase.</p>
+<!-- EVERY STAGE -->
+<section id="bokse" class="py-16 md:py-24 bg-paper scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-4 md:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-10 md:mb-12">
+      <h2 class="serif text-[2rem] md:text-[2.5rem] leading-tight font-normal text-charcoal mb-4">Kosttilskud til<br>hver fase af dig.</h2>
+      <p class="text-sm md:text-base text-charcoal/80">Hele din vitaminrutine, gjort enkel. Én boks om måneden med 30 dagsposer, sammensat efter hvor du er i forløbet.</p>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
       {% for p in packages %}
-      <a href="{{ p.get_absolute_url }}" class="group flex flex-col rounded-2xl border border-line bg-white overflow-hidden hover:border-terra/60 hover:shadow-sm transition">
-        <div class="overflow-hidden bg-cream" style="aspect-ratio:4/3;">
+      <a href="{{ p.get_absolute_url }}" class="group block bg-cream border border-sand hover:border-green/50 transition">
+        <div class="overflow-hidden" style="aspect-ratio:4/5;">
           <img src="{{ p.box_image }}" alt="Motherbox {{ p.label }}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
         </div>
-        <div class="p-5 flex flex-col flex-1">
-          <p class="eyebrow mb-1.5">{{ p.weeks_label }}</p>
-          <p class="serif text-2xl font-light mb-4 group-hover:text-terra">{{ p.label }}</p>
-          <div class="flex flex-wrap gap-1.5 mb-5">
-            {% for ln in p.key_lines %}<span class="chip {% if ln.sst %}chip-sst{% endif %}">{{ ln.name }}{% if ln.amount %} <span class="opacity-70">{{ ln.amount }}</span>{% endif %}</span>{% endfor %}
-          </div>
-          <div class="mt-auto pt-4 border-t border-line flex items-center justify-between text-sm">
-            <span><span class="font-medium">{{ sub_price|floatformat:0 }} kr.</span><span class="text-muted font-light"> / md.</span></span>
-            <span class="text-terra text-xs track-wide uppercase">Se indhold →</span>
-          </div>
+        <div class="px-3 py-4 text-center">
+          <p class="text-sm md:text-[15px] font-medium text-charcoal">{{ p.label }}</p>
+          <p class="text-[11px] text-muted mt-0.5">{{ p.weeks_label }}</p>
         </div>
       </a>
       {% endfor %}
     </div>
-    <p class="text-xs text-muted font-light mt-5"><span class="chip chip-sst mr-1">Grøn</span> følger Sundhedsstyrelsens anbefaling. Det øvrige indhold står som tillæg på hver boks.</p>
   </div>
 </section>
 
-<!-- SST FIRST: CLINICAL TABLE -->
-<section id="anbefalinger" class="py-20 md:py-24 bg-cream scroll-mt-20">
-  <div class="max-w-6xl mx-auto px-4 md:px-6">
-    <div class="grid md:grid-cols-12 gap-6 md:gap-12 mb-10">
-      <div class="md:col-span-5">
-        <p class="eyebrow mb-3">Sundhedsstyrelsen først</p>
-        <h2 class="serif text-4xl md:text-5xl font-light leading-tight">Det officielle grundlag – fase for fase</h2>
-      </div>
-      <p class="md:col-span-7 md:pt-8 text-muted font-light leading-relaxed">Sundhedsstyrelsen anbefaler fire kosttilskud før, under og efter graviditeten. Her kan du se anbefalingen, og hvor meget der er i dagsposen i hver boks.</p>
-    </div>
-    <div class="rounded-2xl border border-line bg-white overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm min-w-[720px]">
-          <thead>
-            <tr class="text-left text-[10px] track-wide uppercase text-muted border-b border-line">
-              <th class="p-4 md:p-5 font-medium">Næringsstof</th>
-              <th class="p-4 md:p-5 font-medium">Anbefaling</th>
-              {% for p in packages %}<th class="p-4 md:p-5 font-medium text-center">{{ p.label }}</th>{% endfor %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in sst_rows %}
-            <tr class="border-b border-line last:border-0 align-top">
-              <td class="p-4 md:p-5"><p class="serif text-xl">{{ row.nutrient }}</p></td>
-              <td class="p-4 md:p-5"><p class="font-medium">{{ row.dose }}</p><p class="text-xs text-muted font-light mt-0.5 max-w-[220px]">{{ row.period }}</p></td>
-              {% for b in row.boxes %}<td class="p-4 md:p-5 text-center">{% if b.amount %}<span class="chip chip-sst">{{ b.amount }}</span>{% else %}<span class="text-stone-300">—</span>{% endif %}</td>{% endfor %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-5 text-xs text-muted font-light">
-      <span>Kilde: Sundhedsstyrelsen, <em>Ernæring, mad og måltider til gravide og ammende</em>. Calcium anbefales kun, hvis du får mindre end ½ liter mælk om dagen.</span>
-      <a href="{% url 'science' %}" class="text-terra track-wide uppercase whitespace-nowrap hover:underline">Fuldt indhold &amp; kilder →</a>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="py-20 md:py-24 bg-white">
-  <div class="max-w-6xl mx-auto px-4 md:px-6">
-    <p class="eyebrow mb-3 text-center">Sådan fungerer det</p>
-    <h2 class="serif text-4xl md:text-5xl font-light text-center mb-12">Én boks. Én måned. Én pose om dagen.</h2>
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="rounded-2xl border border-line p-7">
-        <p class="serif text-terra text-3xl mb-4">01</p>
-        <p class="font-medium mb-2">Vælg din fase</p>
-        <p class="text-sm text-muted font-light leading-relaxed">Klar til graviditet, de første uger, uge 10–40 eller amning. Er du gravid, finder vi boksen ud fra din terminsdato.</p>
-      </div>
-      <div class="rounded-2xl border border-line p-7">
-        <p class="serif text-terra text-3xl mb-4">02</p>
-        <p class="font-medium mb-2">Få 30 dagsposer</p>
-        <p class="text-sm text-muted font-light leading-relaxed">Én original pakning med 30 dagsposer – præcis en måned – plus goodies. Fri fragt.</p>
-      </div>
-      <div class="rounded-2xl border border-line p-7">
-        <p class="serif text-terra text-3xl mb-4">03</p>
-        <p class="font-medium mb-2">Boksen følger dig</p>
-        <p class="text-sm text-muted font-light leading-relaxed">Abonnementet skifter selv til næste fase. Ingen binding – opsig når som helst.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOUNDER STORY -->
-<section class="py-20 md:py-24 bg-cream">
-  <div class="max-w-6xl mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-    <div>
-      <img src="{% static 'images/motherbox/camilla-bord.jpg' %}" alt="Camilla Stær, stifter af Motherbox" loading="lazy" class="w-full rounded-2xl bg-sand" style="aspect-ratio:4/5;object-fit:cover;">
-    </div>
-    <div>
-      <p class="eyebrow mb-4">Vores historie</p>
-      <h2 class="serif text-4xl md:text-5xl font-light leading-tight mb-6">Startet af en sygeplejerske, der selv ledte efter det</h2>
-      <div class="text-muted font-light leading-relaxed space-y-4">
-        <p>Da Camilla Stær blev gravid, ledte hun efter en nem løsning: de rigtige kosttilskud, samlet ét sted og leveret hver måned. Den fandtes ikke. I stedet stod hun på apoteket og købte det hele enkeltvis – og endte med halvtomme bøtter i køkkenskabet.</p>
-        <p>Camilla er uddannet sygeplejerske. Derfor startede hun Motherbox: én boks om måneden med 30 dagsposer fra Zentabox, der følger Sundhedsstyrelsens anbefalinger for netop din fase – og lidt forkælelse til dig.</p>
-      </div>
-      <div class="mt-8 pt-6 border-t border-line">
-        <p class="serif text-2xl font-light">Camilla Stær</p>
-        <p class="text-xs track-wide uppercase text-muted">Sygeplejerske · Stifter af Motherbox</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHO WE ASK FOR ADVICE -->
+<!-- WHO WE ASK -->
 {% if advisors %}
-<section class="py-20 md:py-24 bg-white">
-  <div class="max-w-6xl mx-auto px-4 md:px-6">
-    <div class="text-center max-w-2xl mx-auto mb-12">
-      <p class="eyebrow mb-4">Fagligheden bag</p>
-      <h2 class="serif text-4xl md:text-5xl font-light leading-tight mb-5">Hvem spørger vi til råds</h2>
-      <p class="text-muted font-light leading-relaxed">Vi spørger fagfolk, når vi sammensætter boksene og skriver om graviditetens faser. Kredsen bliver udvidet løbende.</p>
+<section class="py-16 md:py-24 bg-paper border-t border-line">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+    <h2 class="serif text-[2rem] md:text-[2.5rem] leading-tight font-normal text-charcoal mb-8">Startet af en sygeplejerske.<br>Sammensat med fagfolk.</h2>
+    <div class="flex flex-wrap justify-center gap-2 mb-10" role="tablist">
+      {% for a in advisors %}<button type="button" role="tab" class="role-tab pill border border-line bg-white/60 px-6 py-2.5 text-[11px] track-wide uppercase font-medium text-muted" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-role="{{ a.slug }}">{{ a.role }}</button>{% endfor %}
     </div>
-    <div class="grid sm:grid-cols-2 {% if advisors|length > 2 %}lg:grid-cols-3 max-w-6xl{% else %}max-w-4xl{% endif %} gap-5 mx-auto">
-      {% for a in advisors %}
-      <div class="rounded-2xl border border-line p-8 text-center">
-        <p class="serif text-3xl font-light mb-3">{{ a.role }}</p>
-        <p class="text-sm text-muted font-light leading-relaxed">{{ a.advises_on }}</p>
+    {% for a in advisors %}
+    <div class="role-panel max-w-xl mx-auto {% if not forloop.first %}hidden{% endif %}" data-role="{{ a.slug }}" role="tabpanel">
+      <div class="w-24 h-24 rounded-full bg-cream border border-sand mx-auto mb-5 flex items-center justify-center">
+        <svg viewBox="0 0 48 48" class="w-10 h-10 text-green" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M24 42c0-12 4-22 16-30-14 0-22 8-22 20"/><path d="M24 42c0-8-3-15-12-20 10 0 14 6 14 13"/></svg>
       </div>
-      {% endfor %}
+      <p class="text-xs track-wide uppercase font-medium text-charcoal mb-2">{{ a.role }}</p>
+      <p class="text-sm text-muted leading-relaxed">{{ a.advises_on }}</p>
     </div>
-    <p class="text-center text-xs text-muted font-light mt-6 max-w-xl mx-auto">Rådgiverne bidrager med faglig viden til vores indhold. De udtaler sig ikke om og anbefaler ikke bestemte produkter.</p>
+    {% endfor %}
+    <p class="text-[11px] text-muted mt-8 max-w-lg mx-auto">Rådgiverne bidrager med faglig viden til vores indhold. De udtaler sig ikke om og anbefaler ikke bestemte produkter. Kredsen udvides løbende.</p>
+    <a href="{% url 'about' %}" class="pill inline-block mt-8 px-8 py-3 text-[11px] track-wide uppercase font-medium bg-[#8FA596] text-charcoal hover:bg-[#7F978A] transition">Læs vores historie</a>
   </div>
 </section>
 {% endif %}
 
-<!-- PRODUCED BY JEMOPHARM -->
-<section class="py-20 md:py-24 bg-cream">
+<!-- WHY MOTHERBOX -->
+<section class="relative py-12 md:py-16" style="background:#E9E2D6 url('{% static 'images/motherbox/texture.jpg' %}') center/cover;">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="bg-paper rounded-lg px-5 md:px-12 py-10 md:py-12">
+      <h2 class="serif text-[2rem] md:text-[2.5rem] font-normal text-center text-charcoal mb-8">Hvorfor Motherbox?</h2>
+      <div class="grid grid-cols-[1fr_84px] md:grid-cols-[1fr_116px]">
+        <div></div>
+        <div class="bg-blush rounded-t-lg pt-3 pb-1 text-center font-logo text-xl md:text-2xl text-charcoal">Motherbox</div>
+        {% for f in why_rows %}
+        <div class="border-t border-charcoal/30 py-3.5 md:py-4 pr-3 text-base md:text-[1.35rem] text-charcoal leading-snug">{{ f }}</div>
+        <div class="bg-blush border-t border-charcoal/30 flex items-center justify-center {% if forloop.last %}rounded-b-lg{% endif %}"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        {% endfor %}
+      </div>
+      <div class="mt-5 bg-cream rounded-md px-5 py-4 flex items-center justify-between gap-3">
+        <span class="text-base md:text-[1.35rem] text-charcoal">Pris pr. måned</span>
+        <span class="flex items-center gap-3"><span class="hidden sm:inline bg-blush text-[11px] track-wide uppercase px-2 py-1">Inkl. goodies &amp; fragt</span><span class="text-xl md:text-[1.5rem] text-charcoal">{{ sub_price|floatformat:0 }} kr.</span></span>
+      </div>
+      <p class="text-[10px] text-muted text-center mt-3">Enkeltboks uden abonnement: {{ min_single_price|floatformat:0 }} kr. Ingen binding på abonnementet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="py-16 md:py-24 bg-sagelight">
+  <div class="max-w-5xl mx-auto px-4 md:px-6 text-center">
+    <h2 class="text-[1.4rem] md:text-[1.75rem] font-normal text-charcoal mb-4" style="font-family:'DM Sans',sans-serif;">Hvor er du i forløbet? Vi finder den rigtige boks.</h2>
+    <p class="text-sm md:text-base text-charcoal/80 mb-8">Vælg din fase. Er du gravid, kan du også bruge din terminsdato.</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto mb-8" id="quiz">
+      {% for p in packages %}
+      <button type="button" class="quiz-card text-left bg-white border border-line overflow-hidden" aria-pressed="false" data-url="{{ p.get_absolute_url }}">
+        <span class="quiz-label block text-center text-[12px] md:text-[13px] py-2.5 border-b border-line transition">{% if p.stage == 'ttc' %}Prøver at blive gravid{% elif p.stage == 'postpartum' %}Ammer{% else %}Gravid · {{ p.weeks_label|lower }}{% endif %}</span>
+        <img src="{% static 'images/motherbox/stage-' %}{{ p.image_key }}.jpg" alt="" loading="lazy" class="w-full aspect-square object-cover">
+      </button>
+      {% endfor %}
+    </div>
+    <button type="button" id="quizGo" class="pill border border-charcoal/30 px-7 py-2.5 text-[12px] track-wide uppercase text-charcoal/40 transition" disabled>Fortsæt</button>
+    <form method="post" action="{% url 'start' %}" class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">
+      {% csrf_token %}<input type="hidden" name="stage" value="pregnant">
+      <label for="due" class="text-charcoal/80">Eller indtast terminsdato:</label>
+      <input id="due" type="date" name="due_date" required class="border border-line bg-white px-3 py-2 text-sm">
+      <button class="pill btn-terra px-6 py-2.5 text-[11px] track-wide uppercase font-medium">Find boks</button>
+    </form>
+  </div>
+</section>
+
+<!-- FORMULATED & TESTED -->
+<section class="py-16 md:py-24 bg-paper">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 grid md:grid-cols-12 gap-10 items-center">
+    <div class="md:col-span-5">
+      <h2 class="serif text-[2rem] md:text-[2.5rem] leading-tight font-light text-charcoal mb-4">Omhyggeligt sammensat,<br>tydeligt deklareret.</h2>
+      <p class="text-charcoal/80 mb-6">Se præcis hvad der er i hver dagspose, og hvor det kommer fra – før du køber.</p>
+      <a href="{% url 'science' %}" class="pill btn-outline inline-block px-7 py-3 text-[11px] track-wide uppercase font-medium">Se anbefalinger &amp; kilder</a>
+    </div>
+    <div class="md:col-span-7 grid sm:grid-cols-2 gap-px bg-line border border-line">
+      <div class="bg-paper p-6"><p class="serif text-xl text-charcoal mb-1.5">Følger Sundhedsstyrelsen</p><p class="text-sm text-muted">Folsyre, D-vitamin og jern i de doser og faser, Sundhedsstyrelsen anbefaler.</p></div>
+      <div class="bg-paper p-6"><p class="serif text-xl text-charcoal mb-1.5">Dansk produceret</p><p class="text-sm text-muted">Zentabox-dagsposer, produceret af JemoPharm i Stege på Møn siden 1986.</p></div>
+      <div class="bg-paper p-6"><p class="serif text-xl text-charcoal mb-1.5">Kun godkendte anprisninger</p><p class="text-sm text-muted">Vi bruger kun sundhedsanprisninger, som EU har godkendt – og henviser til kilden.</p></div>
+      <div class="bg-paper p-6"><p class="serif text-xl text-charcoal mb-1.5">Fuld varedeklaration</p><p class="text-sm text-muted">Alle næringsstoffer, doser og ingredienser står på hver boks. Tillæg er markeret.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER QUOTE ON IMAGE -->
+<section class="relative overflow-hidden">
+  <img src="{% static 'images/motherbox/hero-camilla.jpg' %}" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-cover" style="object-position:80% center;">
+  <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/35 to-black/10"></div>
+  <div class="relative max-w-7xl mx-auto px-6 py-24 md:py-36 text-center md:text-left text-white"><div class="md:max-w-xl">
+    <p class="text-[11px] md:text-xs track-wide uppercase font-medium mb-4">Startet af sygeplejerske Camilla Stær</p>
+    <h3 class="serif text-[2rem] md:text-[2.5rem] font-normal mb-6">Støtte til hver fase</h3>
+    <p class="serif text-xl md:text-2xl font-light leading-relaxed mb-6">“Da jeg blev gravid, ledte jeg efter én nem løsning: de rigtige kosttilskud, samlet ét sted og leveret hver måned. Den fandtes ikke – så jeg startede Motherbox.”</p>
+    <p class="text-xs track-wide uppercase font-medium">Camilla Stær · Stifter</p>
+  </div></div>
+</section>
+
+<!-- KNOWLEDGE -->
+<section class="py-16 md:py-24 bg-paper">
   <div class="max-w-6xl mx-auto px-4 md:px-6">
-    <div class="text-center max-w-2xl mx-auto mb-12">
-      <p class="eyebrow mb-4">Dagsposerne</p>
-      <h2 class="serif text-4xl md:text-5xl font-light leading-tight mb-5">Produceret i Danmark – på Møn</h2>
-      <p class="text-muted font-light leading-relaxed">Dagsposerne kommer fra Zentabox og produceres af JemoPharm A/S i Stege, som har lavet kosttilskud og naturlægemidler siden 1986 og bl.a. står bag VitaCare, der sælges på danske apoteker. Du får dem i original, uåbnet pakning.</p>
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h2 class="serif text-[2rem] md:text-[2.5rem] leading-tight font-normal text-charcoal mb-4">Vi gør det tunge arbejde for dig.</h2>
+      <p class="text-charcoal/80">Gennemsigtighed om indhold, producent og kilder – så du ved, hvad du tager.</p>
     </div>
     <div class="grid md:grid-cols-3 gap-5">
-      <div class="rounded-2xl bg-white border border-line p-8 text-center">
-        <p class="serif text-5xl font-light text-terra mb-3">1986</p>
-        <p class="font-medium mb-1">JemoPharm A/S</p>
-        <p class="text-sm text-muted font-light">Har udviklet kosttilskud og naturlægemidler i snart 40 år.</p>
-      </div>
-      <div class="rounded-2xl bg-white border border-line p-8 text-center">
-        <p class="serif text-5xl font-light text-terra mb-3">Møn</p>
-        <p class="font-medium mb-1">Produceret i Stege</p>
-        <p class="text-sm text-muted font-light">Dansk produktion – fra JemoPharm på Møn til din dør.</p>
-      </div>
-      <div class="rounded-2xl bg-white border border-line p-8 text-center">
-        <p class="serif text-5xl font-light text-terra mb-3">30</p>
-        <p class="font-medium mb-1">Dagsposer pr. boks</p>
-        <p class="text-sm text-muted font-light">Én original Zentabox-pakning – præcis en måned.</p>
-      </div>
+      <a href="{% url 'science' %}" class="group block">
+        <div class="overflow-hidden bg-cream mb-4" style="aspect-ratio:4/3;"><img src="{% static 'images/motherbox/pills-late.jpg' %}" alt="" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
+        <p class="text-[11px] track-wide uppercase text-muted mb-1">Anbefalinger</p>
+        <p class="serif text-xl text-charcoal group-hover:underline">Sundhedsstyrelsens anbefalinger – og hvad der er i hver dagspose</p>
+      </a>
+      <a href="{% url 'manufacturer_list' %}" class="group block">
+        <div class="overflow-hidden bg-cream mb-4" style="aspect-ratio:4/3;"><img src="{% static 'images/motherbox/kit-late.jpg' %}" alt="" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
+        <p class="text-[11px] track-wide uppercase text-muted mb-1">Producent</p>
+        <p class="serif text-xl text-charcoal group-hover:underline">Produceret i Danmark: mød JemoPharm på Møn</p>
+      </a>
+      <a href="{% url 'faq' %}" class="group block">
+        <div class="overflow-hidden bg-cream mb-4" style="aspect-ratio:4/3;"><img src="{% static 'images/motherbox/side-early.jpg' %}" alt="" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
+        <p class="text-[11px] track-wide uppercase text-muted mb-1">Spørgsmål &amp; svar</p>
+        <p class="serif text-xl text-charcoal group-hover:underline">Alt om abonnement, levering og skift mellem faser</p>
+      </a>
     </div>
-    <p class="text-center mt-8"><a href="{% url 'manufacturer_list' %}" class="text-xs track-wide uppercase text-terra hover:underline">Læs mere om producenten →</a></p>
   </div>
 </section>
 
-<!-- CLOSING CTA -->
-<section class="py-20 md:py-24 bg-white">
-  <div class="max-w-3xl mx-auto px-4 md:px-6 text-center">
-    <h2 class="serif text-4xl md:text-5xl font-light leading-tight mb-5">Klar til at finde din boks?</h2>
-    <p class="text-muted font-light mb-8">{{ sub_price|floatformat:0 }} kr. om måneden inkl. goodies og fri fragt. Ingen binding.</p>
-    <a href="#bokse" class="pill btn-terra inline-block px-12 py-4 text-xs track-wide uppercase font-medium">Find din boks</a>
-  </div>
-</section>
-
+<script>
+  (function () {
+    var cards = document.querySelectorAll('.quiz-card'), go = document.getElementById('quizGo'), url = null;
+    cards.forEach(function (c) {
+      c.addEventListener('click', function () {
+        cards.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        c.setAttribute('aria-pressed', 'true'); url = c.dataset.url;
+        go.disabled = false; go.className = 'pill btn-terra px-7 py-2.5 text-[12px] track-wide uppercase';
+      });
+    });
+    go.addEventListener('click', function () { if (url) window.location = url; });
+    var tabs = document.querySelectorAll('.role-tab'), panels = document.querySelectorAll('.role-panel');
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+        panels.forEach(function (p) { p.classList.toggle('hidden', p.dataset.role !== t.dataset.role); });
+      });
+    });
+  })();
+</script>
 {% endblock %}
