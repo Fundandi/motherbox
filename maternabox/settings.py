@@ -118,7 +118,7 @@ COMPANY = {
     'legal_name': os.environ.get('COMPANY_LEGAL_NAME', 'Intento Holding ApS'),
     'cvr': os.environ.get('COMPANY_CVR', '40593411'),
     'address': os.environ.get('COMPANY_ADDRESS', ''),
-    'email': os.environ.get('COMPANY_EMAIL', 'hej@motherbox.dk'),
+    'email': os.environ.get('COMPANY_EMAIL', 'info@motherbox.dk'),
     'phone': os.environ.get('COMPANY_PHONE', ''),
 }
 

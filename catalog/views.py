@@ -12,7 +12,7 @@ from .visuals import nutrient_style
 
 WHY_ROWS = [
     'Følger Sundhedsstyrelsens anbefalinger',
-    'Bokse, der skifter med din graviditetsuge',
+    'Skifter automatisk, når du går ind i en ny fase',
     'Én dagspose – 30 poser pr. boks',
     'Produceret i Danmark af JemoPharm',
     'Fuld varedeklaration før køb',
