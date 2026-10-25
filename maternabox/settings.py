@@ -115,8 +115,8 @@ LOGGING = {
 # ── Business ────────────────────────────────────────────────────────────────
 COMPANY = {
     'name': os.environ.get('COMPANY_NAME', 'Motherbox'),
-    'legal_name': os.environ.get('COMPANY_LEGAL_NAME', 'Intento Holding ApS'),
-    'cvr': os.environ.get('COMPANY_CVR', '40593411'),
+    'legal_name': os.environ.get('COMPANY_LEGAL_NAME', 'MB ApS'),
+    'cvr': os.environ.get('COMPANY_CVR', '39816792'),
     'address': os.environ.get('COMPANY_ADDRESS', ''),
     'email': os.environ.get('COMPANY_EMAIL', 'info@motherbox.dk'),
     'phone': os.environ.get('COMPANY_PHONE', ''),
