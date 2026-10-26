@@ -132,7 +132,7 @@ class Package(models.Model):
         if self.stage == self.STAGE_PREGNANT:
             return 'Early Care' if (self.week_start or 0) < 10 else 'Late Care'
         if self.stage == self.STAGE_POSTPARTUM:
-            return 'Ammebox'
+            return 'After Care'
         return 'Klar til graviditet'
 
     _IMAGES = {'klar-til-graviditet': 'klar', 'early-care': 'early', 'late-care': 'late', 'ammeboks': 'amme'}
