@@ -47,7 +47,7 @@ PACKAGE_TEXTS = [
     },
     {
         'slug': 'ammeboks', 'position': 3, 'stage': 'postpartum', 'month': None, 'week_start': None, 'week_end': None,
-        'title': 'Ammeboksen',
+        'title': 'Ammebox',
         'tagline': 'Tiden efter fødslen kræver også sit. En boks til dig, der ammer og kommer dig.',
         'hero_nutrient': 'D-vitamin + DHA',
         'image_url': U + 'photo-1542385151-efd9000785a0?w=900&q=80&fit=crop',
