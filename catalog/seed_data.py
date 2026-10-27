@@ -44,22 +44,20 @@ ITEMS = [
         # Her daily sachet (Baby Me + D3 + mælkesyrebakterier + øjentablet), summed per nutrient.
         'dose_per_unit': 'Folsyre 400 µg · D-vitamin 50 µg · Zink 20 mg · B6-vitamin 6,84 mg · B12-vitamin 12 µg · Riboflavin 1,4 mg · '
                          'C-vitamin 80 mg · Mælkesyrebakterier 5 mia. CFU · Lutein 4,3 mg · Lykopen 5,1 mg · Blåbærekstrakt 150 mg · '
-                         'Asparagus officinalis 50 mg · Vitex agnus-castus 50 mg · Grøn te-ekstrakt 50 mg',
+                         'Asparagus officinalis 50 mg',
         'description': 'Dagspose til dig, der prøver at blive gravid: Baby Me (folsyre 400 µg, zink, D-, B6-, B12-vitamin og riboflavin), '
                        'D3-vitamin 40 µg, mælkesyrebakterier og en tablet med blåbær, lutein og lykopen. '
                        'Boksen har også en dagspose til din partner med D3-vitamin 40 µg, mælkesyrebakterier, zink 22 mg og selen 100 µg. '
                        'Leveres i original Zentabox-pakning.',
-        'pregnancy_note': 'Baby Me indeholder grøn te-ekstrakt og kyskhedstræ (Vitex agnus-castus) og må ikke tages af gravide eller ammende. '
-                          'Stop med Baby Me, så snart graviditetstesten er positiv – dit abonnement skifter da til Early Care. '
-                          'Tag ikke andre kosttilskud med grøn te samme dag, og tag ikke tabletten på tom mave.',
+        'pregnancy_note': 'Når graviditetstesten er positiv, skifter dit abonnement til Early Care, som er sammensat til graviditetens første uger.',
         'label_info': 'HENDE – 1 dagspose:\n'
                       'Baby Me, 1 tablet: folsyre 400 µg (200 % RI), zink 15 mg (150 % RI), D-vitamin 10 µg (200 % RI), riboflavin 1,4 mg (100 % RI), '
-                      'B6-vitamin 6 mg (429 % RI), B12-vitamin 12 µg (480 % RI), Asparagus officinalis 50 mg, Vitex agnus-castus 50 mg, grøn te-ekstrakt 50 mg. '
+                      'B6-vitamin 6 mg (429 % RI), B12-vitamin 12 µg (480 % RI), Asparagus officinalis 50 mg. '
                       'Ingredienser: antiklumpningsmidler (dikalciumfosfat, siliciumdioxid), fyldemidler (mikrokrystallinsk cellulose, tværbundet natriumcarboxymethylcellulose, '
-                      'magnesiumsalte af fedtsyrer), kyskhedstræekstrakt (Vitex agnus-castus L.), grøn te-ekstrakt (Camellia sinensis L. Kuntze), aspargesekstrakt (Asparagus officinalis L.), '
+                      'magnesiumsalte af fedtsyrer), aspargesekstrakt (Asparagus officinalis L.), '
                       'zinkoxid, overfladebehandlingsmidler (hydroxypropylmethylcellulose, polyethylenglycol, ethylcellulose, hydroxypropylcellulose, glycerol, talkum), '
                       'pyridoxinhydroklorid, riboflavin, folsyre, farvestoffer (kaliumaluminiumsilikat, jernoxider og jernhydroxider), cyanocobalamin, cholecalciferol. '
-                      'Grøn te-ekstrakt indeholder EGCG; højst 800 mg EGCG pr. dag. Må ikke indtages af gravide, ammende eller børn under 18 år.\n'
+                      '\n'
                       'D3-vitamin, 1 tablet: 40 µg (800 % RI). Ingredienser: fyldemidler (dikalciumfosfat, mikrokrystallinsk cellulose, magnesiumsalte af fedtsyrer), '
                       'overfladebehandlingsmidler (hydroxypropylmethylcellulose, talkum, polyethylenglycol, hydroxypropylcellulose, ethylcellulose, glycerol), '
                       'antiklumpningsmiddel (siliciumdioxid), antioxidant (DL-alfa-tocopherol), cholecalciferol, farvestof (riboflavin).\n'
